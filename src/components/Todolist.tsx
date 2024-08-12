@@ -1,29 +1,47 @@
 import React from "react";
-import { TaskType } from "../App";
+import {Button} from "./Button";
+import styled from "styled-components";
+import {FlexWrapper} from "./FlexWrapper";
+import {myTheme} from "../styles/Theme.styled";
+import { TaskType } from "../types/types";
 
 type TodolistPropsType = {
     title: string,
     tasks: Array<TaskType>
 }
 
-export const Todolist = (props: TodolistPropsType) => {
+export const Todolist = ({title, tasks}: TodolistPropsType) => {
+
+    const tasksList: Array<JSX.Element> = tasks.map((task, index) => {
+        return (
+            <li key={index}>
+                <input type="checkbox" checked={task.isDone}/> <span>{task.title}</span>
+            </li>
+        )
+    })
+
     return (
-        <div>
-            <h3>{props.title}</h3>
-            <div>
+        <StyledTodoList direction={"column"} gap={"8px"}>
+            <h3>{title}</h3>
+            <FlexWrapper gap={"8px"}>
                 <input/>
-                <button>+</button>
-            </div>
+                <Button title={"+"}/>
+            </FlexWrapper>
             <ul>
-                <li><input type="checkbox" checked={props.tasks[0].isDone}/> <span>{props.tasks[0].title}</span></li>
-                <li><input type="checkbox" checked={props.tasks[1].isDone}/> <span>{props.tasks[1].title}</span></li>
-                <li><input type="checkbox" checked={props.tasks[2].isDone}/> <span>{props.tasks[2].title}</span></li>
+                {tasksList}
             </ul>
-            <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
-            </div>
-        </div>
+            <FlexWrapper gap={"8px"}>
+                <Button title={"All"}/>
+                <Button title={"Active"}/>
+                <Button title={"Completed"}/>
+            </FlexWrapper>
+        </StyledTodoList>
     )
 }
+
+const StyledTodoList = styled(FlexWrapper)`
+  background-color: ${myTheme.colors.lightBlue};
+  padding: 8px;
+  border: ${myTheme.colors.borderColor} 2px solid;
+  border-radius: 16px;
+`
