@@ -1,17 +1,17 @@
 import React from 'react';
 import './App.css';
 import {Todolist} from "./components/Todolist";
-import { TaskType } from './types/types';
+import { TaskProps } from './types/types';
 
 function App() {
 
-    let task1: Array<TaskType> = [
+    let task1: Array<TaskProps> = [
         {id: 1, title: "CSS", isDone: true},
         {id: 1, title: "JS", isDone: true},
         {id: 1, title: "React", isDone: false}
     ]
 
-    let task2: Array<TaskType> = [
+    let task2: Array<TaskProps> = [
         {id: 1, title: "Cola", isDone: true},
         {id: 1, title: "Whiskey", isDone: true},
         {id: 1, title: "Ice", isDone: false}

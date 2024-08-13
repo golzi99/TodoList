@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import {myTheme} from "../styles/Theme.styled";
 
-type ButtonPropsType = {
+type ButtonProps = {
     title: string
 }
 
-export const Button = ({title}: ButtonPropsType) => {
+export const Button = ({title}: ButtonProps) => {
     return (
         <StyledButton>{title}</StyledButton>
     );

@@ -3,14 +3,14 @@ import {Button} from "./Button";
 import styled from "styled-components";
 import {FlexWrapper} from "./FlexWrapper";
 import {myTheme} from "../styles/Theme.styled";
-import { TaskType } from "../types/types";
+import { TaskProps } from "../types/types";
 
-type TodolistPropsType = {
+type TodolistProps = {
     title: string,
-    tasks: Array<TaskType>
+    tasks: Array<TaskProps>
 }
 
-export const Todolist = ({title, tasks}: TodolistPropsType) => {
+export const Todolist = ({title, tasks}: TodolistProps) => {
 
     const tasksList: Array<JSX.Element> = tasks.map((task, index) => {
         return (
