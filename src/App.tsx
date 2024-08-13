@@ -7,14 +7,17 @@ function App() {
 
     let task1: Array<TaskProps> = [
         {id: 1, title: "CSS", isDone: true},
-        {id: 1, title: "JS", isDone: true},
-        {id: 1, title: "React", isDone: false}
+        {id: 2, title: "JS", isDone: true},
+        {id: 3, title: "React", isDone: false},
+        { id: 4, title: 'Redux', isDone: false },
+        { id: 5, title: 'Typescript', isDone: false },
+        { id: 6, title: 'RTK query', isDone: false },
     ]
 
     let task2: Array<TaskProps> = [
         {id: 1, title: "Cola", isDone: true},
-        {id: 1, title: "Whiskey", isDone: true},
-        {id: 1, title: "Ice", isDone: false}
+        {id: 2, title: "Whiskey", isDone: true},
+        {id: 3, title: "Ice", isDone: false}
     ]
 
     return (

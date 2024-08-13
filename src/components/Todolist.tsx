@@ -3,7 +3,7 @@ import {Button} from "./Button";
 import styled from "styled-components";
 import {FlexWrapper} from "./FlexWrapper";
 import {myTheme} from "../styles/Theme.styled";
-import { TaskProps } from "../types/types";
+import {TaskProps} from "../types/types";
 
 type TodolistProps = {
     title: string,
@@ -12,9 +12,9 @@ type TodolistProps = {
 
 export const Todolist = ({title, tasks}: TodolistProps) => {
 
-    const tasksList: Array<JSX.Element> = tasks.map((task, index) => {
+    const tasksList: Array<JSX.Element> = tasks.map((task) => {
         return (
-            <li key={index}>
+            <li key={task.id}>
                 <input type="checkbox" checked={task.isDone}/> <span>{task.title}</span>
             </li>
         )
@@ -27,9 +27,11 @@ export const Todolist = ({title, tasks}: TodolistProps) => {
                 <input/>
                 <Button title={"+"}/>
             </FlexWrapper>
-            <ul>
-                {tasksList}
-            </ul>
+            {tasks.length === 0 ? <p>Тасок нет</p> :
+                <ul>
+                    {tasksList}
+                </ul>
+            }
             <FlexWrapper gap={"8px"}>
                 <Button title={"All"}/>
                 <Button title={"Active"}/>
