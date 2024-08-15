@@ -1,26 +1,42 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button} from './Button';
 import styled from 'styled-components';
 import {FlexWrapper} from './FlexWrapper';
 import {myTheme} from '../styles/Theme.styled';
 import {FilterValues, TaskProps} from '../types/types';
+import {Input} from './Input';
 
 type TodolistProps = {
     title: string,
     tasks: Array<TaskProps>,
     removeTask: (id: number) => void,
     changeFilter: (value: FilterValues) => void,
-    addTask: (addedTask: TaskProps) => void
+    addTask: (addedTask: TaskProps) => void,
 }
 
-export const Todolist = ({title, tasks, removeTask, changeFilter}: TodolistProps) => {
+export const Todolist = ({title, tasks, removeTask, changeFilter, addTask}: TodolistProps) => {
+
+    const [inputTaskTitle, setInputTask] = useState('')
+
+    const addTaskOnClick = () => {
+        if (inputTaskTitle.trim()) {
+            addTask({
+                id: tasks[tasks.length - 1].id + 1,
+                isDone: false,
+                title: inputTaskTitle
+            })
+            setInputTask('')
+        }
+    }
 
     const tasksList: Array<JSX.Element> = tasks.map((task) => {
         return (
             <li key={task.id}>
                 <input type="checkbox" checked={task.isDone}/>
                 <span>{task.title} </span>
-                <Button title={"x"} onClick={() => {removeTask(task.id)}}/>
+                <Button title={'x'} callBack={() => {
+                    removeTask(task.id)
+                }}/>
             </li>
         )
     })
@@ -29,8 +45,10 @@ export const Todolist = ({title, tasks, removeTask, changeFilter}: TodolistProps
         <StyledTodoList direction={'column'} gap={'8px'}>
             <h3>{title}</h3>
             <FlexWrapper gap={'8px'}>
-                <input/>
-                <Button title={'+'} onClick={() => {console.log("add")}}/>
+                <Input title={inputTaskTitle} setTitle={setInputTask}/>
+                <Button title={'+'} callBack={() => {
+                    addTaskOnClick()
+                }}/>
             </FlexWrapper>
             {tasks.length === 0 ? <p>Тасок нет</p> :
                 <ul>
@@ -38,9 +56,9 @@ export const Todolist = ({title, tasks, removeTask, changeFilter}: TodolistProps
                 </ul>
             }
             <FlexWrapper gap={'8px'}>
-                <Button title={'All'} onClick={() => changeFilter("all")}/>
-                <Button title={'Active'} onClick={() => changeFilter("active")}/>
-                <Button title={'Completed'} onClick={() => changeFilter("completed")}/>
+                <Button title={'All'} callBack={() => changeFilter('all')}/>
+                <Button title={'Active'} callBack={() => changeFilter('active')}/>
+                <Button title={'Completed'} callBack={() => changeFilter('completed')}/>
             </FlexWrapper>
         </StyledTodoList>
     )

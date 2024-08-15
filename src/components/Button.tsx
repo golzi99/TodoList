@@ -1,26 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import {myTheme} from '../styles/Theme.styled';
-import {FilterValues} from '../types/types';
 
 type ButtonProps = {
     title: string,
-    onClick: (params?: any) => void;
-    filterValue?: FilterValues,
-    id?: number
+    callBack: () => void
 }
 
-export const Button = (props: ButtonProps) => {
+export const Button = ({title, callBack}: ButtonProps) => {
+
+    const onClickButtonHandler = () => {
+        callBack()
+    }
+
+
     return (
-        <StyledButton onClick={() => {
-            if (props.filterValue) {
-                props.onClick(props.filterValue)
-            } else if (props.id) {
-                props.onClick(props.id)
-            }
-            props.onClick()
-        }}>
-            {props.title}
+        <StyledButton onClick={onClickButtonHandler}>
+            {title}
         </StyledButton>
     );
 };
