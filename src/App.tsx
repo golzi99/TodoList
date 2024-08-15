@@ -29,6 +29,10 @@ function App() {
         setFilter(value)
     }
 
+    const addTask = (addedTask: TaskProps) => {
+        setTasks([...tasks1, addedTask])
+    }
+
     let tasksForTodoList = tasks1
     if (filter === "active") {
         tasksForTodoList = tasks1.filter(t => !t.isDone)
@@ -38,7 +42,7 @@ function App() {
 
     return (
         <div className="App">
-           <Todolist title={"What to learn"} tasks={tasksForTodoList} removeTask={removeTask} changeFilter={changeFilter}/>
+           <Todolist title={"What to learn"} tasks={tasksForTodoList} removeTask={removeTask} changeFilter={changeFilter} addTask={addTask}/>
            {/*<Todolist title={"What to buy"} tasks={task2} removeTask={removeTask}/>*/}
         </div>
     );

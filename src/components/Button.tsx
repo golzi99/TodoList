@@ -44,7 +44,7 @@ const StyledButton = styled.button`
     height: 100%;
     z-index: -1;
     background-color: ${myTheme.colors.lightPurple};
-    transition: transform 0.4s ease;
+    transition: transform 0.2s ease;
     transform: scaleX(0);
     transform-origin: left;
   }

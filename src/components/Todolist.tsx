@@ -9,7 +9,8 @@ type TodolistProps = {
     title: string,
     tasks: Array<TaskProps>,
     removeTask: (id: number) => void,
-    changeFilter: (value: FilterValues) => void
+    changeFilter: (value: FilterValues) => void,
+    addTask: (addedTask: TaskProps) => void
 }
 
 export const Todolist = ({title, tasks, removeTask, changeFilter}: TodolistProps) => {
