@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {Button} from './Button';
 import styled from 'styled-components';
 import {FlexWrapper} from './FlexWrapper';
@@ -12,7 +12,7 @@ type TodolistProps = {
     removeTask: (id: number) => void,
     changeFilter: (value: FilterValues) => void,
     addTask: (addedTask: TaskProps) => void,
-    taskDone: (id: number) => void
+    taskDone: (id: number, checked: boolean) => void
 }
 
 export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskDone}: TodolistProps) => {
@@ -30,16 +30,24 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskD
         }
     }
 
+    const removeTaskOnClick = (id: number) => {
+        removeTask(id)
+    }
+
+    const onChangeCheckedTask = (id: number, event: ChangeEvent<HTMLInputElement>) => {
+        taskDone(id, event.currentTarget.checked)
+    }
+
     const tasksList: Array<JSX.Element> = tasks.map((task) => {
         return (
             <li key={task.id}>
                 <input type="checkbox"
                        checked={task.isDone}
-                       onChange={() => taskDone(task.id)}
+                       onChange={(event) => onChangeCheckedTask(task.id, event)}
                 />
                 <span>{task.title} </span>
                 <Button title={'x'} callBack={() => {
-                    removeTask(task.id)
+                    removeTaskOnClick(task.id)
                 }}/>
             </li>
         )

@@ -19,10 +19,10 @@ function App() {
         setTasks(filteredTasks)
     }
 
-    const taskDone = (id: number) => {
+    const taskDone = (id: number, checked: boolean) => {
         const doneTasks = tasks.map(t => {
             if (t.id === id) {
-                return {...t, isDone: !t.isDone}
+                return {...t, isDone:checked}
             }
             return t
         })
@@ -46,8 +46,13 @@ function App() {
 
     return (
         <div className="App">
-            <Todolist title={'What to learn'} tasks={tasksForTodoList} removeTask={removeTask}
-                      changeFilter={changeFilter} addTask={addTask} taskDone={taskDone}/>
+            <Todolist title={'What to learn'}
+                      tasks={tasksForTodoList}
+                      removeTask={removeTask}
+                      changeFilter={changeFilter}
+                      addTask={addTask}
+                      taskDone={taskDone}
+            />
         </div>
     );
 }
