@@ -12,9 +12,10 @@ type TodolistProps = {
     removeTask: (id: number) => void,
     changeFilter: (value: FilterValues) => void,
     addTask: (addedTask: TaskProps) => void,
+    taskDone: (id: number) => void
 }
 
-export const Todolist = ({title, tasks, removeTask, changeFilter, addTask}: TodolistProps) => {
+export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskDone}: TodolistProps) => {
 
     const [inputTaskTitle, setInputTask] = useState('')
 
@@ -32,7 +33,10 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask}: Todo
     const tasksList: Array<JSX.Element> = tasks.map((task) => {
         return (
             <li key={task.id}>
-                <input type="checkbox" checked={task.isDone}/>
+                <input type="checkbox"
+                       checked={task.isDone}
+                       onChange={() => taskDone(task.id)}
+                />
                 <span>{task.title} </span>
                 <Button title={'x'} callBack={() => {
                     removeTask(task.id)

@@ -19,6 +19,16 @@ function App() {
         setTasks(filteredTasks)
     }
 
+    const taskDone = (id: number) => {
+        const doneTasks = tasks.map(t => {
+            if (t.id === id) {
+                return {...t, isDone: !t.isDone}
+            }
+            return t
+        })
+        setTasks(doneTasks)
+    }
+
     const changeFilter = (value: FilterValues) => {
         setFilter(value)
     }
@@ -37,7 +47,7 @@ function App() {
     return (
         <div className="App">
             <Todolist title={'What to learn'} tasks={tasksForTodoList} removeTask={removeTask}
-                      changeFilter={changeFilter} addTask={addTask}/>
+                      changeFilter={changeFilter} addTask={addTask} taskDone={taskDone}/>
         </div>
     );
 }
