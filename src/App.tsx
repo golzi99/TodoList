@@ -2,24 +2,25 @@ import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './components/Todolist';
 import {FilterValues, TaskProps} from './types/types';
+import {v1} from 'uuid';
 
 function App() {
     const [tasks, setTasks] = useState<Array<TaskProps>>([
-        {id: 1, title: 'CSS', isDone: true},
-        {id: 2, title: 'JS', isDone: true},
-        {id: 3, title: 'React', isDone: false},
-        {id: 4, title: 'Redux', isDone: false},
-        {id: 5, title: 'Typescript', isDone: false},
-        {id: 6, title: 'RTK query', isDone: false}
+        {id: v1(), title: 'CSS', isDone: true},
+        {id: v1(), title: 'JS', isDone: true},
+        {id: v1(), title: 'React', isDone: false},
+        {id: v1(), title: 'Redux', isDone: false},
+        {id: v1(), title: 'Typescript', isDone: false},
+        {id: v1(), title: 'RTK query', isDone: false}
     ])
     const [filter, setFilter] = useState<FilterValues>('all')
 
-    const removeTask = (id: number) => {
+    const removeTask = (id: string) => {
         let filteredTasks = tasks.filter(t => t.id !== id)
         setTasks(filteredTasks)
     }
 
-    const taskDone = (id: number, checked: boolean) => {
+    const taskDone = (id: string, checked: boolean) => {
         const doneTasks = tasks.map(t => {
             if (t.id === id) {
                 return {...t, isDone:checked}
@@ -33,8 +34,9 @@ function App() {
         setFilter(value)
     }
 
-    const addTask = (addedTask: TaskProps) => {
-        setTasks([...tasks, addedTask])
+    const addTask = (title: string) => {
+        let newTask = {id: v1(), title: title, isDone: false}
+        setTasks([newTask, ...tasks])
     }
 
     let tasksForTodoList = tasks

@@ -9,10 +9,10 @@ import {Input} from './Input';
 type TodolistProps = {
     title: string,
     tasks: Array<TaskProps>,
-    removeTask: (id: number) => void,
+    removeTask: (id: string) => void,
     changeFilter: (value: FilterValues) => void,
-    addTask: (addedTask: TaskProps) => void,
-    taskDone: (id: number, checked: boolean) => void
+    addTask: (title: string) => void,
+    taskDone: (id: string, checked: boolean) => void
 }
 
 export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskDone}: TodolistProps) => {
@@ -21,24 +21,26 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskD
 
     const addTaskOnClick = () => {
         if (inputTaskTitle.trim()) {
-            addTask({
-                id: tasks[tasks.length - 1].id + 1,
-                isDone: false,
-                title: inputTaskTitle
-            })
+            addTask(inputTaskTitle)
             setInputTask('')
         }
     }
 
-    const removeTaskOnClick = (id: number) => {
+    const removeTaskOnClick = (id: string) => {
         removeTask(id)
     }
 
-    const onChangeCheckedTask = (id: number, event: ChangeEvent<HTMLInputElement>) => {
+    const onChangeCheckedTask = (id: string, event: ChangeEvent<HTMLInputElement>) => {
         taskDone(id, event.currentTarget.checked)
     }
 
+    const onAllClickHandler = () => changeFilter('all')
+    const onActiveClickHandler = () => changeFilter('active')
+    const oCompletedClickHandler = () => changeFilter('completed')
+
     const tasksList: Array<JSX.Element> = tasks.map((task) => {
+        const onRemoveHandler = () => removeTaskOnClick(task.id)
+
         return (
             <li key={task.id}>
                 <input type="checkbox"
@@ -46,9 +48,7 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskD
                        onChange={(event) => onChangeCheckedTask(task.id, event)}
                 />
                 <span>{task.title} </span>
-                <Button title={'x'} callBack={() => {
-                    removeTaskOnClick(task.id)
-                }}/>
+                <Button title={'x'} callBack={onRemoveHandler}/>
             </li>
         )
     })
@@ -57,10 +57,8 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskD
         <StyledTodoList direction={'column'} gap={'8px'}>
             <h3>{title}</h3>
             <FlexWrapper gap={'8px'}>
-                <Input title={inputTaskTitle} setTitle={setInputTask}/>
-                <Button title={'+'} callBack={() => {
-                    addTaskOnClick()
-                }}/>
+                <Input title={inputTaskTitle} setTitle={setInputTask} onEnter={addTaskOnClick}/>
+                <Button title={'+'} callBack={addTaskOnClick}/>
             </FlexWrapper>
             {tasks.length === 0 ? <p>Тасок нет</p> :
                 <ul>
@@ -68,9 +66,9 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskD
                 </ul>
             }
             <FlexWrapper gap={'8px'}>
-                <Button title={'All'} callBack={() => changeFilter('all')}/>
-                <Button title={'Active'} callBack={() => changeFilter('active')}/>
-                <Button title={'Completed'} callBack={() => changeFilter('completed')}/>
+                <Button title={'All'} callBack={onAllClickHandler}/>
+                <Button title={'Active'} callBack={onActiveClickHandler}/>
+                <Button title={'Completed'} callBack={oCompletedClickHandler}/>
             </FlexWrapper>
         </StyledTodoList>
     )
