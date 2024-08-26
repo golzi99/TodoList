@@ -3,14 +3,14 @@ import {Button} from './Button';
 import styled from 'styled-components';
 import {FlexWrapper} from './FlexWrapper';
 import {myTheme} from '../styles/Theme.styled';
-import {FilterValues, TaskProps} from '../types/types';
+import {FilterValuesType, TaskPropsType} from '../types/types';
 import {Input} from './Input';
 
 type TodolistProps = {
     title: string,
-    tasks: Array<TaskProps>,
+    tasks: Array<TaskPropsType>,
     removeTask: (id: string) => void,
-    changeFilter: (value: FilterValues) => void,
+    changeFilter: (value: FilterValuesType) => void,
     addTask: (title: string) => void,
     taskDone: (id: string, checked: boolean) => void
 }
@@ -38,9 +38,7 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskD
         taskDone(id, event.currentTarget.checked)
     }
 
-    const onAllClickHandler = () => changeFilter('all')
-    const onActiveClickHandler = () => changeFilter('active')
-    const oCompletedClickHandler = () => changeFilter('completed')
+    const setFilterHandlerCreator = (newFilterValue: FilterValuesType) => () => changeFilter(newFilterValue)
 
     const tasksList: Array<JSX.Element> = tasks.map((task) => {
         const onRemoveHandler = () => removeTaskOnClick(task.id)
@@ -74,9 +72,9 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskD
                 </ul>
             }
             <FlexWrapper gap={'8px'}>
-                <Button title={'All'} callBack={onAllClickHandler}/>
-                <Button title={'Active'} callBack={onActiveClickHandler}/>
-                <Button title={'Completed'} callBack={oCompletedClickHandler}/>
+                <Button title={'All'} callBack={setFilterHandlerCreator('all')}/>
+                <Button title={'Active'} callBack={setFilterHandlerCreator('active')}/>
+                <Button title={'Completed'} callBack={setFilterHandlerCreator('completed')}/>
             </FlexWrapper>
         </StyledTodoList>
     )

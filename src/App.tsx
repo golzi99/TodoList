@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './components/Todolist';
-import {FilterValues, TaskProps} from './types/types';
+import {FilterValuesType, TaskPropsType} from './types/types';
 import {v1} from 'uuid';
 
 function App() {
-    const [tasks, setTasks] = useState<Array<TaskProps>>([
+    const [tasks, setTasks] = useState<Array<TaskPropsType>>([
         {id: v1(), title: 'CSS', isDone: true},
         {id: v1(), title: 'JS', isDone: true},
         {id: v1(), title: 'React', isDone: false},
@@ -13,7 +13,7 @@ function App() {
         {id: v1(), title: 'Typescript', isDone: false},
         {id: v1(), title: 'RTK query', isDone: false}
     ])
-    const [filter, setFilter] = useState<FilterValues>('all')
+    const [filter, setFilter] = useState<FilterValuesType>('all')
 
     const removeTask = (id: string) => {
         let filteredTasks = tasks.filter(t => t.id !== id)
@@ -30,7 +30,7 @@ function App() {
         setTasks(doneTasks)
     }
 
-    const changeFilter = (value: FilterValues) => {
+    const changeFilter = (value: FilterValuesType) => {
         setFilter(value)
     }
 

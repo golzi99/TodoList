@@ -1,8 +1,8 @@
 
-export type TaskProps = {
+export type TaskPropsType = {
     id: string,
     title: string,
     isDone: boolean
 }
 
-export type FilterValues = "all" | "active" | "completed"
+export type FilterValuesType = "all" | "active" | "completed"
