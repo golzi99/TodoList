@@ -20,10 +20,8 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskD
     const [inputTaskTitle, setInputTask] = useState('')
 
     const addTaskOnClick = () => {
-        if (inputTaskTitle.trim()) {
-            addTask(inputTaskTitle)
-            setInputTask('')
-        }
+        addTask(inputTaskTitle)
+        setInputTask('')
     }
 
     const removeTaskOnClick = (id: string) => {
@@ -58,8 +56,15 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskD
             <h3>{title}</h3>
             <FlexWrapper gap={'8px'}>
                 <Input title={inputTaskTitle} setTitle={setInputTask} onEnter={addTaskOnClick}/>
-                <Button title={'+'} callBack={addTaskOnClick}/>
+                <Button title={'+'} callBack={addTaskOnClick}
+                        disabled={(!inputTaskTitle ? true : 10 - inputTaskTitle.length > 0 ? false : 10 - inputTaskTitle.length <= 0)}/>
+
             </FlexWrapper>
+            {!inputTaskTitle && <p>${`Max length task title is 10 charters`}</p>}
+            {inputTaskTitle && 10 - inputTaskTitle.length > 0 &&
+                <p>${`You have ${10 - inputTaskTitle.length} characters left`}</p>}
+            {inputTaskTitle && 10 - inputTaskTitle.length <= 0 &&
+                <p>${`You have exceeded your symbol limit`}</p>}
             {tasks.length === 0 ? <p>Тасок нет</p> :
                 <ul>
                     {tasksList}

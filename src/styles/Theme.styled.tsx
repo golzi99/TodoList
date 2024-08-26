@@ -5,7 +5,8 @@ export const myTheme = {
         lightPurple: "#a49de7",
         lightOrange: "#e7c29d",
         lightPink: "#e79dd1",
-        borderColor: "#a28745"
+        borderColor: "#a28745",
+        lightGrey: 'lightgrey'
     },
 
     media: {
