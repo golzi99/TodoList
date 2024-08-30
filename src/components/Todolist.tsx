@@ -9,23 +9,25 @@ import {Input} from './Input';
 type TodolistProps = {
     title: string,
     tasks: Array<TaskPropsType>,
+    filter: FilterValuesType,
     removeTask: (id: string) => void,
     changeFilter: (value: FilterValuesType) => void,
     addTask: (title: string) => void,
     taskDone: (id: string, checked: boolean) => void
 }
 
-export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskDone}: TodolistProps) => {
+export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskDone, filter}: TodolistProps) => {
 
     const [inputTaskTitle, setInputTask] = useState('')
 
     const isInputButtonDisabled = !inputTaskTitle
     const userLengthMessage = `You have ${10 - inputTaskTitle.length} characters left`
     const userErrorLengthMessage = inputTaskTitle.length > 10
+    const lineOfSpaceError = !inputTaskTitle.trim()
 
     const addTaskOnClick = () => {
-        if (!isInputButtonDisabled && !userErrorLengthMessage) {
-            addTask(inputTaskTitle)
+        if (!isInputButtonDisabled && !userErrorLengthMessage && !lineOfSpaceError) {
+            addTask(inputTaskTitle.trim())
             setInputTask('')
         }
     }
@@ -34,11 +36,13 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskD
         removeTask(id)
     }
 
-    const onChangeCheckedTask = (id: string, event: ChangeEvent<HTMLInputElement>) => {
+    const onChangeStatus = (id: string, event: ChangeEvent<HTMLInputElement>) => {
         taskDone(id, event.currentTarget.checked)
     }
 
-    const setFilterHandlerCreator = (newFilterValue: FilterValuesType) => () => changeFilter(newFilterValue)
+    const setFilterHandlerCreator = (newFilterValue: FilterValuesType) => () => {
+        changeFilter(newFilterValue)
+    }
 
     const tasksList: Array<JSX.Element> = tasks.map((task) => {
         const onRemoveHandler = () => removeTaskOnClick(task.id)
@@ -47,9 +51,9 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskD
             <li key={task.id}>
                 <input type="checkbox"
                        checked={task.isDone}
-                       onChange={(event) => onChangeCheckedTask(task.id, event)}
+                       onChange={(event) => onChangeStatus(task.id, event)}
                 />
-                <span>{task.title} </span>
+                <TaskIsDone done={task.isDone.toString()}> {task.title} </TaskIsDone>
                 <Button title={'x'} callBack={onRemoveHandler}/>
             </li>
         )
@@ -61,20 +65,23 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskD
             <FlexWrapper gap={'8px'}>
                 <Input title={inputTaskTitle} setTitle={setInputTask} onEnter={addTaskOnClick}/>
                 <Button title={'+'} callBack={addTaskOnClick}
-                        disabled={isInputButtonDisabled || userErrorLengthMessage}/>
+                        disabled={isInputButtonDisabled || userErrorLengthMessage || lineOfSpaceError}/>
             </FlexWrapper>
             {isInputButtonDisabled && <p>Max length task title is 10 charters</p>}
-            {(!isInputButtonDisabled && !userErrorLengthMessage) && <p>${userLengthMessage}</p>}
-            {userErrorLengthMessage && <p style={{color: 'red'}}>Task title is to long</p>}
+            {!isInputButtonDisabled && lineOfSpaceError && <ErrorMessage>Line of spaces is not a task!</ErrorMessage>}
+            {(!isInputButtonDisabled && !userErrorLengthMessage && !lineOfSpaceError) && <p>${userLengthMessage}</p>}
+            {userErrorLengthMessage && <ErrorMessage>Task title is to long</ErrorMessage>}
             {tasks.length === 0 ? <p>Тасок нет</p> :
                 <ul>
                     {tasksList}
                 </ul>
             }
             <FlexWrapper gap={'8px'}>
-                <Button title={'All'} callBack={setFilterHandlerCreator('all')}/>
-                <Button title={'Active'} callBack={setFilterHandlerCreator('active')}/>
-                <Button title={'Completed'} callBack={setFilterHandlerCreator('completed')}/>
+                <Button activeButton={filter === 'all'} title={'All'} callBack={setFilterHandlerCreator('all')}/>
+                <Button activeButton={filter === 'active'} title={'Active'}
+                               callBack={setFilterHandlerCreator('active')}/>
+                <Button activeButton={filter === 'completed'} title={'Completed'}
+                               callBack={setFilterHandlerCreator('completed')}/>
             </FlexWrapper>
         </StyledTodoList>
     )
@@ -85,4 +92,12 @@ const StyledTodoList = styled(FlexWrapper)`
   padding: 8px;
   border: ${myTheme.colors.borderColor} 2px solid;
   border-radius: 16px;
+`
+
+const ErrorMessage = styled.p`
+  color: red;
+`
+
+const TaskIsDone = styled.span<{done: string}>`
+  opacity: ${props => props.done === 'true' ? 0.5 : 1};
 `

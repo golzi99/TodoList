@@ -25,3 +25,9 @@ export const Input = ({title, setTitle, onEnter}: InputProps) => {
         />
     );
 };
+//
+// const InputWithError = styled.input`
+//   border: ${props => !props.value ? `${myTheme.colors.borderColor} 1px solid` : `red 1px solid` };
+// `
+
+

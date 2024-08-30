@@ -5,29 +5,31 @@ import {myTheme} from '../styles/Theme.styled';
 type ButtonProps = {
     title: string,
     callBack: () => void,
-    disabled?: boolean
+    disabled?: boolean,
+    activeButton?: boolean
 }
 
-export const Button = ({title, callBack, disabled}: ButtonProps) => {
+export const Button = ({title, callBack, disabled, activeButton}: ButtonProps) => {
 
     const onClickButtonHandler = () => {
         callBack()
     }
 
-
     return (
         <StyledButton
             onClick={onClickButtonHandler}
-            disabled={disabled}>
+            disabled={disabled}
+            activeButton={activeButton}>
             {title}
         </StyledButton>
     );
 };
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ disabled?: boolean; activeButton?: boolean }>`
   position: relative;
   display: inline-block;
-  background-color: ${props => !props.disabled ? myTheme.colors.lightGreen : myTheme.colors.lightGrey};
+  background-color: ${(props) =>
+          props.activeButton ? myTheme.colors.lightOrange : props.disabled ? myTheme.colors.lightGrey : myTheme.colors.lightGreen};
   padding: 4px;
   border: ${myTheme.colors.borderColor} 1px solid;
   border-radius: 4px;
