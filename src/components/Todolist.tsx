@@ -111,6 +111,7 @@ const ErrorMessage = styled.p`
 `
 
 const TaskIsDone = styled.span<{ done: string }>`
+  font-weight: ${props => props.done === 'true' ? '' : 'bold'};;
   text-decoration: ${props => props.done === 'true' ? 'line-through' : 'none'};
   opacity: ${props => props.done === 'true' ? 0.5 : 1};
 `
