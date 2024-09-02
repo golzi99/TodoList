@@ -20,7 +20,7 @@ function App() {
         setTasks(filteredTasks)
     }
 
-    const taskDone = (id: string, checked: boolean) => {
+    const changeTaskStatus = (id: string, checked: boolean) => {
         const doneTasks = tasks.map(t => t.id === id ? {...t, isDone:checked} : t)
         setTasks(doneTasks)
     }
@@ -48,7 +48,7 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
-                      taskDone={taskDone}
+                      changeTaskStatus={changeTaskStatus}
                       filter={filter}
             />
         </div>

@@ -13,10 +13,10 @@ type TodolistProps = {
     removeTask: (id: string) => void,
     changeFilter: (value: FilterValuesType) => void,
     addTask: (title: string) => void,
-    taskDone: (id: string, checked: boolean) => void
+    changeTaskStatus: (id: string, checked: boolean) => void
 }
 
-export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskDone, filter}: TodolistProps) => {
+export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, changeTaskStatus, filter}: TodolistProps) => {
 
     const [inputTaskTitle, setInputTask] = useState('')
 
@@ -37,7 +37,7 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, taskD
     }
 
     const onChangeStatus = (id: string, event: ChangeEvent<HTMLInputElement>) => {
-        taskDone(id, event.currentTarget.checked)
+        changeTaskStatus(id, event.currentTarget.checked)
     }
 
     const setFilterHandlerCreator = (newFilterValue: FilterValuesType) => () => {
@@ -99,5 +99,6 @@ const ErrorMessage = styled.p`
 `
 
 const TaskIsDone = styled.span<{done: string}>`
+  text-decoration: ${props => props.done === 'true' ? 'line-through' : 'none'};
   opacity: ${props => props.done === 'true' ? 0.5 : 1};
 `
