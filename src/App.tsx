@@ -21,12 +21,7 @@ function App() {
     }
 
     const taskDone = (id: string, checked: boolean) => {
-        const doneTasks = tasks.map(t => {
-            if (t.id === id) {
-                return {...t, isDone:checked}
-            }
-            return t
-        })
+        const doneTasks = tasks.map(t => t.id === id ? {...t, isDone:checked} : t)
         setTasks(doneTasks)
     }
 
