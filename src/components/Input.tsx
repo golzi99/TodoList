@@ -12,13 +12,14 @@ type InputProps = {
 export const Input = ({title, setTitle, onEnter, error, setInputError}: InputProps) => {
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        error && setInputError(false) //
         setTitle(event.currentTarget.value)
-        if (!event.currentTarget.value.trim() && event.currentTarget.value) {
-            setInputError(true)
-        }
-        else {
-            setInputError(false)
-        }
+        // if (!event.currentTarget.value.trim() && event.currentTarget.value) {
+        //     setInputError(true)
+        // }
+        // else {
+        //     setInputError(false)
+        // }
     }
 
     const onEnterClick = (event: React.KeyboardEvent<HTMLInputElement>) => {

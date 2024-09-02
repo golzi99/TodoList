@@ -34,10 +34,13 @@ export const Todolist = ({
     const userLengthMessage = `You have ${10 - inputTaskTitle.length} characters left`
 
     const addTaskOnClick = () => {
-        if (!inputEmpty && !userErrorLengthMessage && !inputError) {
-            addTask(inputTaskTitle.trim())
-            setInputTask('')
+        const trimmedTitle = inputTaskTitle.trim()
+        if (!inputEmpty && !userErrorLengthMessage && trimmedTitle) {
+            addTask(trimmedTitle)
+        } else {
+            setInputError(true)
         }
+        setInputTask('')
     }
 
     const removeTaskOnClick = (id: string) => {
@@ -76,10 +79,10 @@ export const Todolist = ({
                 <Button title={'+'} callBack={addTaskOnClick}
                         disabled={inputEmpty || userErrorLengthMessage || inputError}/>
             </FlexWrapper>
-            {inputEmpty && <p>Max length task title is 10 charters</p>}
-            {!inputEmpty && inputError && <ErrorMessage>Task title required</ErrorMessage>}
+            {inputEmpty && !inputError && <p>Max length task title is 10 charters</p>}
             {!inputEmpty && !userErrorLengthMessage && !inputError && <p>{userLengthMessage}</p>}
             {userErrorLengthMessage && !inputError && <ErrorMessage>Task title is to long</ErrorMessage>}
+            {inputError && <ErrorMessage>Task title required</ErrorMessage>}
             {tasks.length === 0 ? <p>Тасок нет</p> :
                 <ul>
                     {tasksList}
