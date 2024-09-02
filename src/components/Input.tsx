@@ -13,7 +13,7 @@ export const Input = ({title, setTitle, onEnter, error, setInputError}: InputPro
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setTitle(event.currentTarget.value)
-        if (!event.currentTarget.value.trim() && event.currentTarget.value.length > 0) {
+        if (!event.currentTarget.value.trim() && event.currentTarget.value) {
             setInputError(true)
         }
         else {

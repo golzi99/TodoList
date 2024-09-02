@@ -16,18 +16,25 @@ type TodolistProps = {
     changeTaskStatus: (id: string, checked: boolean) => void
 }
 
-export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, changeTaskStatus, filter}: TodolistProps) => {
+export const Todolist = ({
+                             title,
+                             tasks,
+                             removeTask,
+                             changeFilter,
+                             addTask,
+                             changeTaskStatus,
+                             filter
+                         }: TodolistProps) => {
 
     const [inputTaskTitle, setInputTask] = useState('')
     const [inputError, setInputError] = useState(false)
-    // const [error, setError] = useState<string | null>(null)
 
-    const isInputButtonDisabled = !inputTaskTitle
-    const userLengthMessage = `You have ${10 - inputTaskTitle.length} characters left`
+    const inputEmpty = !inputTaskTitle
     const userErrorLengthMessage = inputTaskTitle.length > 10
+    const userLengthMessage = `You have ${10 - inputTaskTitle.length} characters left`
 
     const addTaskOnClick = () => {
-        if (!isInputButtonDisabled && !userErrorLengthMessage && !inputError) {
+        if (!inputEmpty && !userErrorLengthMessage && !inputError) {
             addTask(inputTaskTitle.trim())
             setInputTask('')
         }
@@ -64,13 +71,14 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, chang
         <StyledTodoList direction={'column'} gap={'8px'}>
             <h3>{title}</h3>
             <FlexWrapper gap={'8px'}>
-                <Input title={inputTaskTitle} setTitle={setInputTask} onEnter={addTaskOnClick} error={inputError} setInputError={setInputError}/>
+                <Input title={inputTaskTitle} setTitle={setInputTask} onEnter={addTaskOnClick} error={inputError}
+                       setInputError={setInputError}/>
                 <Button title={'+'} callBack={addTaskOnClick}
-                        disabled={isInputButtonDisabled || userErrorLengthMessage || inputError}/>
+                        disabled={inputEmpty || userErrorLengthMessage || inputError}/>
             </FlexWrapper>
-            {isInputButtonDisabled && <p>Max length task title is 10 charters</p>}
-            {!isInputButtonDisabled && inputError && <ErrorMessage>Task title required</ErrorMessage>}
-            {(!isInputButtonDisabled && !userErrorLengthMessage && !inputError) && <p>{userLengthMessage}</p>}
+            {inputEmpty && <p>Max length task title is 10 charters</p>}
+            {!inputEmpty && inputError && <ErrorMessage>Task title required</ErrorMessage>}
+            {!inputEmpty && !userErrorLengthMessage && !inputError && <p>{userLengthMessage}</p>}
             {userErrorLengthMessage && !inputError && <ErrorMessage>Task title is to long</ErrorMessage>}
             {tasks.length === 0 ? <p>Тасок нет</p> :
                 <ul>
@@ -80,9 +88,9 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, chang
             <FlexWrapper gap={'8px'}>
                 <Button activeButton={filter === 'all'} title={'All'} callBack={setFilterHandlerCreator('all')}/>
                 <Button activeButton={filter === 'active'} title={'Active'}
-                               callBack={setFilterHandlerCreator('active')}/>
+                        callBack={setFilterHandlerCreator('active')}/>
                 <Button activeButton={filter === 'completed'} title={'Completed'}
-                               callBack={setFilterHandlerCreator('completed')}/>
+                        callBack={setFilterHandlerCreator('completed')}/>
             </FlexWrapper>
         </StyledTodoList>
     )
@@ -99,7 +107,7 @@ const ErrorMessage = styled.p`
   color: red;
 `
 
-const TaskIsDone = styled.span<{done: string}>`
+const TaskIsDone = styled.span<{ done: string }>`
   text-decoration: ${props => props.done === 'true' ? 'line-through' : 'none'};
   opacity: ${props => props.done === 'true' ? 0.5 : 1};
 `
