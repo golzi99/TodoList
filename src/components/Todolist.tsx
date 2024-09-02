@@ -19,14 +19,15 @@ type TodolistProps = {
 export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, changeTaskStatus, filter}: TodolistProps) => {
 
     const [inputTaskTitle, setInputTask] = useState('')
+    const [inputError, setInputError] = useState(false)
+    // const [error, setError] = useState<string | null>(null)
 
     const isInputButtonDisabled = !inputTaskTitle
     const userLengthMessage = `You have ${10 - inputTaskTitle.length} characters left`
     const userErrorLengthMessage = inputTaskTitle.length > 10
-    const lineOfSpaceError = !inputTaskTitle.trim()
 
     const addTaskOnClick = () => {
-        if (!isInputButtonDisabled && !userErrorLengthMessage && !lineOfSpaceError) {
+        if (!isInputButtonDisabled && !userErrorLengthMessage && !inputError) {
             addTask(inputTaskTitle.trim())
             setInputTask('')
         }
@@ -63,14 +64,14 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, chang
         <StyledTodoList direction={'column'} gap={'8px'}>
             <h3>{title}</h3>
             <FlexWrapper gap={'8px'}>
-                <Input title={inputTaskTitle} setTitle={setInputTask} onEnter={addTaskOnClick}/>
+                <Input title={inputTaskTitle} setTitle={setInputTask} onEnter={addTaskOnClick} error={inputError} setInputError={setInputError}/>
                 <Button title={'+'} callBack={addTaskOnClick}
-                        disabled={isInputButtonDisabled || userErrorLengthMessage || lineOfSpaceError}/>
+                        disabled={isInputButtonDisabled || userErrorLengthMessage || inputError}/>
             </FlexWrapper>
             {isInputButtonDisabled && <p>Max length task title is 10 charters</p>}
-            {!isInputButtonDisabled && lineOfSpaceError && <ErrorMessage>Line of spaces is not a task!</ErrorMessage>}
-            {(!isInputButtonDisabled && !userErrorLengthMessage && !lineOfSpaceError) && <p>${userLengthMessage}</p>}
-            {userErrorLengthMessage && <ErrorMessage>Task title is to long</ErrorMessage>}
+            {!isInputButtonDisabled && inputError && <ErrorMessage>Task title required</ErrorMessage>}
+            {(!isInputButtonDisabled && !userErrorLengthMessage && !inputError) && <p>{userLengthMessage}</p>}
+            {userErrorLengthMessage && !inputError && <ErrorMessage>Task title is to long</ErrorMessage>}
             {tasks.length === 0 ? <p>Тасок нет</p> :
                 <ul>
                     {tasksList}
