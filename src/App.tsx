@@ -21,16 +21,13 @@ function App() {
     }
 
     const taskDone = (id: string, checked: boolean) => {
-        const task = tasks.find(t => t.id === id)
-        if (task)
-            task.isDone = checked
-        // const doneTasks = tasks.map(t => {
-        //     if (t.id === id) {
-        //         return {...t, isDone:checked}
-        //     }
-        //     return t
-        // })
-        setTasks([...tasks])
+        const doneTasks = tasks.map(t => {
+            if (t.id === id) {
+                return {...t, isDone:checked}
+            }
+            return t
+        })
+        setTasks(doneTasks)
     }
 
     const changeFilter = (value: FilterValuesType) => {
