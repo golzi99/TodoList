@@ -1,3 +1,8 @@
+export type TodolistType = {
+    id: string
+    title: string
+    filter: FilterValuesType
+}
 
 export type TaskPropsType = {
     id: string,

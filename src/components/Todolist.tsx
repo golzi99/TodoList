@@ -7,23 +7,27 @@ import {FilterValuesType, TaskPropsType} from '../types/types';
 import {Input} from './Input';
 
 type TodolistProps = {
+    id: string
     title: string,
     tasks: Array<TaskPropsType>,
     filter: FilterValuesType,
-    removeTask: (id: string) => void,
-    changeFilter: (value: FilterValuesType) => void,
-    addTask: (title: string) => void,
-    changeTaskStatus: (id: string, checked: boolean) => void
+    removeTask: (id: string, todoListId: string) => void,
+    changeFilter: (value: FilterValuesType, todoListId: string) => void,
+    addTask: (title: string, todoListId: string) => void,
+    changeTaskStatus: (id: string, checked: boolean, todoListId: string) => void,
+    removeTodoList: (todoListId: string) => void
 }
 
 export const Todolist = ({
+                             id,
                              title,
                              tasks,
                              removeTask,
                              changeFilter,
                              addTask,
                              changeTaskStatus,
-                             filter
+                             filter,
+                             removeTodoList
                          }: TodolistProps) => {
 
     const [inputTaskTitle, setInputTask] = useState('')
@@ -36,23 +40,23 @@ export const Todolist = ({
     const addTaskOnClick = () => {
         const trimmedTitle = inputTaskTitle.trim()
         if (!inputEmpty && !userErrorLengthMessage && trimmedTitle) {
-            addTask(trimmedTitle)
+            addTask(trimmedTitle, id)
         } else {
             setInputError(true)
         }
         setInputTask('')
     }
 
-    const removeTaskOnClick = (id: string) => {
-        removeTask(id)
+    const removeTaskOnClick = (taskId: string) => {
+        removeTask(taskId, id)
     }
 
-    const onChangeStatus = (id: string, event: ChangeEvent<HTMLInputElement>) => {
-        changeTaskStatus(id, event.currentTarget.checked)
+    const onChangeStatus = (taskId: string, event: ChangeEvent<HTMLInputElement>) => {
+        changeTaskStatus(taskId, event.currentTarget.checked, id)
     }
 
     const setFilterHandlerCreator = (newFilterValue: FilterValuesType) => () => {
-        changeFilter(newFilterValue)
+        changeFilter(newFilterValue, id)
     }
 
     const tasksList: Array<JSX.Element> = tasks.map((task) => {
@@ -70,9 +74,16 @@ export const Todolist = ({
         )
     })
 
+    const onClickRemoveTodoList = () => {
+        removeTodoList(id)
+    }
+
     return (
         <StyledTodoList direction={'column'} gap={'8px'}>
-            <h3>{title}</h3>
+            <Title>
+                {title}
+                <Button title={'X'} callBack={onClickRemoveTodoList}/>
+            </Title>
             <FlexWrapper gap={'8px'}>
                 <Input title={inputTaskTitle} setTitle={setInputTask} onEnter={addTaskOnClick} error={inputError}
                        setInputError={setInputError}/>
@@ -114,4 +125,9 @@ const TaskIsDone = styled.span<{ done: string }>`
   font-weight: ${props => props.done === 'true' ? '' : 'bold'};;
   text-decoration: ${props => props.done === 'true' ? 'line-through' : 'none'};
   opacity: ${props => props.done === 'true' ? 0.5 : 1};
+`
+
+const Title = styled.h3`
+  display: flex;
+  justify-content: space-between;
 `
