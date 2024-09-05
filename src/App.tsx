@@ -1,23 +1,23 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './components/Todolist';
-import {FilterValuesType, TodolistType} from './types/types';
+import {FilterValuesType, TodoListType} from './types/types';
 import {v1} from 'uuid';
 
 function App() {
     const removeTask = (id: string, todoListId: string) => {
-        let tempTasksList = {...tasks}
-        let tasksList = tempTasksList[todoListId]
-        let filteredTasks = tasksList.filter(t => t.id !== id)
-        tempTasksList = {...tasks, [todoListId]: filteredTasks}
+        // let tempTasksList = {...tasks}
+        // let tasksList = tempTasksList[todoListId]
+        const filteredTasks = tasks[todoListId].filter(t => t.id !== id)
+        const tempTasksList = {...tasks, [todoListId]: filteredTasks}
         setTasks(tempTasksList)
     }
 
     const changeTaskStatus = (id: string, checked: boolean, todoListId: string) => {
-        let tempTasksList = {...tasks}
-        let tasksList = tempTasksList[todoListId]
-        const doneTasks = tasksList.map(t => t.id === id ? {...t, isDone: checked} : t)
-        tempTasksList = {...tasks, [todoListId]: doneTasks}
+        // let tempTasksList = {...tasks}
+        // let tasksList = tempTasksList[todoListId]
+        const doneTasks = tasks[todoListId].map(t => t.id === id ? {...t, isDone: checked} : t)
+        const tempTasksList = {...tasks, [todoListId]: doneTasks}
         setTasks(tempTasksList)
     }
 
@@ -27,11 +27,11 @@ function App() {
     }
 
     const addTask = (title: string, todoListId: string) => {
-        let tempTasksList = {...tasks}
-        let tasksList = tempTasksList[todoListId]
+        // let tempTasksList = {...tasks}
+        // let tasksList = tempTasksList[todoListId]
         let newTask = {id: v1(), title: title, isDone: false}
-        tasksList = [...tasksList, newTask]
-        tempTasksList = {...tasks, [todoListId]: tasksList}
+        const tasksList = [...tasks[todoListId], newTask]
+        const tempTasksList = {...tasks, [todoListId]: tasksList}
         setTasks(tempTasksList)
     }
 
@@ -46,7 +46,7 @@ function App() {
     const todoListId1 = v1()
     const todoListId2 = v1()
 
-    const [todoLists, setTodoLists] = useState<Array<TodolistType>>([
+    const [todoLists, setTodoLists] = useState<Array<TodoListType>>([
         {id: todoListId1, title: 'What to learn', filter: 'all'},
         {id: todoListId2, title: 'What to buy', filter: 'all'}
     ])

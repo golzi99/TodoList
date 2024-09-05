@@ -1,4 +1,4 @@
-export type TodolistType = {
+export type TodoListType = {
     id: string
     title: string
     filter: FilterValuesType
