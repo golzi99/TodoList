@@ -11,3 +11,7 @@ export type TaskPropsType = {
 }
 
 export type FilterValuesType = "all" | "active" | "completed"
+
+export type TasksStateType = {
+    [key: string]: TaskPropsType[]
+}
