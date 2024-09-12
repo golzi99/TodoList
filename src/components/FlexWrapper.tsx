@@ -15,6 +15,6 @@ export const FlexWrapper = styled.div<FlexWrapperProps>`
   justify-content: ${props => props.justify || "flex-start"};
   align-items: ${props => props.align || "stretch"};
   flex-wrap: ${props => props.wrap || "nowrap"};
-  height: 100%;
+  //height: 100%;
   gap: ${props => props.gap || "0"}
 `

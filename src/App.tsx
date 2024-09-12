@@ -3,8 +3,16 @@ import './App.css';
 import {Todolist} from './components/Todolist';
 import {FilterValuesType, TasksStateType, TodoListType} from './types/types';
 import {v1} from 'uuid';
+import {AddItemForm} from './components/AddItemForm';
 
 function App() {
+    const addTodoList = (title: string) => {
+        const todolistId = v1()
+        const newTodoList: TodoListType = {id: todolistId, title: title, filter: 'all'}
+        setTodoLists([...todoLists, newTodoList])
+        setTasks({...tasks, [todolistId]: []})
+    }
+
     const removeTask = (id: string, todoListId: string) => {
         const filteredTasks = tasks[todoListId].filter(t => t.id !== id)
         const tempTasksList = {...tasks, [todoListId]: filteredTasks}
@@ -62,6 +70,7 @@ function App() {
 
     return (
         <div className="App">
+            <AddItemForm addItem={addTodoList} maxLength={30}/>
             {todoLists.map((tl) => {
                     let tasksForTodoList = tasks[tl.id]
                     if (tl.filter === 'active') {
@@ -72,7 +81,7 @@ function App() {
 
                     return (
                         <Todolist key={tl.id}
-                                  id={tl.id}
+                                  todoListId={tl.id}
                                   title={tl.title}
                                   tasks={tasksForTodoList}
                                   removeTask={removeTask}

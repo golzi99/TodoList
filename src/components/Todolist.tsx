@@ -1,13 +1,13 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import {Button} from './Button';
 import styled from 'styled-components';
 import {FlexWrapper} from './FlexWrapper';
 import {myTheme} from '../styles/Theme.styled';
 import {FilterValuesType, TaskPropsType} from '../types/types';
-import {Input} from './Input';
+import {AddItemForm} from './AddItemForm';
 
 type TodolistProps = {
-    id: string
+    todoListId: string
     title: string,
     tasks: Array<TaskPropsType>,
     filter: FilterValuesType,
@@ -19,7 +19,7 @@ type TodolistProps = {
 }
 
 export const Todolist = ({
-                             id,
+                             todoListId,
                              title,
                              tasks,
                              removeTask,
@@ -30,33 +30,20 @@ export const Todolist = ({
                              removeTodoList
                          }: TodolistProps) => {
 
-    const [inputTaskTitle, setInputTask] = useState('')
-    const [inputError, setInputError] = useState(false)
-
-    const inputEmpty = !inputTaskTitle
-    const userErrorLengthMessage = inputTaskTitle.length > 10
-    const userLengthMessage = `You have ${10 - inputTaskTitle.length} characters left`
-
-    const addTaskOnClick = () => {
-        const trimmedTitle = inputTaskTitle.trim()
-        if (!inputEmpty && !userErrorLengthMessage && trimmedTitle) {
-            addTask(trimmedTitle, id)
-        } else {
-            setInputError(true)
-        }
-        setInputTask('')
+    const addTaskOnClick = (title: string) => {
+        addTask(title, todoListId)
     }
 
     const removeTaskOnClick = (taskId: string) => {
-        removeTask(taskId, id)
+        removeTask(taskId, todoListId)
     }
 
     const onChangeStatus = (taskId: string, event: ChangeEvent<HTMLInputElement>) => {
-        changeTaskStatus(taskId, event.currentTarget.checked, id)
+        changeTaskStatus(taskId, event.currentTarget.checked, todoListId)
     }
 
     const setFilterHandlerCreator = (newFilterValue: FilterValuesType) => () => {
-        changeFilter(newFilterValue, id)
+        changeFilter(newFilterValue, todoListId)
     }
 
     const tasksList: Array<JSX.Element> = tasks.map((task) => {
@@ -75,7 +62,7 @@ export const Todolist = ({
     })
 
     const onClickRemoveTodoList = () => {
-        removeTodoList(id)
+        removeTodoList(todoListId)
     }
 
     return (
@@ -84,16 +71,7 @@ export const Todolist = ({
                 {title}
                 <Button title={'X'} callBack={onClickRemoveTodoList}/>
             </Title>
-            <FlexWrapper gap={'8px'}>
-                <Input title={inputTaskTitle} setTitle={setInputTask} onEnter={addTaskOnClick} error={inputError}
-                       setInputError={setInputError}/>
-                <Button title={'+'} callBack={addTaskOnClick}
-                        disabled={inputEmpty || userErrorLengthMessage || inputError}/>
-            </FlexWrapper>
-            {inputEmpty && !inputError && <p>Max length task title is 10 charters</p>}
-            {!inputEmpty && !userErrorLengthMessage && !inputError && <p>{userLengthMessage}</p>}
-            {userErrorLengthMessage && !inputError && <ErrorMessage>Task title is to long</ErrorMessage>}
-            {inputError && <ErrorMessage>Task title required</ErrorMessage>}
+            <AddItemForm addItem={addTaskOnClick} maxLength={10}/>
             {tasks.length === 0 ? <p>Тасок нет</p> :
                 <ul>
                     {tasksList}
@@ -115,10 +93,6 @@ const StyledTodoList = styled(FlexWrapper)`
   padding: 8px;
   border: ${myTheme.colors.borderColor} 2px solid;
   border-radius: 16px;
-`
-
-const ErrorMessage = styled.p`
-  color: red;
 `
 
 const TaskIsDone = styled.span<{ done: string }>`
