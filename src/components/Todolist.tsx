@@ -5,6 +5,7 @@ import {FlexWrapper} from './FlexWrapper';
 import {myTheme} from '../styles/Theme.styled';
 import {FilterValuesType, TaskPropsType} from '../types/types';
 import {AddItemForm} from './AddItemForm';
+import {EditableSpan} from './EditableSpan';
 
 type TodolistProps = {
     todoListId: string
@@ -51,12 +52,14 @@ export const Todolist = ({
 
         return (
             <li key={task.id}>
-                <input type="checkbox"
-                       checked={task.isDone}
-                       onChange={(event) => onChangeStatus(task.id, event)}
-                />
-                <TaskIsDone done={task.isDone.toString()}> {task.title} </TaskIsDone>
-                <Button title={'x'} callBack={onRemoveHandler}/>
+                <FlexWrapper gap={'4px'} align={'center'}>
+                    <input type="checkbox"
+                           checked={task.isDone}
+                           onChange={(event) => onChangeStatus(task.id, event)}
+                    />
+                    <EditableSpan done={task.isDone} value={task.title}/>
+                    <Button title={'x'} callBack={onRemoveHandler}/>
+                </FlexWrapper>
             </li>
         )
     })
@@ -67,10 +70,10 @@ export const Todolist = ({
 
     return (
         <StyledTodoList direction={'column'} gap={'8px'}>
-            <Title>
-                {title}
+            <FlexWrapper justify={'space-between'}>
+                <h3>{title}</h3>
                 <Button title={'X'} callBack={onClickRemoveTodoList}/>
-            </Title>
+            </FlexWrapper>
             <AddItemForm addItem={addTaskOnClick} maxLength={10}/>
             {tasks.length === 0 ? <p>Тасок нет</p> :
                 <ul>
@@ -93,15 +96,4 @@ const StyledTodoList = styled(FlexWrapper)`
   padding: 8px;
   border: ${myTheme.colors.borderColor} 2px solid;
   border-radius: 16px;
-`
-
-const TaskIsDone = styled.span<{ done: string }>`
-  font-weight: ${props => props.done === 'true' ? '' : 'bold'};;
-  text-decoration: ${props => props.done === 'true' ? 'line-through' : 'none'};
-  opacity: ${props => props.done === 'true' ? 0.5 : 1};
-`
-
-const Title = styled.h3`
-  display: flex;
-  justify-content: space-between;
 `

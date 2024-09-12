@@ -18,7 +18,7 @@ export const AddItemForm = ({addItem, maxLength}: AddItemFormPropsType) => {
     const userErrorLengthMessage = title.length > maxLength
     const userLengthMessage = `You have ${maxLength - title.length} characters left`
 
-    const addTaskOnClick = () => {
+    const addItemOnClick = () => {
         const trimmedTitle = title.trim()
         if (!inputEmpty && !userErrorLengthMessage && trimmedTitle) {
             addItem(trimmedTitle)
@@ -31,15 +31,15 @@ export const AddItemForm = ({addItem, maxLength}: AddItemFormPropsType) => {
     return (
         <div>
             <FlexWrapper gap={'8px'}>
-                <Input title={title} setTitle={setTitle} onEnter={addTaskOnClick} error={inputError}
+                <Input title={title} setTitle={setTitle} onEnter={addItemOnClick} error={inputError}
                        setInputError={setInputError}/>
-                <Button title={'+'} callBack={addTaskOnClick}
+                <Button title={'+'} callBack={addItemOnClick}
                         disabled={inputEmpty || userErrorLengthMessage || inputError}/>
             </FlexWrapper>
-            {inputEmpty && !inputError && <p>Max length task title is {maxLength} charters</p>}
+            {inputEmpty && !inputError && <p>Max length title is {maxLength} charters</p>}
             {!inputEmpty && !userErrorLengthMessage && !inputError && <p>{userLengthMessage}</p>}
-            {userErrorLengthMessage && !inputError && <ErrorMessage>Task title is to long</ErrorMessage>}
-            {inputError && <ErrorMessage>Task title required</ErrorMessage>}
+            {userErrorLengthMessage && !inputError && <ErrorMessage>Title is to long</ErrorMessage>}
+            {inputError && <ErrorMessage>Title required</ErrorMessage>}
         </div>
 
     );

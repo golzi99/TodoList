@@ -6,6 +6,10 @@ import {v1} from 'uuid';
 import {AddItemForm} from './components/AddItemForm';
 
 function App() {
+    const setNewTitle = () => {
+
+    }
+
     const addTodoList = (title: string) => {
         const todolistId = v1()
         const newTodoList: TodoListType = {id: todolistId, title: title, filter: 'all'}
