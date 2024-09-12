@@ -9,7 +9,7 @@ import {EditableSpan} from './EditableSpan';
 
 type TodolistProps = {
     todoListId: string
-    title: string,
+    todoListTitle: string,
     tasks: Array<TaskPropsType>,
     filter: FilterValuesType,
     removeTask: (id: string, todoListId: string) => void,
@@ -17,13 +17,13 @@ type TodolistProps = {
     addTask: (title: string, todoListId: string) => void,
     changeTaskStatus: (id: string, checked: boolean, todoListId: string) => void,
     removeTodoList: (todoListId: string) => void,
-    setNewTitle: (taskId: string, todoListId: string, newTitle: string) => void,
-    setNewTitleTodoList: (todolistId: string, title: string) => void
+    updateTitleTask: (taskId: string, todoListId: string, newTitle: string) => void,
+    updateTitleTodoList: (todolistId: string, title: string) => void
 }
 
 export const Todolist = ({
                              todoListId,
-                             title,
+                             todoListTitle,
                              tasks,
                              removeTask,
                              changeFilter,
@@ -31,8 +31,8 @@ export const Todolist = ({
                              changeTaskStatus,
                              filter,
                              removeTodoList,
-                             setNewTitle,
-                             setNewTitleTodoList
+                             updateTitleTask,
+                             updateTitleTodoList
                          }: TodolistProps) => {
 
     const addTaskOnClick = (title: string) => {
@@ -55,8 +55,8 @@ export const Todolist = ({
     const tasksList: Array<JSX.Element> = tasks.map((task) => {
         const onRemoveHandler = () => removeTaskOnClick(task.id)
 
-        const changeTaskTitle = (title: string) => {
-            setNewTitle(task.id, todoListId, title)
+        const changeTaskTitle = (taskTitle: string) => {
+            updateTitleTask(task.id, todoListId, taskTitle)
         }
 
         return (
@@ -66,7 +66,7 @@ export const Todolist = ({
                            checked={task.isDone}
                            onChange={(event) => onChangeStatus(task.id, event)}
                     />
-                    <EditableSpan done={task.isDone} value={task.title} reWriteTitle={changeTaskTitle}/>
+                    <EditableSpan done={task.isDone} value={task.title} updateTitle={changeTaskTitle}/>
                     <Button title={'x'} callBack={onRemoveHandler}/>
                 </FlexWrapper>
             </li>
@@ -78,14 +78,14 @@ export const Todolist = ({
     }
 
     const onTitleClick = (todoListTitle: string) => {
-        setNewTitleTodoList(todoListId, todoListTitle)
+        updateTitleTodoList(todoListId, todoListTitle)
     }
 
     return (
         <StyledTodoList direction={'column'} gap={'8px'}>
             <FlexWrapper justify={'space-between'}>
                 <h3>
-                    <EditableSpan value={title} reWriteTitle={onTitleClick} maxLength={30}/>
+                    <EditableSpan value={todoListTitle} updateTitle={onTitleClick} maxLength={30}/>
                 </h3>
                 <Button title={'X'} callBack={onClickRemoveTodoList}/>
             </FlexWrapper>

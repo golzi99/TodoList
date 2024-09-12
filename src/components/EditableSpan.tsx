@@ -5,23 +5,23 @@ import {Input} from './Input';
 type EditableSpanPropsType = {
     value: string,
     done?: boolean,
-    reWriteTitle: (title: string) => void,
+    updateTitle: (title: string) => void,
     maxLength?: number
 }
 
-export const EditableSpan = ({value, done, reWriteTitle, maxLength = 10}: EditableSpanPropsType) => {
+export const EditableSpan = ({value, done, updateTitle, maxLength = 10}: EditableSpanPropsType) => {
     const [itemTitle, setItemTitle] = useState(value)
     const [editMode, setEditMode] = useState(false)
     const [inputError, setInputError] = useState(false)
 
     const inputEmpty = !itemTitle
     const userErrorLengthMessage = itemTitle.length > maxLength
-    const userLengthMessage = `You have ${maxLength - itemTitle.length} characters left`
+    // const userLengthMessage = `You have ${maxLength - itemTitle.length} characters left`
 
     const rebuildTitle = () => {
         const trimmedTitle = itemTitle.trim()
         if (!inputEmpty && !userErrorLengthMessage && trimmedTitle) {
-            reWriteTitle(trimmedTitle)
+            updateTitle(trimmedTitle)
             setEditMode(false)
         } else {
             setInputError(true)
