@@ -4,7 +4,7 @@ import {Input} from './Input';
 
 type EditableSpanPropsType = {
     value: string,
-    done: boolean,
+    done?: boolean,
     reWriteTitle: (title: string) => void,
     maxLength?: number
 }
@@ -47,7 +47,7 @@ export const EditableSpan = ({value, done, reWriteTitle, maxLength = 10}: Editab
     );
 };
 
-const Task = styled.span<{ done: boolean }>`
+const Task = styled.span<{ done?: boolean }>`
   font-weight: ${props => props.done ? '' : 'bold'};;
   text-decoration: ${props => props.done ? 'line-through' : 'none'};
   opacity: ${props => props.done  ? 0.5 : 1};

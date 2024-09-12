@@ -17,7 +17,8 @@ type TodolistProps = {
     addTask: (title: string, todoListId: string) => void,
     changeTaskStatus: (id: string, checked: boolean, todoListId: string) => void,
     removeTodoList: (todoListId: string) => void,
-    setNewTitle: (taskId: string, todoListId: string, newTitle: string) => void
+    setNewTitle: (taskId: string, todoListId: string, newTitle: string) => void,
+    setNewTitleTodoList: (todolistId: string, title: string) => void
 }
 
 export const Todolist = ({
@@ -30,7 +31,8 @@ export const Todolist = ({
                              changeTaskStatus,
                              filter,
                              removeTodoList,
-                             setNewTitle
+                             setNewTitle,
+                             setNewTitleTodoList
                          }: TodolistProps) => {
 
     const addTaskOnClick = (title: string) => {
@@ -75,10 +77,16 @@ export const Todolist = ({
         removeTodoList(todoListId)
     }
 
+    const onTitleClick = (todoListTitle: string) => {
+        setNewTitleTodoList(todoListId, todoListTitle)
+    }
+
     return (
         <StyledTodoList direction={'column'} gap={'8px'}>
             <FlexWrapper justify={'space-between'}>
-                <h3>{title}</h3>
+                <h3>
+                    <EditableSpan value={title} reWriteTitle={onTitleClick} maxLength={30}/>
+                </h3>
                 <Button title={'X'} callBack={onClickRemoveTodoList}/>
             </FlexWrapper>
             <AddItemForm addItem={addTaskOnClick} maxLength={10}/>
