@@ -2,18 +2,20 @@ import React, {ChangeEvent} from 'react';
 import styled, {css} from 'styled-components';
 
 type InputProps = {
-    title: string,
-    setTitle: (title: string) => void,
+    value: string,
+    setValue: (title: string) => void,
     onEnter: () => void,
     error: boolean,
-    setInputError: (error: boolean) => void
+    setInputError: (error: boolean) => void,
+    autoFocus?: boolean,
+    onBlur?: () => void
 }
 
-export const Input = ({title, setTitle, onEnter, error, setInputError}: InputProps) => {
+export const Input = ({value, setValue, onEnter, error, setInputError, autoFocus, onBlur}: InputProps) => {
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
         error && setInputError(false)
-        setTitle(event.currentTarget.value)
+        setValue(event.currentTarget.value)
     }
 
     const onEnterClick = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -22,11 +24,19 @@ export const Input = ({title, setTitle, onEnter, error, setInputError}: InputPro
         }
     }
 
+    const handleBlur = () => {
+        if (typeof onBlur === 'function') {
+            onBlur();
+        }
+    };
+
     return (
-        <StyledInput value={title}
+        <StyledInput value={value}
                      onChange={onChangeInputHandler}
                      onKeyDown={onEnterClick}
                      error={error}
+                     autoFocus={autoFocus}
+                     onBlur={handleBlur}
         />
     );
 };

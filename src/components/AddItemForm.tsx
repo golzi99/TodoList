@@ -31,7 +31,7 @@ export const AddItemForm = ({addItem, maxLength}: AddItemFormPropsType) => {
     return (
         <div>
             <FlexWrapper gap={'8px'}>
-                <Input title={title} setTitle={setTitle} onEnter={addItemOnClick} error={inputError}
+                <Input value={title} setValue={setTitle} onEnter={addItemOnClick} error={inputError}
                        setInputError={setInputError}/>
                 <Button title={'+'} callBack={addItemOnClick}
                         disabled={inputEmpty || userErrorLengthMessage || inputError}/>

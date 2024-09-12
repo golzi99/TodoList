@@ -16,7 +16,8 @@ type TodolistProps = {
     changeFilter: (value: FilterValuesType, todoListId: string) => void,
     addTask: (title: string, todoListId: string) => void,
     changeTaskStatus: (id: string, checked: boolean, todoListId: string) => void,
-    removeTodoList: (todoListId: string) => void
+    removeTodoList: (todoListId: string) => void,
+    setNewTitle: (taskId: string, todoListId: string, newTitle: string) => void
 }
 
 export const Todolist = ({
@@ -28,7 +29,8 @@ export const Todolist = ({
                              addTask,
                              changeTaskStatus,
                              filter,
-                             removeTodoList
+                             removeTodoList,
+                             setNewTitle
                          }: TodolistProps) => {
 
     const addTaskOnClick = (title: string) => {
@@ -47,8 +49,13 @@ export const Todolist = ({
         changeFilter(newFilterValue, todoListId)
     }
 
+
     const tasksList: Array<JSX.Element> = tasks.map((task) => {
         const onRemoveHandler = () => removeTaskOnClick(task.id)
+
+        const changeTaskTitle = (title: string) => {
+            setNewTitle(task.id, todoListId, title)
+        }
 
         return (
             <li key={task.id}>
@@ -57,7 +64,7 @@ export const Todolist = ({
                            checked={task.isDone}
                            onChange={(event) => onChangeStatus(task.id, event)}
                     />
-                    <EditableSpan done={task.isDone} value={task.title}/>
+                    <EditableSpan done={task.isDone} value={task.title} reWriteTitle={changeTaskTitle}/>
                     <Button title={'x'} callBack={onRemoveHandler}/>
                 </FlexWrapper>
             </li>

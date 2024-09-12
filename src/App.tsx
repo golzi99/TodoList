@@ -6,8 +6,10 @@ import {v1} from 'uuid';
 import {AddItemForm} from './components/AddItemForm';
 
 function App() {
-    const setNewTitle = () => {
-
+    const setNewTitle = (taskId: string, todoListId: string, newTitle: string) => {
+        const newTaskTitle = tasks[todoListId].map(task => task.id === taskId ? {...task, title: newTitle}: task)
+        const tempTasksList = {...tasks, [todoListId]: newTaskTitle}
+        setTasks(tempTasksList)
     }
 
     const addTodoList = (title: string) => {
@@ -88,6 +90,7 @@ function App() {
                                   todoListId={tl.id}
                                   title={tl.title}
                                   tasks={tasksForTodoList}
+                                  setNewTitle={setNewTitle}
                                   removeTask={removeTask}
                                   changeFilter={changeFilter}
                                   addTask={addTask}
