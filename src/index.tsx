@@ -2,21 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import {GlobalStyled} from "./styles/Global.styled";
-import { ThemeProvider } from 'styled-components';
-import { myTheme } from './styles/Theme.styled';
 
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 root.render(
-    <ThemeProvider theme={myTheme}>
-        <React.StrictMode>
-            <App/>
-            <GlobalStyled/>
-        </React.StrictMode>
-    </ThemeProvider>
+    <React.StrictMode>
+        <App/>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

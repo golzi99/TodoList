@@ -1,8 +1,5 @@
 import React, {ChangeEvent} from 'react';
 import {Button} from './Button';
-import styled from 'styled-components';
-import {FlexWrapper} from './FlexWrapper';
-import {myTheme} from '../styles/Theme.styled';
 import {FilterValuesType, TaskPropsType} from '../types/types';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
@@ -12,12 +9,14 @@ type TodolistProps = {
     todoListTitle: string,
     tasks: Array<TaskPropsType>,
     filter: FilterValuesType,
+
     removeTask: (id: string, todoListId: string) => void,
-    changeFilter: (value: FilterValuesType, todoListId: string) => void,
     addTask: (title: string, todoListId: string) => void,
     changeTaskStatus: (id: string, checked: boolean, todoListId: string) => void,
-    removeTodoList: (todoListId: string) => void,
     updateTitleTask: (taskId: string, todoListId: string, newTitle: string) => void,
+
+    changeFilter: (value: FilterValuesType, todoListId: string) => void,
+    removeTodoList: (todoListId: string) => void,
     updateTitleTodoList: (todolistId: string, title: string) => void
 }
 
@@ -43,10 +42,6 @@ export const Todolist = ({
         removeTask(taskId, todoListId)
     }
 
-    const onChangeStatus = (taskId: string, event: ChangeEvent<HTMLInputElement>) => {
-        changeTaskStatus(taskId, event.currentTarget.checked, todoListId)
-    }
-
     const setFilterHandlerCreator = (newFilterValue: FilterValuesType) => () => {
         changeFilter(newFilterValue, todoListId)
     }
@@ -55,20 +50,24 @@ export const Todolist = ({
     const tasksList: Array<JSX.Element> = tasks.map((task) => {
         const onRemoveHandler = () => removeTaskOnClick(task.id)
 
+        const onChangeStatus = (event: ChangeEvent<HTMLInputElement>) => {
+            changeTaskStatus(task.id, event.currentTarget.checked, todoListId)
+        }
+
         const changeTaskTitle = (taskTitle: string) => {
             updateTitleTask(task.id, todoListId, taskTitle)
         }
 
+        const tasksClasses: string = task.isDone ? 'task-done' : 'task'
+
         return (
             <li key={task.id}>
-                <FlexWrapper gap={'4px'} align={'center'}>
-                    <input type="checkbox"
-                           checked={task.isDone}
-                           onChange={(event) => onChangeStatus(task.id, event)}
-                    />
-                    <EditableSpan done={task.isDone} value={task.title} updateTitle={changeTaskTitle}/>
-                    <Button title={'x'} callBack={onRemoveHandler}/>
-                </FlexWrapper>
+                <input type="checkbox"
+                       checked={task.isDone}
+                       onChange={onChangeStatus}
+                />
+                <EditableSpan classes={tasksClasses} value={task.title} updateTitle={changeTaskTitle}/>
+                <Button title={'x'} callBack={onRemoveHandler}/>
             </li>
         )
     })
@@ -82,33 +81,25 @@ export const Todolist = ({
     }
 
     return (
-        <StyledTodoList direction={'column'} gap={'8px'}>
-            <FlexWrapper justify={'space-between'}>
-                <h3>
-                    <EditableSpan value={todoListTitle} updateTitle={onTitleClick} maxLength={30}/>
-                </h3>
+        <div className="todolist">
+            <h3 className={'todolistTitle'}>
+                <EditableSpan value={todoListTitle} updateTitle={onTitleClick} maxLength={30}/>
                 <Button title={'X'} callBack={onClickRemoveTodoList}/>
-            </FlexWrapper>
+            </h3>
             <AddItemForm addItem={addTaskOnClick} maxLength={10}/>
             {tasks.length === 0 ? <p>Тасок нет</p> :
                 <ul>
                     {tasksList}
                 </ul>
             }
-            <FlexWrapper gap={'8px'}>
-                <Button activeButton={filter === 'all'} title={'All'} callBack={setFilterHandlerCreator('all')}/>
-                <Button activeButton={filter === 'active'} title={'Active'}
+            <div>
+                <Button classes={filter === 'all' ? 'filter-btn-active' : ''} title={'All'}
+                        callBack={setFilterHandlerCreator('all')}/>
+                <Button classes={filter === 'active' ? 'filter-btn-active' : ''} title={'Active'}
                         callBack={setFilterHandlerCreator('active')}/>
-                <Button activeButton={filter === 'completed'} title={'Completed'}
+                <Button classes={filter === 'completed' ? 'filter-btn-active' : ''} title={'Completed'}
                         callBack={setFilterHandlerCreator('completed')}/>
-            </FlexWrapper>
-        </StyledTodoList>
+            </div>
+        </div>
     )
 }
-
-const StyledTodoList = styled(FlexWrapper)`
-  background-color: ${myTheme.colors.lightBlue};
-  padding: 8px;
-  border: ${myTheme.colors.borderColor} 2px solid;
-  border-radius: 16px;
-`

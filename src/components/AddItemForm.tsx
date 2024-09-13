@@ -1,8 +1,5 @@
-import React, {useState} from 'react';
-import {Input} from './Input';
+import React, {ChangeEvent, useState} from 'react';
 import {Button} from './Button';
-import {FlexWrapper} from './FlexWrapper';
-import styled from 'styled-components';
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void,
@@ -28,23 +25,29 @@ export const AddItemForm = ({addItem, maxLength}: AddItemFormPropsType) => {
         setTitle('')
     }
 
+    const onEnterClick = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            addItemOnClick()
+        }
+    }
+
+    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        inputError && setInputError(false)
+        setTitle(event.currentTarget.value)
+    }
+
     return (
         <div>
-            <FlexWrapper gap={'8px'}>
-                <Input value={title} setValue={setTitle} onEnter={addItemOnClick} error={inputError}
-                       setInputError={setInputError}/>
+            <div>
+                <input className={inputError ? "input-error" : undefined} value={title} onChange={onChangeInputHandler} onKeyDown={onEnterClick}/>
                 <Button title={'+'} callBack={addItemOnClick}
                         disabled={inputEmpty || userErrorLengthMessage || inputError}/>
-            </FlexWrapper>
+            </div>
             {inputEmpty && !inputError && <p>Max length title is {maxLength} charters</p>}
             {!inputEmpty && !userErrorLengthMessage && !inputError && <p>{userLengthMessage}</p>}
-            {userErrorLengthMessage && !inputError && <ErrorMessage>Title is to long</ErrorMessage>}
-            {inputError && <ErrorMessage>Title required</ErrorMessage>}
+            {userErrorLengthMessage && !inputError && <p className={'error-message'}>Title is to long</p>}
+            {inputError && <p className={'error-message'}>Title required</p>}
         </div>
 
     );
 };
-
-const ErrorMessage = styled.p`
-  color: red;
-`

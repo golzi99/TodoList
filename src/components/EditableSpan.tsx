@@ -1,22 +1,19 @@
-import React, {useState} from 'react';
-import styled from 'styled-components';
-import {Input} from './Input';
+import React, {ChangeEvent, useState} from 'react';
 
 type EditableSpanPropsType = {
     value: string,
-    done?: boolean,
     updateTitle: (title: string) => void,
+    classes?: string
     maxLength?: number
 }
 
-export const EditableSpan = ({value, done, updateTitle, maxLength = 10}: EditableSpanPropsType) => {
+export const EditableSpan = ({value, updateTitle, classes, maxLength = 10}: EditableSpanPropsType) => {
     const [itemTitle, setItemTitle] = useState(value)
     const [editMode, setEditMode] = useState(false)
     const [inputError, setInputError] = useState(false)
 
     const inputEmpty = !itemTitle
     const userErrorLengthMessage = itemTitle.length > maxLength
-    // const userLengthMessage = `You have ${maxLength - itemTitle.length} characters left`
 
     const rebuildTitle = () => {
         const trimmedTitle = itemTitle.trim()
@@ -29,26 +26,25 @@ export const EditableSpan = ({value, done, updateTitle, maxLength = 10}: Editabl
         setItemTitle(trimmedTitle)
     }
 
+    const onEnterClick = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            rebuildTitle()
+        }
+    }
+
+    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        inputError && setInputError(false)
+        setItemTitle(event.currentTarget.value)
+    }
+
     return (
-        <div>
-            {editMode ? <Input value={itemTitle}
-                               setValue={setItemTitle}
-                               error={inputError}
-                               setInputError={setInputError}
-                               onEnter={rebuildTitle}
-                               onBlur={rebuildTitle}
-                               autoFocus={true}
-                /> :
-                <Task done={done} onDoubleClick={() => {
-                    setEditMode(true)
-                }}>{value}
-                </Task>}
-        </div>
+        editMode ? <input value={itemTitle}
+                          onChange={onChangeInputHandler}
+                          onKeyDown={onEnterClick}
+                          autoFocus/>
+            :
+            <span className={classes} onDoubleClick={() => {setEditMode(true)}}>
+                    {value}
+            </span>
     );
 };
-
-const Task = styled.span<{ done?: boolean }>`
-  font-weight: ${props => props.done ? '' : 'bold'};;
-  text-decoration: ${props => props.done ? 'line-through' : 'none'};
-  opacity: ${props => props.done  ? 0.5 : 1};
-`
