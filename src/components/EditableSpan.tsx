@@ -37,10 +37,16 @@ export const EditableSpan = ({value, updateTitle, classes, maxLength = 10}: Edit
         setItemTitle(event.currentTarget.value)
     }
 
+    const onBlurHandler = () => {
+        rebuildTitle()
+    }
+
     return (
         editMode ? <input value={itemTitle}
                           onChange={onChangeInputHandler}
                           onKeyDown={onEnterClick}
+                          onBlur={onBlurHandler}
+                          className={inputError ? "input-error" : undefined}
                           autoFocus/>
             :
             <span className={classes} onDoubleClick={() => {setEditMode(true)}}>
