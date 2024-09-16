@@ -3,11 +3,10 @@ import React, {ChangeEvent, useState} from 'react';
 type EditableSpanPropsType = {
     value: string,
     updateTitle: (title: string) => void,
-    classes?: string
     maxLength?: number
 }
 
-export const EditableSpan = ({value, updateTitle, classes, maxLength = 10}: EditableSpanPropsType) => {
+export const EditableSpan = ({value, updateTitle, maxLength = 10}: EditableSpanPropsType) => {
     const [itemTitle, setItemTitle] = useState(value)
     const [editMode, setEditMode] = useState(false)
     const [inputError, setInputError] = useState(false)
@@ -49,7 +48,7 @@ export const EditableSpan = ({value, updateTitle, classes, maxLength = 10}: Edit
                           className={inputError ? "input-error" : undefined}
                           autoFocus/>
             :
-            <span className={classes} onDoubleClick={() => {setEditMode(true)}}>
+            <span onDoubleClick={() => {setEditMode(true)}}>
                     {value}
             </span>
     );
