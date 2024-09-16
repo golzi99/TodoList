@@ -15,3 +15,5 @@ export type FilterValuesType = "all" | "active" | "completed"
 export type TasksStateType = {
     [key: string]: TaskPropsType[]
 }
+
+export type ThemeModeType = 'light'|'dark'

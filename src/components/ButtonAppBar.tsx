@@ -5,9 +5,14 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {MenuButton} from './Menu/MenuButton';
+import Switch from '@mui/material/Switch';
 // import {useTheme} from '@mui/material';
 
-export default function ButtonAppBar() {
+type ButtonAppBarPropsType = {
+    onChange: () => void
+}
+
+export default function ButtonAppBar({onChange}: ButtonAppBarPropsType) {
     // const theme = useTheme()
 
     return (
@@ -29,6 +34,7 @@ export default function ButtonAppBar() {
                     <MenuButton color="inherit">Login</MenuButton>
                     <MenuButton color="inherit">LogOut</MenuButton>
                     <MenuButton color="inherit">FAQ</MenuButton>
+                    <Switch color={'default'} onChange={onChange}/>
                 </Toolbar>
             </AppBar>
         </Box>

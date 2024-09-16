@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './components/Todolist/Todolist';
-import {FilterValuesType, TasksStateType, TodoListType} from './types/types';
+import {FilterValuesType, TasksStateType, ThemeModeType, TodoListType} from './types/types';
 import {v1} from 'uuid';
 import {AddItemForm} from './components/AddItemForm';
 import ButtonAppBar from './components/ButtonAppBar';
@@ -9,6 +9,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import Paper from '@mui/material/Paper';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 
 function App() {
@@ -85,8 +86,15 @@ function App() {
         ]
     })
 
+    const [themeMode, setThemeMode] = useState<ThemeModeType>('dark')
+
+    const changeModeHandler = () => {
+        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
+    }
+
     const theme = createTheme({
         palette: {
+            mode: themeMode === 'light' ? 'light' : 'dark',
             primary: {
                 main: '#95d97b',
             }
@@ -97,7 +105,7 @@ function App() {
         <div className="App">
             <ThemeProvider theme={theme}>
                 <Container>
-                    <ButtonAppBar/>
+                    <ButtonAppBar onChange={changeModeHandler}/>
                     <Grid container sx={{p: '30px'}}>
                         <AddItemForm addItem={addTodoList} maxLength={30}/>
                     </Grid>
@@ -133,6 +141,7 @@ function App() {
                         )}
                     </Grid>
                 </Container>
+                <CssBaseline/>
             </ThemeProvider>
         </div>
     );
