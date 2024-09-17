@@ -46,7 +46,7 @@ export const Todolist = ({
                              updateTitleTodoList
                          }: TodolistProps) => {
 
-    const addTaskOnClick = (title: string) => {
+    const addNewTask = (title: string) => {
         addTask(title, todoListId)
     }
 
@@ -87,7 +87,7 @@ export const Todolist = ({
         removeTodoList(todoListId)
     }
 
-    const onTitleClick = (todoListTitle: string) => {
+    const updateTitle = (todoListTitle: string) => {
         updateTitleTodoList(todoListId, todoListTitle)
     }
 
@@ -96,14 +96,14 @@ export const Todolist = ({
             <Accordion>
                 <AccordionSummary expandIcon={<ArrowDownwardIcon/>}>
                     <h3>
-                        <EditableSpan value={todoListTitle} updateTitle={onTitleClick} maxLength={30}/>
+                        <EditableSpan value={todoListTitle} updateTitle={updateTitle} maxLength={30}/>
                         <IconButton aria-label="delete" onClick={onClickRemoveTodoList}>
                             <DeleteIcon/>
                         </IconButton>
                     </h3>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <AddItemForm addItem={addTaskOnClick} maxLength={10}/>
+                    <AddItemForm addItem={addNewTask} maxLength={10}/>
                     {tasks.length === 0 ? <p>Тасок нет</p> :
                         <List>
                             {tasksList}

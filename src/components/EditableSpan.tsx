@@ -14,7 +14,7 @@ export const EditableSpan = ({value, updateTitle, maxLength = 10}: EditableSpanP
     const inputEmpty = !itemTitle
     const userErrorLengthMessage = itemTitle.length > maxLength
 
-    const rebuildTitle = () => {
+    const changeTitle = () => {
         const trimmedTitle = itemTitle.trim()
         if (!inputEmpty && !userErrorLengthMessage && trimmedTitle) {
             updateTitle(trimmedTitle)
@@ -27,7 +27,7 @@ export const EditableSpan = ({value, updateTitle, maxLength = 10}: EditableSpanP
 
     const onEnterClick = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            rebuildTitle()
+            changeTitle()
         }
     }
 
@@ -37,7 +37,7 @@ export const EditableSpan = ({value, updateTitle, maxLength = 10}: EditableSpanP
     }
 
     const onBlurHandler = () => {
-        rebuildTitle()
+        changeTitle()
     }
 
     return (
