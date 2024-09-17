@@ -10,6 +10,10 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import {getListItemSx} from './Todolist.styles';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 type TodolistProps = {
@@ -89,32 +93,65 @@ export const Todolist = ({
 
     return (
         <div>
-            <h3>
-                <EditableSpan value={todoListTitle} updateTitle={onTitleClick} maxLength={30}/>
-                <IconButton aria-label="delete" onClick={onClickRemoveTodoList}>
-                    <DeleteIcon/>
-                </IconButton>
-            </h3>
-            <AddItemForm addItem={addTaskOnClick} maxLength={10}/>
-            {tasks.length === 0 ? <p>Тасок нет</p> :
-                <List>
-                    {tasksList}
-                </List>
-            }
-            <Box display={'flex'} justifyContent={'space-between'} gap={'10px'}>
-                <Button variant={filter === 'all' ? 'outlined' : 'text'} color={'success'}
-                        onClick={setFilterHandlerCreator('all')}>
-                    All
-                </Button>
-                <Button variant={filter === 'active' ? 'outlined' : 'text'} color="error"
-                        onClick={setFilterHandlerCreator('active')}>
-                    Active
-                </Button>
-                <Button variant={filter === 'completed' ? 'outlined' : 'text'} color="secondary"
-                        onClick={setFilterHandlerCreator('completed')}>
-                    Completed
-                </Button>
-            </Box>
+            <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon/>}
+                                  id="panel1-header">
+                    <h3>
+                        <EditableSpan value={todoListTitle} updateTitle={onTitleClick} maxLength={30}/>
+                        <IconButton aria-label="delete" onClick={onClickRemoveTodoList}>
+                            <DeleteIcon/>
+                        </IconButton>
+                    </h3>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <AddItemForm addItem={addTaskOnClick} maxLength={10}/>
+                    {tasks.length === 0 ? <p>Тасок нет</p> :
+                        <List>
+                            {tasksList}
+                        </List>
+                    }
+                    <Box display={'flex'} justifyContent={'space-between'} gap={'10px'}>
+                        <Button variant={filter === 'all' ? 'outlined' : 'text'} color={'success'}
+                                onClick={setFilterHandlerCreator('all')}>
+                            All
+                        </Button>
+                        <Button variant={filter === 'active' ? 'outlined' : 'text'} color="error"
+                                onClick={setFilterHandlerCreator('active')}>
+                            Active
+                        </Button>
+                        <Button variant={filter === 'completed' ? 'outlined' : 'text'} color="secondary"
+                                onClick={setFilterHandlerCreator('completed')}>
+                            Completed
+                        </Button>
+                    </Box>
+                </AccordionDetails>
+            </Accordion>
+            {/*<h3>*/}
+            {/*    <EditableSpan value={todoListTitle} updateTitle={onTitleClick} maxLength={30}/>*/}
+            {/*    <IconButton aria-label="delete" onClick={onClickRemoveTodoList}>*/}
+            {/*        <DeleteIcon/>*/}
+            {/*    </IconButton>*/}
+            {/*</h3>*/}
+            {/*<AddItemForm addItem={addTaskOnClick} maxLength={10}/>*/}
+            {/*{tasks.length === 0 ? <p>Тасок нет</p> :*/}
+            {/*    <List>*/}
+            {/*        {tasksList}*/}
+            {/*    </List>*/}
+            {/*}*/}
+            {/*<Box display={'flex'} justifyContent={'space-between'} gap={'10px'}>*/}
+            {/*    <Button variant={filter === 'all' ? 'outlined' : 'text'} color={'success'}*/}
+            {/*            onClick={setFilterHandlerCreator('all')}>*/}
+            {/*        All*/}
+            {/*    </Button>*/}
+            {/*    <Button variant={filter === 'active' ? 'outlined' : 'text'} color="error"*/}
+            {/*            onClick={setFilterHandlerCreator('active')}>*/}
+            {/*        Active*/}
+            {/*    </Button>*/}
+            {/*    <Button variant={filter === 'completed' ? 'outlined' : 'text'} color="secondary"*/}
+            {/*            onClick={setFilterHandlerCreator('completed')}>*/}
+            {/*        Completed*/}
+            {/*    </Button>*/}
+            {/*</Box>*/}
         </div>
     )
 }

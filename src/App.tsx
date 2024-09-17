@@ -7,7 +7,7 @@ import {AddItemForm} from './components/AddItemForm';
 import ButtonAppBar from './components/ButtonAppBar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
-import Paper from '@mui/material/Paper';
+// import Paper from '@mui/material/Paper';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -86,6 +86,36 @@ function App() {
         ]
     })
 
+    const todoListsComponent: Array<JSX.Element> = todoLists.map((tl) => {
+        let tasksForTodoList = tasks[tl.id]
+        if (tl.filter === 'active') {
+            tasksForTodoList = tasksForTodoList.filter(t => !t.isDone)
+        } else if (tl.filter === 'completed') {
+            tasksForTodoList = tasksForTodoList.filter(t => t.isDone)
+        }
+
+        return (
+            <Grid>
+                {/*<Paper sx={{p: '5px 20px 20px 20px'}} elevation={5}>*/}
+                    <Todolist key={tl.id}
+                              todoListId={tl.id}
+                              todoListTitle={tl.title}
+                              tasks={tasksForTodoList}
+                              removeTask={removeTask}
+                              changeFilter={changeFilter}
+                              addTask={addTask}
+                              changeTaskStatus={changeTaskStatus}
+                              filter={tl.filter}
+                              removeTodoList={removeTodoList}
+                              updateTitleTodoList={updateTitleTodoListHandler}
+                              updateTitleTask={updateTitleTaskHandler}
+                    />
+                {/*</Paper>*/}
+            </Grid>
+        )
+    })
+
+
     const [themeMode, setThemeMode] = useState<ThemeModeType>('dark')
 
     const changeModeHandler = () => {
@@ -96,7 +126,7 @@ function App() {
         palette: {
             mode: themeMode === 'light' ? 'light' : 'dark',
             primary: {
-                main: '#95d97b',
+                main: '#d06905',
             }
         },
     })
@@ -110,35 +140,7 @@ function App() {
                         <AddItemForm addItem={addTodoList} maxLength={30}/>
                     </Grid>
                     <Grid container spacing={4}>
-                        {todoLists.map((tl) => {
-                                let tasksForTodoList = tasks[tl.id]
-                                if (tl.filter === 'active') {
-                                    tasksForTodoList = tasksForTodoList.filter(t => !t.isDone)
-                                } else if (tl.filter === 'completed') {
-                                    tasksForTodoList = tasksForTodoList.filter(t => t.isDone)
-                                }
-
-                                return (
-                                    <Grid>
-                                        <Paper sx={{p: '5px 20px 20px 20px'}} elevation={5}>
-                                            <Todolist key={tl.id}
-                                                      todoListId={tl.id}
-                                                      todoListTitle={tl.title}
-                                                      tasks={tasksForTodoList}
-                                                      removeTask={removeTask}
-                                                      changeFilter={changeFilter}
-                                                      addTask={addTask}
-                                                      changeTaskStatus={changeTaskStatus}
-                                                      filter={tl.filter}
-                                                      removeTodoList={removeTodoList}
-                                                      updateTitleTodoList={updateTitleTodoListHandler}
-                                                      updateTitleTask={updateTitleTaskHandler}
-                                            />
-                                        </Paper>
-                                    </Grid>
-                                )
-                            }
-                        )}
+                        {todoListsComponent}
                     </Grid>
                 </Container>
                 <CssBaseline/>

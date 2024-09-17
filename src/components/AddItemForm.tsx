@@ -35,7 +35,7 @@ export const AddItemForm = ({addItem, maxLength}: AddItemFormPropsType) => {
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
         inputError && setInputError(null)
-        event.currentTarget.value.length > maxLength && setInputError('Too long!!!')
+        event.currentTarget.value.length > maxLength && setInputError(`Too long!!! (Max length: ${maxLength})`)
         setTitle(event.currentTarget.value)
     }
 
