@@ -95,7 +95,7 @@ function App() {
         }
 
         return (
-            <Grid>
+            <Grid key={tl.id}>
                 {/*<Paper sx={{p: '5px 20px 20px 20px'}} elevation={5}>*/}
                     <Todolist key={tl.id}
                               todoListId={tl.id}

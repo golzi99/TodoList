@@ -94,8 +94,7 @@ export const Todolist = ({
     return (
         <div>
             <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon/>}
-                                  id="panel1-header">
+                <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
                     <h3>
                         <EditableSpan value={todoListTitle} updateTitle={onTitleClick} maxLength={30}/>
                         <IconButton aria-label="delete" onClick={onClickRemoveTodoList}>
