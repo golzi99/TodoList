@@ -13,7 +13,7 @@ import {getListItemSx} from './Todolist.styles';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 
 type TodolistProps = {
@@ -94,7 +94,7 @@ export const Todolist = ({
     return (
         <div>
             <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                <AccordionSummary expandIcon={<ArrowDownwardIcon/>}>
                     <h3>
                         <EditableSpan value={todoListTitle} updateTitle={onTitleClick} maxLength={30}/>
                         <IconButton aria-label="delete" onClick={onClickRemoveTodoList}>
