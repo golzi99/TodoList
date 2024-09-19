@@ -95,7 +95,7 @@ export const removeTask = (idTask: string, idTodoList: string) => {
 
 export const addTask = (title: string, idTodoList: string) => {
     return {
-        type: 'ADD-TODOLIST',
+        type: 'ADD-TASK',
         payload: {
             title,
             idTodoList
@@ -105,7 +105,7 @@ export const addTask = (title: string, idTodoList: string) => {
 
 export const changeTaskTitle = (idTask: string, idTodoList: string, title: string) => {
     return {
-        type: 'CHANGE-TODOLIST-TITLE',
+        type: 'CHANGE-TASK-TITLE',
         payload: {
             idTask,
             idTodoList,
@@ -116,7 +116,7 @@ export const changeTaskTitle = (idTask: string, idTodoList: string, title: strin
 
 export const changeTaskStatus = (idTask: string, idTodoList: string, status: boolean) => {
     return {
-        type: 'CHANGE-TODOLIST-FILTER',
+        type: 'CHANGE-TASK-STATUS',
         payload: {
             idTask,
             idTodoList,
