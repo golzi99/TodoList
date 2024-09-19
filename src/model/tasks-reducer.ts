@@ -19,6 +19,13 @@ const initialState: TasksStateType = {
     ]
 }
 
+export type RemoveTodoListOfTasks = {
+    type: 'REMOVE-TODOLIST-OF-TASKS',
+    payload: {
+        idTodoList: string
+    }
+}
+
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
     payload: {
@@ -58,6 +65,7 @@ type ActionsType =
     | AddTaskActionType
     | ChangeTaskTitleActionType
     | ChangeTaskStatusActionType
+    | RemoveTodoListOfTasks
 
 export const tasksReducer = (state = initialState, action: ActionsType) : TasksStateType => {
     switch (action.type) {
@@ -77,13 +85,26 @@ export const tasksReducer = (state = initialState, action: ActionsType) : TasksS
         case 'CHANGE-TASK-STATUS': {
             return {...state, [action.payload.idTodoList]: state[action.payload.idTodoList].map(t => t.id === action.payload.idTask ? {...t, isDone: action.payload.status} : t)}
         }
+        case 'REMOVE-TODOLIST-OF-TASKS': {
+            const { [action.payload.idTodoList]: _, ...updatedState } = state;
+            return updatedState;
+        }
         default: {
             return state
         }
     }
 }
 
-export const removeTask = (idTask: string, idTodoList: string) => {
+export const removeTodolistOfTasksAC = (idTodoList: string) => {
+    return  {
+        type: 'REMOVE-TODOLIST-OF-TASKS',
+        payload: {
+            idTodoList
+        }
+    } as const
+}
+
+export const removeTaskAC = (idTask: string, idTodoList: string) => {
     return  {
         type: 'REMOVE-TASK',
         payload: {
@@ -93,7 +114,7 @@ export const removeTask = (idTask: string, idTodoList: string) => {
     } as const
 }
 
-export const addTask = (title: string, idTodoList: string) => {
+export const addTaskAC = (title: string, idTodoList: string) => {
     return {
         type: 'ADD-TASK',
         payload: {
@@ -103,7 +124,7 @@ export const addTask = (title: string, idTodoList: string) => {
     } as const
 }
 
-export const changeTaskTitle = (idTask: string, idTodoList: string, title: string) => {
+export const changeTaskTitleAC = (idTask: string, idTodoList: string, title: string) => {
     return {
         type: 'CHANGE-TASK-TITLE',
         payload: {
@@ -114,7 +135,7 @@ export const changeTaskTitle = (idTask: string, idTodoList: string, title: strin
     } as const
 }
 
-export const changeTaskStatus = (idTask: string, idTodoList: string, status: boolean) => {
+export const changeTaskStatusAC = (idTask: string, idTodoList: string, status: boolean) => {
     return {
         type: 'CHANGE-TASK-STATUS',
         payload: {
