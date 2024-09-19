@@ -15,9 +15,8 @@ export const MenuButton = styled(Button)<MenuButtonPropsType>(({background, them
     padding: '8px 24px',
     color: theme.palette.primary.contrastText,
     background: background || theme.palette.primary.light,
-
     '&:hover': {
         background: theme.palette.primary.main
-    }
+    },
 
 }))
