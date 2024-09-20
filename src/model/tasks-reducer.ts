@@ -38,7 +38,8 @@ export type AddTaskActionType = {
     type: 'ADD-TASK'
     payload: {
         title: string,
-        idTodoList: string
+        idTodoList: string,
+        idTask: string
     }
 }
 
@@ -82,8 +83,8 @@ export const tasksReducer = (state = initialState, action: ActionsType) : TasksS
                     t.id !== action.payload.idTask)}
         }
         case 'ADD-TASK': {
-            const newId = v1()
-            let newTask = {id: newId, title: action.payload.title, isDone: false}
+            //const newId = v1() // вынести в payload (нарушает стуктуру чистой функции)
+            let newTask = {id: action.payload.idTask, title: action.payload.title, isDone: false}
 
             return {...state, [action.payload.idTodoList]: [...state[action.payload.idTodoList], newTask]}
         }
@@ -94,8 +95,11 @@ export const tasksReducer = (state = initialState, action: ActionsType) : TasksS
             return {...state, [action.payload.idTodoList]: state[action.payload.idTodoList].map(t => t.id === action.payload.idTask ? {...t, isDone: action.payload.status} : t)}
         }
         case 'REMOVE-TODOLIST-OF-TASKS': {
-            const { [action.payload.idTodoList]: _, ...updatedState } = state;
-            return updatedState;
+            const newState = {...state}
+            delete newState[action.payload.idTodoList]
+           // const { [action.payload.idTodoList]: _, ...updatedState } = state;
+
+            return newState;
         }
         case 'CREATE-EMPTY-TODOLIST-OF-TASKS': {
             return {...state, [action.payload.idTodoList]: []};
@@ -125,12 +129,13 @@ export const removeTaskAC = (idTask: string, idTodoList: string) => {
     } as const
 }
 
-export const addTaskAC = (title: string, idTodoList: string) => {
+export const addTaskAC = (title: string, idTodoList: string, idTask: string) => {
     return {
         type: 'ADD-TASK',
         payload: {
             title,
-            idTodoList
+            idTodoList,
+            idTask
         }
     } as const
 }

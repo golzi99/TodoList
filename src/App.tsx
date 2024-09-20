@@ -61,7 +61,7 @@ function App() {
         // const doneTasks = tasks[todoListId].map(t => t.id === taskId ? {...t, isDone: checked} : t)
         // const tempTasksList = {...tasks, [todoListId]: doneTasks}
         // setTasks(tempTasksList)
-        dispatchTasks(changeTaskStatusAC(taskId, todoListId, checked))
+        dispatchTasks(changeTaskStatusAC(taskId, todoListId, checked)) // { taskId: string, }
     }
 
     const changeFilter = (value: FilterValuesType, todoListId: string) => {
@@ -75,7 +75,8 @@ function App() {
         // const tasksList = [...tasks[todoListId], newTask]
         // const tempTasksList = {...tasks, [todoListId]: tasksList}
         // setTasks(tempTasksList)
-        dispatchTasks(addTaskAC(taskTitle, todoListId))
+        const newTaskId = v1()
+        dispatchTasks(addTaskAC(taskTitle, todoListId, newTaskId))
     }
 
     const removeTodoList = (todoListId: string) => {
