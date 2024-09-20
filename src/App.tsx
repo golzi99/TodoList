@@ -13,7 +13,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import {
     addTaskAC,
     changeTaskStatusAC,
-    changeTaskTitleAC,
+    changeTaskTitleAC, createEmptyTodoListOfTasks,
     removeTaskAC,
     removeTodolistOfTasksAC,
     tasksReducer
@@ -42,11 +42,12 @@ function App() {
     }
 
     const addTodoList = (todoListTitle: string) => {
-        // const todolistId = v1()
+        const todolistId = v1()
         // const newTodoList: TodoListType = {id: todolistId, title: todoListTitle, filter: 'all'}
         // setTodoLists([...todoLists, newTodoList])
         // setTasks({...tasks, [todolistId]: []})
-        dispatchTodoLists(addTodolistAC(todoListTitle))
+        dispatchTodoLists(addTodolistAC(todolistId, todoListTitle))
+        dispatchTasks(createEmptyTodoListOfTasks(todolistId))
     }
 
     const removeTask = (taskId: string, todoListId: string) => {
@@ -83,7 +84,7 @@ function App() {
         // let newTasks = {...tasks};
         // delete newTasks[todoListId]
         // setTasks(newTasks)
-        dispatchTodoLists(removeTodolistAC(todoListId)) // ???
+        dispatchTodoLists(removeTodolistAC(todoListId))
         dispatchTasks(removeTodolistOfTasksAC(todoListId))
     }
 

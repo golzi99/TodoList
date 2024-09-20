@@ -60,12 +60,20 @@ export type ChangeTaskStatusActionType = {
     }
 }
 
+export type CreateEmptyTodoListOfTasksActionType = {
+    type: 'CREATE-EMPTY-TODOLIST-OF-TASKS'
+    payload: {
+        idTodoList: string
+    }
+}
+
 type ActionsType =
     | RemoveTaskActionType
     | AddTaskActionType
     | ChangeTaskTitleActionType
     | ChangeTaskStatusActionType
     | RemoveTodoListOfTasks
+    |CreateEmptyTodoListOfTasksActionType
 
 export const tasksReducer = (state = initialState, action: ActionsType) : TasksStateType => {
     switch (action.type) {
@@ -88,6 +96,9 @@ export const tasksReducer = (state = initialState, action: ActionsType) : TasksS
         case 'REMOVE-TODOLIST-OF-TASKS': {
             const { [action.payload.idTodoList]: _, ...updatedState } = state;
             return updatedState;
+        }
+        case 'CREATE-EMPTY-TODOLIST-OF-TASKS': {
+            return {...state, [action.payload.idTodoList]: []};
         }
         default: {
             return state
@@ -142,6 +153,15 @@ export const changeTaskStatusAC = (idTask: string, idTodoList: string, status: b
             idTask,
             idTodoList,
             status
+        }
+    } as const
+}
+
+export const createEmptyTodoListOfTasks = (idTodoList: string) => {
+    return {
+        type: 'CREATE-EMPTY-TODOLIST-OF-TASKS',
+        payload: {
+            idTodoList,
         }
     } as const
 }
