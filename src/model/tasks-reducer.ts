@@ -157,7 +157,7 @@ export const changeTaskStatusAC = (idTask: string, idTodoList: string, status: b
     } as const
 }
 
-export const createEmptyTodoListOfTasks = (idTodoList: string) => {
+export const createEmptyTodoListOfTasksAC = (idTodoList: string) => {
     return {
         type: 'CREATE-EMPTY-TODOLIST-OF-TASKS',
         payload: {

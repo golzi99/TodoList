@@ -3,7 +3,7 @@ import {v1} from 'uuid';
 import {
     addTaskAC,
     changeTaskStatusAC,
-    changeTaskTitleAC,
+    changeTaskTitleAC, createEmptyTodoListOfTasksAC,
     removeTaskAC,
     removeTodolistOfTasksAC,
     tasksReducer
@@ -70,4 +70,12 @@ test('correct task should change its status', () => {
 
     expect(endState[todoListId1].length).toBe(6)
     expect(endState[todoListId1][0].isDone).toBe(false)
+})
+
+test('correct empty todolist of tasks should be created', () => {
+    const newId = v1()
+    const endState = tasksReducer(startState, createEmptyTodoListOfTasksAC(newId))
+
+    expect(endState[newId].length).toBe(0)
+    expect(endState[newId]).toBeDefined()
 })
