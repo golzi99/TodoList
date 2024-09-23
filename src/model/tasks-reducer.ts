@@ -1,6 +1,6 @@
 import {v1} from 'uuid';
 import {TasksStateType} from '../types/types';
-import {AddTodolistActionType} from './todolists-reducer';
+import {AddTodolistActionType, RemoveTodolistActionType} from './todolists-reducer';
 
 const todoListId1 = v1()
 const todoListId2 = v1()
@@ -20,7 +20,7 @@ const initialState: TasksStateType = {
     ]
 }
 
-export type RemoveTodoListOfTasksActionType = ReturnType<typeof removeTodolistOfTasksAC>
+// export type RemoveTodoListOfTasksActionType = ReturnType<typeof removeTodolistOfTasksAC>
 export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
 export type AddTaskActionType = ReturnType<typeof addTaskAC>
 export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
@@ -81,8 +81,9 @@ type ActionsType =
     | AddTaskActionType
     | ChangeTaskTitleActionType
     | ChangeTaskStatusActionType
-    | RemoveTodoListOfTasksActionType
+    | RemoveTodolistActionType
     | AddTodolistActionType
+    // | RemoveTodoListOfTasksActionType
     // | CreateEmptyTodoListOfTasksActionType
 
 export const tasksReducer = (state = initialState, action: ActionsType) : TasksStateType => {
@@ -103,9 +104,9 @@ export const tasksReducer = (state = initialState, action: ActionsType) : TasksS
         case 'CHANGE-TASK-STATUS': {
             return {...state, [action.payload.todoListId]: state[action.payload.todoListId].map(t => t.id === action.payload.taskId ? {...t, isDone: action.payload.status} : t)}
         }
-        case 'REMOVE-TODOLIST-OF-TASKS': {
+        case 'REMOVE-TODOLIST': {
             const newState = {...state}
-            delete newState[action.payload.todoListId]
+            delete newState[action.payload.todolistId]
            // const { [action.payload.idTodoList]: _, ...updatedState } = state;
 
             return newState;
@@ -122,12 +123,12 @@ export const tasksReducer = (state = initialState, action: ActionsType) : TasksS
     }
 }
 
-export const removeTodolistOfTasksAC = (payload: {todoListId: string}) => {
-    return  {
-        type: 'REMOVE-TODOLIST-OF-TASKS',
-        payload
-    } as const
-}
+// export const removeTodolistOfTasksAC = (payload: {todoListId: string}) => {
+//     return  {
+//         type: 'REMOVE-TODOLIST-OF-TASKS',
+//         payload
+//     } as const
+// }
 
 export const removeTaskAC = (payload: {taskId: string, todoListId: string}) => {
     return  {

@@ -14,7 +14,6 @@ import {
     changeTaskStatusAC,
     changeTaskTitleAC,
     removeTaskAC,
-    removeTodolistOfTasksAC,
     tasksReducer
 } from './model/tasks-reducer';
 import {
@@ -50,10 +49,10 @@ function App() {
         // dispatchTodoLists(addTodolistAC({idTodolist: todolistId, title: todoListTitle}))
         // dispatchTasks(createEmptyTodoListOfTasksAC({idTodoList: todolistId}))
 
-        const newTodoListAC = addTodolistAC({title: todoListTitle})
+        const action = addTodolistAC({title: todoListTitle})
 
-        dispatchTodoLists(newTodoListAC)
-        dispatchTasks(newTodoListAC)
+        dispatchTodoLists(action)
+        dispatchTasks(action)
     }
 
     const removeTask = (taskId: string, todoListId: string) => {
@@ -91,8 +90,10 @@ function App() {
         // let newTasks = {...tasks};
         // delete newTasks[todoListId]
         // setTasks(newTasks)
-        dispatchTodoLists(removeTodolistAC({todolistId: todoListId}))
-        dispatchTasks(removeTodolistOfTasksAC({todoListId: todoListId}))
+        const action = removeTodolistAC({todolistId: todoListId})
+
+        dispatchTodoLists(action)
+        dispatchTasks(action)
     }
 
     const todoListId1 = v1()

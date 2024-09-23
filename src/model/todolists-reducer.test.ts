@@ -9,23 +9,25 @@ import {
 } from './todolists-reducer';
 import {tasksReducer} from './tasks-reducer';
 
-const todoListId1 = v1()
-const todoListId2 = v1()
-
+let todolistId1: string
+let todolistId2: string
 let startState: Array<TodoListType> = []
 
 beforeEach(() => {
+    todolistId1 = v1()
+    todolistId2 = v1()
+
     startState = [
-        {id: todoListId1, title: 'What to learn', filter: 'all'},
-        {id: todoListId2, title: 'What to buy', filter: 'all'}
+        {id: todolistId1, title: 'What to learn', filter: 'all'},
+        {id: todolistId2, title: 'What to buy', filter: 'all'}
     ]
 })
 
 test('correct todolist should be removed', () => {
-    const endState = todolistsReducer(startState, removeTodolistAC({todolistId: todoListId1}))
+    const endState = todolistsReducer(startState, removeTodolistAC({todolistId: todolistId1}))
 
     expect(endState.length).toBe(1)
-    expect(endState[0].id).toBe(todoListId2)
+    expect(endState[0].id).toBe(todolistId2)
 })
 
 test('correct todolist should be added', () => {
@@ -39,27 +41,27 @@ test('correct todolist should be added', () => {
 test('correct todolist should change its name', () => {
     const newTitle = 'New Title TodoList'
 
-    const endState = todolistsReducer(startState, changeTodoListTitleAC({todolistId: todoListId2, title: newTitle}))
+    const endState = todolistsReducer(startState, changeTodoListTitleAC({todolistId: todolistId2, title: newTitle}))
 
     expect(endState.length).toBe(2)
     expect(endState[1].title).toBe(newTitle)
-    expect(endState[1].id).toBe(todoListId2)
+    expect(endState[1].id).toBe(todolistId2)
 })
 
 test('correct todolist should change its filter', () => {
     const newFilter1 = 'active'
     const newFilter2 = 'completed'
 
-    const endState1 = todolistsReducer(startState, changeTodoListFilterAC({todolistId: todoListId2, filter: newFilter1}))
-    const endState2 = todolistsReducer(startState, changeTodoListFilterAC({todolistId: todoListId2, filter: newFilter2}))
+    const endState1 = todolistsReducer(startState, changeTodoListFilterAC({todolistId: todolistId2, filter: newFilter1}))
+    const endState2 = todolistsReducer(startState, changeTodoListFilterAC({todolistId: todolistId2, filter: newFilter2}))
 
     expect(endState1.length).toBe(2)
     expect(endState1[1].filter).toBe(newFilter1)
-    expect(endState1[1].id).toBe(todoListId2)
+    expect(endState1[1].id).toBe(todolistId2)
 
     expect(endState2.length).toBe(2)
     expect(endState2[1].filter).toBe(newFilter2)
-    expect(endState2[1].id).toBe(todoListId2)
+    expect(endState2[1].id).toBe(todolistId2)
 })
 
 
