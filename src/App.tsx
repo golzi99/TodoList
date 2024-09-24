@@ -26,20 +26,20 @@ import {
 
 
 function App() {
-    const updateTitleTaskHandler = (taskId: string, todoListId: string, updateTitle: string) => {
+    const updateTitleTaskHandler = (taskId: string, todolistId: string, updateTitle: string) => {
         // const updateTaskTitle = tasks[todoListId].map(task => task.id === taskId ? {...task, title: updateTitle} : task)
         // const tempTasksList = {...tasks, [todoListId]: updateTaskTitle}
         // setTasks(tempTasksList)
-        dispatchTasks(changeTaskTitleAC({taskId: taskId, todolistId: todoListId, title: updateTitle}))
+        dispatchTasks(changeTaskTitleAC({taskId, todolistId, title: updateTitle}))
     }
 
     const updateTitleTodoListHandler = (todolistId: string, updateTodoListTitle: string) => {
         // const tempTodoList = todoLists.map(tl => tl.id === todolistId ? {...tl, title: updateTodoListTitle} : tl)
         // setTodoLists(tempTodoList)
-        dispatchTodoLists(changeTodoListTitleAC({todolistId: todolistId, title: updateTodoListTitle}))
+        dispatchTodoLists(changeTodoListTitleAC({todolistId, title: updateTodoListTitle}))
     }
 
-    const addTodoList = (todoListTitle: string) => {
+    const addTodoList = (todolistTitle: string) => {
         // const todolistId = v1()
 
         // const newTodoList: TodoListType = {id: todolistId, title: todoListTitle, filter: 'all'}
@@ -49,47 +49,47 @@ function App() {
         // dispatchTodoLists(addTodolistAC({idTodolist: todolistId, title: todoListTitle}))
         // dispatchTasks(createEmptyTodoListOfTasksAC({idTodoList: todolistId}))
 
-        const action = addTodolistAC({title: todoListTitle})
+        const action = addTodolistAC({title: todolistTitle})
 
         dispatchTodoLists(action)
         dispatchTasks(action)
     }
 
-    const removeTask = (taskId: string, todoListId: string) => {
+    const removeTask = (taskId: string, todolistId: string) => {
         // const filteredTasks = tasks[todoListId].filter(t => t.id !== taskId)
         // const tempTasksList = {...tasks, [todoListId]: filteredTasks}
         // setTasks(tempTasksList)
-        dispatchTasks(removeTaskAC({taskId: taskId, todolistId: todoListId}))
+        dispatchTasks(removeTaskAC({taskId, todolistId}))
     }
 
-    const changeTaskStatus = (taskId: string, checked: boolean, todoListId: string) => {
+    const changeTaskStatus = (taskId: string, checked: boolean, todolistId: string) => {
         // const doneTasks = tasks[todoListId].map(t => t.id === taskId ? {...t, isDone: checked} : t)
         // const tempTasksList = {...tasks, [todoListId]: doneTasks}
         // setTasks(tempTasksList)
-        dispatchTasks(changeTaskStatusAC({taskId: taskId, todolistId: todoListId, status: checked}))
+        dispatchTasks(changeTaskStatusAC({taskId, todolistId, status: checked}))
     }
 
-    const changeFilter = (value: FilterValuesType, todoListId: string) => {
+    const changeFilter = (value: FilterValuesType, todolistId: string) => {
         // let tempTodolist = todoLists.map(tl => tl.id === todoListId ? {...tl, filter: value} : tl)
         // setTodoLists(tempTodolist)
-        dispatchTodoLists(changeTodoListFilterAC({todolistId: todoListId, filter: value}))
+        dispatchTodoLists(changeTodoListFilterAC({todolistId, filter: value}))
     }
 
-    const addTask = (taskTitle: string, todoListId: string) => {
+    const addTask = (taskTitle: string, todolistId: string) => {
         // let newTask = {id: v1(), title: taskTitle, isDone: false}
         // const tasksList = [...tasks[todoListId], newTask]
         // const tempTasksList = {...tasks, [todoListId]: tasksList}
         // setTasks(tempTasksList)
-        dispatchTasks(addTaskAC({title: taskTitle, todolistId: todoListId}))
+        dispatchTasks(addTaskAC({title: taskTitle, todolistId}))
     }
 
-    const removeTodoList = (todoListId: string) => {
+    const removeTodoList = (todolistId: string) => {
         // let filteredTodoList = todoLists.filter(tl => tl.id !== todoListId)
         // setTodoLists(filteredTodoList)
         // let newTasks = {...tasks};
         // delete newTasks[todoListId]
         // setTasks(newTasks)
-        const action = removeTodolistAC({todolistId: todoListId})
+        const action = removeTodolistAC({todolistId})
 
         dispatchTodoLists(action)
         dispatchTasks(action)
