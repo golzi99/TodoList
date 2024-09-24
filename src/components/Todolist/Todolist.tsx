@@ -72,10 +72,10 @@ export const Todolist = ({
 
         return (
             <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
-                <div>
+                <Box display={'flex'} alignItems={'center'}>
                     <Checkbox checked={task.isDone} onChange={onChangeStatus}/>
                     <EditableSpan value={task.title} updateTitle={changeTaskTitle}/>
-                </div>
+                </Box>
                 <IconButton aria-label="delete" onClick={onRemoveHandler}>
                     <DeleteIcon/>
                 </IconButton>

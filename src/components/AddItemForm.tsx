@@ -2,6 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void,
@@ -40,9 +41,9 @@ export const AddItemForm = ({addItem, maxLength}: AddItemFormPropsType) => {
     }
 
     const buttonStyle = {
-        maxWidth: '39px',
+        maxWidth: '75px',
         maxHeight: '39px',
-        minWidth: '39px',
+        minWidth: '75px',
         minHeight: '39px',
     }
 
@@ -61,7 +62,8 @@ export const AddItemForm = ({addItem, maxLength}: AddItemFormPropsType) => {
                 <Button variant="contained"
                         style={buttonStyle}
                         onClick={addItemOnClick}
-                        disabled={inputEmpty || userErrorLengthMessage || !!inputError}>+</Button>
+                        endIcon={<AddCircleIcon/>}
+                        disabled={inputEmpty || userErrorLengthMessage || !!inputError}>ADD</Button>
             </Box>
             {/*{inputEmpty && !inputError && <p>Max length title is {maxLength} charters</p>}*/}
             {/*{!inputEmpty && !userErrorLengthMessage && !inputError && <p>{userLengthMessage}</p>}*/}
