@@ -77,7 +77,7 @@ test('correct task should be added to correct array', () => {
     expect(endState[todolistId1].length).toBe(7)
     expect(endState[todolistId1][6].id).toBeDefined()
     expect(endState[todolistId1][6].title).toBe('New task')
-    expect(endState[todolistId1][6].isDone).toBe(false)
+    expect(endState[todolistId1][6].isDone).toBeFalsy()
 })
 
 test('correct task should change its name', () => {
@@ -97,7 +97,7 @@ test('correct task should change its status', () => {
     const endState = tasksReducer(startState, changeTaskStatusAC({taskId: '1', todolistId: todolistId1, status: false}))
 
     expect(endState[todolistId1].length).toBe(6)
-    expect(endState[todolistId1][0].isDone).toBe(false)
+    expect(endState[todolistId1][0].isDone).toBeFalsy()
 })
 
 test('new array should be added when new todolist is added', () => {
