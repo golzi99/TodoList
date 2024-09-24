@@ -29,6 +29,22 @@ import { RootState } from './store';
 
 
 function App() {
+
+    const [themeMode, setThemeMode] = useState<ThemeModeType>('dark')
+
+    const changeModeHandler = () => {
+        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
+    }
+
+    const theme = createTheme({
+        palette: {
+            mode: themeMode === 'light' ? 'light' : 'dark',
+            primary: {
+                main: '#d06905',
+            }
+        },
+    })
+
     const dispatch = useDispatch()
 
     const todolists = useSelector<RootState, Array<TodoListType>>(state => state.todolists)
@@ -179,7 +195,7 @@ function App() {
 
         return (
             <Grid key={tl.id}>
-                <Paper elevation={5}>
+                <Paper elevation={5} sx={{border: `1px solid ${theme.palette.primary.main}`}}>
                 <Todolist key={tl.id}
                           todoListId={tl.id}
                           todoListTitle={tl.title}
@@ -196,22 +212,6 @@ function App() {
                 </Paper>
             </Grid>
         )
-    })
-
-
-    const [themeMode, setThemeMode] = useState<ThemeModeType>('dark')
-
-    const changeModeHandler = () => {
-        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
-    }
-
-    const theme = createTheme({
-        palette: {
-            mode: themeMode === 'light' ? 'light' : 'dark',
-            primary: {
-                main: '#d06905',
-            }
-        },
     })
 
     return (
