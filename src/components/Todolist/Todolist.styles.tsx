@@ -5,10 +5,16 @@ export const getListItemSx = (isDone: boolean): SxProps => ({
     justifyContent: 'space-between',
     borderBottom: '1px solid grey',
 
-    '& span': {
+    // '& span': {
+    //     opacity: isDone ? '0.5' : '1',
+    //     fontWeight: isDone ? '400' : 'bold',
+    //     textDecoration: isDone ? 'line-through' : ''
+    // },
+
+    "& span:last-of-type": {
         opacity: isDone ? '0.5' : '1',
         fontWeight: isDone ? '400' : 'bold',
         textDecoration: isDone ? 'line-through' : ''
-    },
+    }
 
 })

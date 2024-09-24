@@ -56,7 +56,7 @@ test('correct task should be removed from correct array', () => {
 })
 
 test('correct todolist of tasks should be removed', () => {
-    const endState = tasksReducer(startState, removeTodolistAC({todolistId: todolistId1}))
+    const endState = tasksReducer(startState, removeTodolistAC(todolistId1))
 
     const keys = Object.keys(endState)
     expect(keys.length).toBe(1)
@@ -102,7 +102,7 @@ test('correct task should change its status', () => {
 
 test('new array should be added when new todolist is added', () => {
     const newTodoListTitle = 'New TodoList'
-    const endState = tasksReducer(startState, addTodolistAC({title: newTodoListTitle}))
+    const endState = tasksReducer(startState, addTodolistAC(newTodoListTitle))
 
     const keys = Object.keys(endState)
     const newKey = keys.find(k => k !== todolistId1 && k !== todolistId2)

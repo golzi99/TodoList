@@ -2,22 +2,22 @@ import {v1} from 'uuid';
 import {TasksStateType} from '../types/types';
 import {AddTodolistActionType, RemoveTodolistActionType} from './todolists-reducer';
 
-const todoListId1 = v1()
-const todoListId2 = v1()
+// const todoListId1 = v1()
+// const todoListId2 = v1()
 
 const initialState: TasksStateType = {
-    [todoListId1]: [
-        {id: v1(), title: 'CSS', isDone: true},
-        {id: v1(), title: 'JS', isDone: true},
-        {id: v1(), title: 'React', isDone: false},
-        {id: v1(), title: 'Redux', isDone: false},
-        {id: v1(), title: 'Typescript', isDone: false},
-        {id: v1(), title: 'RTK query', isDone: false}
-    ],
-    [todoListId2]: [
-        {id: v1(), title: 'Book', isDone: false},
-        {id: v1(), title: 'Milk', isDone: true},
-    ]
+    // [todoListId1]: [
+    //     {id: v1(), title: 'CSS', isDone: true},
+    //     {id: v1(), title: 'JS', isDone: true},
+    //     {id: v1(), title: 'React', isDone: false},
+    //     {id: v1(), title: 'Redux', isDone: false},
+    //     {id: v1(), title: 'Typescript', isDone: false},
+    //     {id: v1(), title: 'RTK query', isDone: false}
+    // ],
+    // [todoListId2]: [
+    //     {id: v1(), title: 'Book', isDone: false},
+    //     {id: v1(), title: 'Milk', isDone: true},
+    // ]
 }
 
 export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
@@ -33,7 +33,7 @@ type ActionsType =
     | RemoveTodolistActionType
     | AddTodolistActionType
 
-export const tasksReducer = (state = initialState, action: ActionsType) : TasksStateType => {
+export const tasksReducer = (state:TasksStateType = initialState, action: ActionsType) : TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK': {
             return {...state, [action.payload.todolistId]: state[action.payload.todolistId].filter(t =>
