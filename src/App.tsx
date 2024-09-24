@@ -30,7 +30,7 @@ function App() {
         // const updateTaskTitle = tasks[todoListId].map(task => task.id === taskId ? {...task, title: updateTitle} : task)
         // const tempTasksList = {...tasks, [todoListId]: updateTaskTitle}
         // setTasks(tempTasksList)
-        dispatchTasks(changeTaskTitleAC({taskId: taskId, todoListId: todoListId, title: updateTitle}))
+        dispatchTasks(changeTaskTitleAC({taskId: taskId, todolistId: todoListId, title: updateTitle}))
     }
 
     const updateTitleTodoListHandler = (todolistId: string, updateTodoListTitle: string) => {
@@ -59,14 +59,14 @@ function App() {
         // const filteredTasks = tasks[todoListId].filter(t => t.id !== taskId)
         // const tempTasksList = {...tasks, [todoListId]: filteredTasks}
         // setTasks(tempTasksList)
-        dispatchTasks(removeTaskAC({taskId: taskId, todoListId: todoListId}))
+        dispatchTasks(removeTaskAC({taskId: taskId, todolistId: todoListId}))
     }
 
     const changeTaskStatus = (taskId: string, checked: boolean, todoListId: string) => {
         // const doneTasks = tasks[todoListId].map(t => t.id === taskId ? {...t, isDone: checked} : t)
         // const tempTasksList = {...tasks, [todoListId]: doneTasks}
         // setTasks(tempTasksList)
-        dispatchTasks(changeTaskStatusAC({taskId: taskId, todoListId: todoListId, status: checked}))
+        dispatchTasks(changeTaskStatusAC({taskId: taskId, todolistId: todoListId, status: checked}))
     }
 
     const changeFilter = (value: FilterValuesType, todoListId: string) => {
@@ -80,8 +80,7 @@ function App() {
         // const tasksList = [...tasks[todoListId], newTask]
         // const tempTasksList = {...tasks, [todoListId]: tasksList}
         // setTasks(tempTasksList)
-        const newTaskId = v1()
-        dispatchTasks(addTaskAC({title: taskTitle, todoListId: todoListId, taskId: newTaskId}))
+        dispatchTasks(addTaskAC({title: taskTitle, todolistId: todoListId}))
     }
 
     const removeTodoList = (todoListId: string) => {
