@@ -61,6 +61,7 @@ test('correct todolist of tasks should be removed', () => {
     const keys = Object.keys(endState)
     expect(keys.length).toBe(1)
     expect(endState[todolistId1]).not.toBeDefined()
+    // expect(endState[todolistId1]).toBeUndefined()
 })
 
 test('correct task should be added to correct array', () => {

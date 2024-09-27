@@ -50,8 +50,7 @@ export const AddItemForm = ({addItem, maxLength}: AddItemFormPropsType) => {
     return (
         <div>
             <Box display={'flex'} justifyContent={'space-between'}>
-                <TextField id="outlined-basic"
-                           label={inputError ? inputError : 'Title'}
+                <TextField label={inputError ? inputError : 'Title'}
                            variant="outlined"
                            error={!!inputError}
                            value={title}

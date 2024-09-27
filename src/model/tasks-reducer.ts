@@ -2,23 +2,7 @@ import {v1} from 'uuid';
 import {TasksStateType} from '../types/types';
 import {AddTodolistActionType, RemoveTodolistActionType} from './todolists-reducer';
 
-// const todoListId1 = v1()
-// const todoListId2 = v1()
-
-const initialState: TasksStateType = {
-    // [todoListId1]: [
-    //     {id: v1(), title: 'CSS', isDone: true},
-    //     {id: v1(), title: 'JS', isDone: true},
-    //     {id: v1(), title: 'React', isDone: false},
-    //     {id: v1(), title: 'Redux', isDone: false},
-    //     {id: v1(), title: 'Typescript', isDone: false},
-    //     {id: v1(), title: 'RTK query', isDone: false}
-    // ],
-    // [todoListId2]: [
-    //     {id: v1(), title: 'Book', isDone: false},
-    //     {id: v1(), title: 'Milk', isDone: true},
-    // ]
-}
+const initialState: TasksStateType = {}
 
 export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
 export type AddTaskActionType = ReturnType<typeof addTaskAC>
@@ -42,7 +26,6 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             }
         }
         case 'ADD-TASK': {
-            //const newId = v1() // вынести в payload (нарушает стуктуру чистой функции)
             let newTask = {id: action.payload.taskId, title: action.payload.title, isDone: false}
 
             return {...state, [action.payload.todolistId]: [...state[action.payload.todolistId], newTask]}
