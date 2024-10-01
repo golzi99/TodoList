@@ -6,14 +6,12 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {MenuButton} from './Menu/MenuButton';
 import Switch from '@mui/material/Switch';
-// import {useTheme} from '@mui/material';
 
 type ButtonAppBarPropsType = {
     onChange: () => void
 }
 
 export default function ButtonAppBar({onChange}: ButtonAppBarPropsType) {
-    // const theme = useTheme()
 
     return (
         <Box sx={{ flexGrow: 1 , paddingBottom: '80px'}}>

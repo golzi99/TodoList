@@ -1,4 +1,4 @@
-export type TodoListType = {
+export type TodolistType = {
     id: string
     title: string
     filter: FilterValuesType
@@ -16,4 +16,4 @@ export type TasksStateType = {
     [key: string]: TaskPropsType[]
 }
 
-export type ThemeModeType = 'light' | 'dark'
+export type ThemeMode = 'light' | 'dark'

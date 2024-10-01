@@ -1,4 +1,4 @@
-import {TodoListType} from '../types/types';
+import {TodolistType} from '../types/types';
 import {v1} from 'uuid';
 import {
     addTodolistAC,
@@ -10,7 +10,7 @@ import {
 
 let todolistId1: string
 let todolistId2: string
-let startState: Array<TodoListType> = []
+let startState: Array<TodolistType> = []
 
 beforeEach(() => {
     todolistId1 = v1()

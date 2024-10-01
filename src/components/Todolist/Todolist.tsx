@@ -1,156 +1,43 @@
-import React, {ChangeEvent} from 'react';
-import {FilterValuesType, TaskPropsType} from '../../types/types';
+import React from 'react';
+import {TodolistType} from '../../types/types';
 import {AddItemForm} from '../AddItemForm';
-import {EditableSpan} from '../EditableSpan';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Box from '@mui/material/Box';
-import {getListItemSx} from './Todolist.styles';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import {FilterTasksButtons} from '../../FilterTasksButtons';
+import {Tasks} from '../../Tasks';
+import {TodolistTitle} from '../../TodolistTitle';
+import {addTaskAC} from '../../model/tasks-reducer';
+import {useDispatch} from 'react-redux';
 
 
-type TodolistProps = {
-    todoListId: string
-    todoListTitle: string,
-    tasks: Array<TaskPropsType>,
-    filter: FilterValuesType,
-
-    removeTask: (id: string, todoListId: string) => void,
-    addTask: (title: string, todoListId: string) => void,
-    changeTaskStatus: (id: string, checked: boolean, todoListId: string) => void,
-    updateTitleTask: (taskId: string, todoListId: string, newTitle: string) => void,
-
-    changeFilter: (value: FilterValuesType, todoListId: string) => void,
-    removeTodoList: (todoListId: string) => void,
-    updateTitleTodoList: (todolistId: string, title: string) => void
+type Props = {
+    todolist: TodolistType,
 }
 
-export const Todolist = ({
-                             todoListId,
-                             todoListTitle,
-                             tasks,
-                             removeTask,
-                             changeFilter,
-                             addTask,
-                             changeTaskStatus,
-                             filter,
-                             removeTodoList,
-                             updateTitleTask,
-                             updateTitleTodoList
-                         }: TodolistProps) => {
+export const Todolist = ({todolist,}: Props) => {
+
+    const dispatch = useDispatch()
+
+    const {id} = todolist
 
     const addNewTask = (title: string) => {
-        addTask(title, todoListId)
-    }
-
-    const removeTaskOnClick = (taskId: string) => {
-        removeTask(taskId, todoListId)
-    }
-
-    const setFilterHandlerCreator = (newFilterValue: FilterValuesType) => () => {
-        changeFilter(newFilterValue, todoListId)
-    }
-
-
-    const tasksList: Array<JSX.Element> = tasks.map((task) => {
-        const onRemoveHandler = () => removeTaskOnClick(task.id)
-
-        const onChangeStatus = (event: ChangeEvent<HTMLInputElement>) => {
-            changeTaskStatus(task.id, event.currentTarget.checked, todoListId)
-        }
-
-        const changeTaskTitle = (taskTitle: string) => {
-            updateTitleTask(task.id, todoListId, taskTitle)
-        }
-
-        return (
-            <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
-                <Box display={'flex'} alignItems={'center'}>
-                    <Checkbox checked={task.isDone} onChange={onChangeStatus}/>
-                    <EditableSpan value={task.title} updateTitle={changeTaskTitle}/>
-                </Box>
-                <IconButton aria-label="delete" onClick={onRemoveHandler}>
-                    <DeleteIcon/>
-                </IconButton>
-            </ListItem>
-        )
-    })
-
-    const onClickRemoveTodoList = () => {
-        removeTodoList(todoListId)
-    }
-
-    const updateTitle = (todoListTitle: string) => {
-        updateTitleTodoList(todoListId, todoListTitle)
+        dispatch(addTaskAC({title, todolistId: id}))
     }
 
     return (
         <div>
             <Accordion>
                 <AccordionSummary expandIcon={<ArrowDownwardIcon/>}>
-                    <h3>
-                        <EditableSpan value={todoListTitle} updateTitle={updateTitle} maxLength={30}/>
-                        <IconButton aria-label="delete" onClick={onClickRemoveTodoList}>
-                            <DeleteIcon/>
-                        </IconButton>
-                    </h3>
+                    <TodolistTitle todolist={todolist}/>
                 </AccordionSummary>
                 <AccordionDetails>
                     <AddItemForm addItem={addNewTask} maxLength={10}/>
-                    {tasks.length === 0 ? <p>Тасок нет</p> :
-                        <List>
-                            {tasksList}
-                        </List>
-                    }
-                    <Box display={'flex'} justifyContent={'space-between'} gap={'10px'}>
-                        <Button variant={filter === 'all' ? 'outlined' : 'text'} color={'success'}
-                                onClick={setFilterHandlerCreator('all')}>
-                            All
-                        </Button>
-                        <Button variant={filter === 'active' ? 'outlined' : 'text'} color="error"
-                                onClick={setFilterHandlerCreator('active')}>
-                            Active
-                        </Button>
-                        <Button variant={filter === 'completed' ? 'outlined' : 'text'} color="secondary"
-                                onClick={setFilterHandlerCreator('completed')}>
-                            Completed
-                        </Button>
-                    </Box>
+                    <Tasks todolist={todolist}/>
+                    <FilterTasksButtons todolist={todolist}/>
                 </AccordionDetails>
             </Accordion>
-            {/*<h3>*/}
-            {/*    <EditableSpan value={todoListTitle} updateTitle={onTitleClick} maxLength={30}/>*/}
-            {/*    <IconButton aria-label="delete" onClick={onClickRemoveTodoList}>*/}
-            {/*        <DeleteIcon/>*/}
-            {/*    </IconButton>*/}
-            {/*</h3>*/}
-            {/*<AddItemForm addItem={addTaskOnClick} maxLength={10}/>*/}
-            {/*{tasks.length === 0 ? <p>Тасок нет</p> :*/}
-            {/*    <List>*/}
-            {/*        {tasksList}*/}
-            {/*    </List>*/}
-            {/*}*/}
-            {/*<Box display={'flex'} justifyContent={'space-between'} gap={'10px'}>*/}
-            {/*    <Button variant={filter === 'all' ? 'outlined' : 'text'} color={'success'}*/}
-            {/*            onClick={setFilterHandlerCreator('all')}>*/}
-            {/*        All*/}
-            {/*    </Button>*/}
-            {/*    <Button variant={filter === 'active' ? 'outlined' : 'text'} color="error"*/}
-            {/*            onClick={setFilterHandlerCreator('active')}>*/}
-            {/*        Active*/}
-            {/*    </Button>*/}
-            {/*    <Button variant={filter === 'completed' ? 'outlined' : 'text'} color="secondary"*/}
-            {/*            onClick={setFilterHandlerCreator('completed')}>*/}
-            {/*        Completed*/}
-            {/*    </Button>*/}
-            {/*</Box>*/}
         </div>
     )
 }
