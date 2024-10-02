@@ -1,19 +1,19 @@
 import React from 'react';
 import Grid from '@mui/material/Grid2';
 import Paper from '@mui/material/Paper';
-import {Todolist} from './components/Todolist/Todolist';
-import {useSelector} from 'react-redux';
-import {RootState} from './app/store';
-import {ThemeMode, TodolistType} from './types/types';
-import {getTheme} from './common/theme/theme';
+import {Todolist} from './Todolist/Todolist';
+import {getTheme} from '../../../../common/theme/theme';
+import {useAppSelector} from '../../../../common/hooks/useAppSelector';
+import {selectThemeMode} from '../../../../app/appSelectors';
+import {selectTodoLists} from '../../model/todolistsSelectors';
 
 export const Todolists = () => {
 
-    const themeMode = useSelector<RootState, ThemeMode>(state => state.app.themeMode)
+    const themeMode = useAppSelector(selectThemeMode)
 
     const theme = getTheme(themeMode)
 
-    const todolists = useSelector<RootState, Array<TodolistType>>(state => state.todolists)
+    const todolists = useAppSelector(selectTodoLists)
 
     const todoListsComponent: Array<JSX.Element> = todolists.map((tl) => {
         return (

@@ -1,4 +1,4 @@
-import {TasksStateType} from '../types/types';
+import {TasksStateType} from '../../../common/types/types';
 import {v1} from 'uuid';
 import {
     addTaskAC,

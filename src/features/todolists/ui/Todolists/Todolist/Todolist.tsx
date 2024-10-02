@@ -1,15 +1,15 @@
 import React from 'react';
-import {TodolistType} from '../../types/types';
-import {AddItemForm} from '../AddItemForm';
+import {TodolistType} from '../../../../../common/types/types';
+import {AddItemForm} from '../../../../../common/components/AddItemForm/AddItemForm';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import {FilterTasksButtons} from '../../FilterTasksButtons';
-import {Tasks} from '../../Tasks';
-import {TodolistTitle} from '../../TodolistTitle';
-import {addTaskAC} from '../../model/tasks-reducer';
-import {useDispatch} from 'react-redux';
+import {FilterTasksButtons} from './FilterTasksButtons/FilterTasksButtons';
+import {Tasks} from './Tasks/Tasks';
+import {TodolistTitle} from './TodolistTitle/TodolistTitle';
+import {addTaskAC} from '../../../model/tasks-reducer';
+import {useAppDispatch} from '../../../../../common/hooks/useAppDispatch';
 
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
 
 export const Todolist = ({todolist,}: Props) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const {id} = todolist
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import {FilterValuesType, TodolistType} from './types/types';
-import {changeTodoListFilterAC} from './model/todolists-reducer';
-import {useDispatch} from 'react-redux';
+import {FilterValuesType, TodolistType} from '../../../../../../common/types/types';
+import {changeTodoListFilterAC} from '../../../../model/todolists-reducer';
+import {useAppDispatch} from '../../../../../../common/hooks/useAppDispatch';
 
 type Props = {
     todolist: TodolistType,
@@ -12,7 +12,7 @@ type Props = {
 export const FilterTasksButtons = ({todolist}: Props) => {
     const { filter, id } = todolist
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const changeFilterTasksHandler = (newFilterValue: FilterValuesType) => () => {
         dispatch(changeTodoListFilterAC({todolistId: id, filter: newFilterValue}))
@@ -35,3 +35,5 @@ export const FilterTasksButtons = ({todolist}: Props) => {
         </Box>
     );
 };
+
+//создайте файл FilterTasksButtons.styles.ts рядом с компонентом FilterTasksButtons и перенесите туда необходимые стили

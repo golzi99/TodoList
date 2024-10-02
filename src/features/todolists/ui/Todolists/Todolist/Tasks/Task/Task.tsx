@@ -1,14 +1,14 @@
 import React, {ChangeEvent} from 'react';
 import ListItem from '@mui/material/ListItem';
-import {getListItemSx} from './components/Todolist/Todolist.styles';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
-import {EditableSpan} from './components/EditableSpan';
+import {EditableSpan} from '../../../../../../../common/components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './model/tasks-reducer';
-import {useDispatch} from 'react-redux';
-import {TaskPropsType, TodolistType} from './types/types';
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from '../../../../../model/tasks-reducer';
+import {TaskPropsType, TodolistType} from '../../../../../../../common/types/types';
+import {getListItemSx} from './Task.styles';
+import {useAppDispatch} from '../../../../../../../common/hooks/useAppDispatch';
 
 type Props = {
     task: TaskPropsType
@@ -16,7 +16,7 @@ type Props = {
 }
 
 export const Task = ({task, todolist}: Props) => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const removeTaskHandler = () => {
         dispatch(removeTaskAC({taskId: task.id, todolistId: todolist.id}))
@@ -42,3 +42,5 @@ export const Task = ({task, todolist}: Props) => {
         </ListItem>
     );
 };
+
+//создайте файл Task.styles.ts рядом с компонентом Task и перенесите туда необходимые стили

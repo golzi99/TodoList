@@ -1,4 +1,4 @@
-import {TodolistType} from '../types/types';
+import {TodolistType} from '../../../common/types/types';
 import {v1} from 'uuid';
 import {
     addTodolistAC,

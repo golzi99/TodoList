@@ -1,20 +1,18 @@
 import React from 'react';
-import './App.css';
 import {ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import {useSelector} from 'react-redux';
-import {RootState} from './store';
-import {Header} from '../Header';
+import {Header} from '../common/components/Header/Header';
 import {getTheme} from '../common/theme/theme';
-import {Main} from '../Main';
-import {ThemeMode} from '../types/types';
+import {Main} from './Main';
+import {useAppSelector} from '../common/hooks/useAppSelector';
+import {selectThemeMode} from './appSelectors';
 
 
 function App() {
-    const themeMode = useSelector<RootState, ThemeMode>(state => state.app.themeMode)
+    const themeMode = useAppSelector(selectThemeMode)
 
     return (
-        <div className="App">
+        <div>
             <ThemeProvider theme={getTheme(themeMode)}>
                 <CssBaseline/>
                 <Header/>

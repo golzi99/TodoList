@@ -1,5 +1,5 @@
 import {createTheme} from '@mui/material/styles';
-import {ThemeMode} from '../../types/types';
+import {ThemeMode} from '../types/types';
 
 export const getTheme = (themeMode: ThemeMode) => {
     return createTheme({
