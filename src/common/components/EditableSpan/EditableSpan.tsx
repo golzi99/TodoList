@@ -1,12 +1,12 @@
 import React, {ChangeEvent, useState} from 'react';
 
-type EditableSpanPropsType = {
+type Props = {
     value: string,
     updateTitle: (title: string) => void,
     maxLength?: number
 }
 
-export const EditableSpan = ({value, updateTitle, maxLength = 10}: EditableSpanPropsType) => {
+export const EditableSpan = ({value, updateTitle, maxLength = 10}: Props) => {
     const [itemTitle, setItemTitle] = useState(value)
     const [editMode, setEditMode] = useState(false)
     const [inputError, setInputError] = useState(false)

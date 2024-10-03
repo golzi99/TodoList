@@ -15,19 +15,17 @@ export const Todolists = () => {
 
     const todolists = useAppSelector(selectTodoLists)
 
-    const todoListsComponent: Array<JSX.Element> = todolists.map((tl) => {
-        return (
-            <Grid key={tl.id}>
-                <Paper elevation={5} sx={{border: `1px solid ${theme.palette.primary.main}`}}>
-                    <Todolist todolist={tl}/>
-                </Paper>
-            </Grid>
-        )
-    })
-
     return (
         <>
-            {todoListsComponent}
+            {todolists.map((tl) => {
+                return (
+                    <Grid key={tl.id}>
+                        <Paper elevation={5} sx={{border: `1px solid ${theme.palette.primary.main}`}}>
+                            <Todolist todolist={tl}/>
+                        </Paper>
+                    </Grid>
+                )
+            })}
         </>
     )
 };

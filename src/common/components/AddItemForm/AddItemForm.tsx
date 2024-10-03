@@ -4,12 +4,12 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
-type AddItemFormPropsType = {
+type Props = {
     addItem: (title: string) => void,
     maxLength: number
 }
 
-export const AddItemForm = ({addItem, maxLength}: AddItemFormPropsType) => {
+export const AddItemForm = ({addItem, maxLength}: Props) => {
 
     const [title, setTitle] = useState('')
     const [inputError, setInputError] = useState<string | null>(null)

@@ -7,11 +7,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {MenuButton} from './MenuButton';
 import Switch from '@mui/material/Switch';
 
-type ButtonAppBarPropsType = {
+type Props = {
     onChange: () => void
 }
 
-export default function ButtonAppBar({onChange}: ButtonAppBarPropsType) {
+export default function ButtonAppBar({onChange}: Props) {
 
     return (
         <Box sx={{ flexGrow: 1 , paddingBottom: '80px'}}>
