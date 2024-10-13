@@ -28,8 +28,8 @@ beforeEach(() => {
             {id: '6', title: 'RTK query', isDone: false}
         ],
         [todolistId2]: [
-            {id: '1', title: 'Book', isDone: false},
-            {id: '2', title: 'Milk', isDone: true},
+            {id: '1', title: 'Book', isDone: true},
+            {id: '2', title: 'Milk', isDone: false},
         ]
     }
 })
@@ -48,8 +48,8 @@ test('correct task should be removed from correct array', () => {
                 {id: '6', title: 'RTK query', isDone: false}
             ],
             [todolistId2]: [
-                {id: '1', title: 'Book', isDone: false},
-                {id: '2', title: 'Milk', isDone: true},
+                {id: '1', title: 'Book', isDone: true},
+                {id: '2', title: 'Milk', isDone: false},
             ]
         }
     )
@@ -92,6 +92,7 @@ test('correct task should change its name', () => {
 
     expect(endState[todolistId1].length).toBe(6)
     expect(endState[todolistId1][0].title).toBe(newTitle)
+    expect(endState[todolistId2][0].title).not.toBe(newTitle)
 })
 
 test('correct task should change its status', () => {
@@ -99,6 +100,7 @@ test('correct task should change its status', () => {
 
     expect(endState[todolistId1].length).toBe(6)
     expect(endState[todolistId1][0].isDone).toBeFalsy()
+    expect(endState[todolistId2][0].isDone).toBeTruthy()
 })
 
 test('new array should be added when new todolist is added', () => {

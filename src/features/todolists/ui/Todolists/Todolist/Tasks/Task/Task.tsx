@@ -6,35 +6,38 @@ import {EditableSpan} from '../../../../../../../common/components/EditableSpan/
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from '../../../../../model/tasks-reducer';
-import {TaskPropsType, TodolistType} from '../../../../../../../common/types/types';
+import {TaskType, TodolistType} from '../../../../../../../common/types/types';
 import {getListItemSx} from './Task.styles';
 import {useAppDispatch} from '../../../../../../../common/hooks/useAppDispatch';
 
 type Props = {
-    task: TaskPropsType
+    task: TaskType
     todolist: TodolistType
 }
 
 export const Task = ({task, todolist}: Props) => {
     const dispatch = useAppDispatch()
+    const {id: taskId, title, isDone} = task
+    const {id: todolistId} = todolist
 
     const removeTaskHandler = () => {
-        dispatch(removeTaskAC({taskId: task.id, todolistId: todolist.id}))
+        dispatch(removeTaskAC({taskId, todolistId}))
     }
 
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeTaskStatusAC({taskId: task.id, status: e.currentTarget.checked, todolistId: todolist.id}))
+        const status = e.currentTarget.checked
+        dispatch(changeTaskStatusAC({taskId, status, todolistId}))
     }
 
     const changeTaskTitleHandler = (title: string) => {
-        dispatch(changeTaskTitleAC({taskId: task.id, title, todolistId: todolist.id}))
+        dispatch(changeTaskTitleAC({taskId, title, todolistId}))
     }
 
     return (
-        <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
+        <ListItem key={taskId} sx={getListItemSx(isDone)}>
             <Box display={'flex'} alignItems={'center'}>
-                <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
-                <EditableSpan value={task.title} updateTitle={changeTaskTitleHandler}/>
+                <Checkbox checked={isDone} onChange={changeTaskStatusHandler}/>
+                <EditableSpan value={title} updateTitle={changeTaskTitleHandler}/>
             </Box>
             <IconButton aria-label="delete" onClick={removeTaskHandler}>
                 <DeleteIcon/>

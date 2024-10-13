@@ -1,43 +1,57 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TodolistType} from '../../../../../common/types/types';
 import {AddItemForm} from '../../../../../common/components/AddItemForm/AddItemForm';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import {FilterTasksButtons} from './FilterTasksButtons/FilterTasksButtons';
 import {Tasks} from './Tasks/Tasks';
 import {TodolistTitle} from './TodolistTitle/TodolistTitle';
 import {addTaskAC} from '../../../model/tasks-reducer';
 import {useAppDispatch} from '../../../../../common/hooks/useAppDispatch';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 
 type Props = {
     todolist: TodolistType,
 }
 
-export const Todolist = ({todolist,}: Props) => {
+export const Todolist = ({todolist}: Props) => {
 
     const dispatch = useAppDispatch()
 
-    const {id} = todolist
+    const {id: todolistId} = todolist
 
     const addNewTask = (title: string) => {
-        dispatch(addTaskAC({title, todolistId: id}))
+        dispatch(addTaskAC({title, todolistId}))
     }
 
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
-        <div>
-            <Accordion>
-                <AccordionSummary expandIcon={<ArrowDownwardIcon/>}>
-                    <TodolistTitle todolist={todolist}/>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <AddItemForm addItem={addNewTask} maxLength={10}/>
-                    <Tasks todolist={todolist}/>
-                    <FilterTasksButtons todolist={todolist}/>
-                </AccordionDetails>
-            </Accordion>
-        </div>
+        <Box padding={'10px'} width={'325px'}>
+            <Box display={'flex'} justifyContent={'space-between'} margin={'5px'}>
+                <TodolistTitle todolist={todolist}/>
+                <Button onClick={() => {
+                    setIsOpen(!isOpen)
+                }}>
+                    <ArrowDownwardIcon sx={{
+                        transform: isOpen ? 'rotate(180deg)' : 0,
+                        transition: 'transform 0.5s linear'
+                    }}/>
+                </Button>
+            </Box>
+            <Box
+                //     sx={{
+                //     maxHeight: isOpen ? '1000px' : 0,
+                //     transition: 'max-height 0.5s ease-in-out',
+                //     overflow: 'hidden'
+                // }}
+            >
+                <AddItemForm addItem={addNewTask} maxLength={10}/>
+                <Tasks todolist={todolist}/>
+                <FilterTasksButtons todolist={todolist}/>
+            </Box>
+
+        </Box>
     )
 }

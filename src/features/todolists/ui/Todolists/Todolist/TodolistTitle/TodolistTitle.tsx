@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {TodolistType} from '../../../../../../common/types/types';
 import {changeTodoListTitleAC, removeTodolistAC} from '../../../../model/todolists-reducer';
 import {useAppDispatch} from '../../../../../../common/hooks/useAppDispatch';
+import styles from './TodolistTitle.module.css'
 
 
 type Props = {
@@ -26,11 +27,13 @@ export const TodolistTitle = ({todolist}: Props) => {
     }
 
     return (
-        <h3>
-            <EditableSpan value={title} updateTitle={updateTitle} maxLength={30}/>
+        <div className={styles.container}>
+            <h3>
+                <EditableSpan value={title} updateTitle={updateTitle} maxLength={30}/>
+            </h3>
             <IconButton aria-label="delete" onClick={onClickRemoveTodoList}>
                 <DeleteIcon/>
             </IconButton>
-        </h3>
+        </div>
     );
 };
