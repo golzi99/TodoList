@@ -1,44 +1,44 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react"
 
 type Props = {
-  value: string;
-  onChange: (title: string) => void;
-  maxLength?: number;
-};
+  value: string
+  onChange: (title: string) => void
+  maxLength?: number
+}
 
 export const EditableSpan = ({ value, onChange, maxLength = 10 }: Props) => {
-  const [itemTitle, setItemTitle] = useState(value);
-  const [editMode, setEditMode] = useState(false);
-  const [inputError, setInputError] = useState(false);
+  const [itemTitle, setItemTitle] = useState(value)
+  const [editMode, setEditMode] = useState(false)
+  const [inputError, setInputError] = useState(false)
 
-  const inputEmpty = !itemTitle;
-  const userErrorLengthMessage = itemTitle.length > maxLength;
+  const inputEmpty = !itemTitle
+  const userErrorLengthMessage = itemTitle.length > maxLength
 
   const changeTitle = () => {
-    const trimmedTitle = itemTitle.trim();
+    const trimmedTitle = itemTitle.trim()
     if (!inputEmpty && !userErrorLengthMessage && trimmedTitle) {
-      onChange(trimmedTitle);
-      setEditMode(false);
+      onChange(trimmedTitle)
+      setEditMode(false)
     } else {
-      setInputError(true);
+      setInputError(true)
     }
-    setItemTitle(trimmedTitle);
-  };
+    setItemTitle(trimmedTitle)
+  }
 
   const onEnterClick = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      changeTitle();
+      changeTitle()
     }
-  };
+  }
 
   const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    inputError && setInputError(false);
-    setItemTitle(event.currentTarget.value);
-  };
+    inputError && setInputError(false)
+    setItemTitle(event.currentTarget.value)
+  }
 
   const onBlurHandler = () => {
-    changeTitle();
-  };
+    changeTitle()
+  }
 
   return editMode ? (
     <input
@@ -52,13 +52,13 @@ export const EditableSpan = ({ value, onChange, maxLength = 10 }: Props) => {
   ) : (
     <span
       onDoubleClick={() => {
-        setEditMode(true);
+        setEditMode(true)
       }}
     >
       {value}
     </span>
-  );
-};
+  )
+}
 
 // Создайте модульный стиль TodolistTitle.module.css и перенесите в него код
 //.container {

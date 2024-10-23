@@ -1,22 +1,22 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import { FilterValues, TodolistProps } from "common/types/types";
-import { changeTodoListFilterAC } from "../../../../model/todolists-reducer";
-import { useAppDispatch } from "common/hooks";
+import React from "react"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import { FilterValues, TodolistProps } from "common/types/types"
+import { changeTodoListFilterAC } from "../../../../model/todolists-reducer"
+import { useAppDispatch } from "common/hooks"
 
 type Props = {
-  todolist: TodolistProps;
-};
+  todolist: TodolistProps
+}
 
 export const FilterTasksButtons = ({ todolist }: Props) => {
-  const { filter, id: todolistId } = todolist;
+  const { filter, id: todolistId } = todolist
 
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   const changeFilterTasksHandler = (newFilterValue: FilterValues) => () => {
-    dispatch(changeTodoListFilterAC({ todolistId, filter: newFilterValue }));
-  };
+    dispatch(changeTodoListFilterAC({ todolistId, filter: newFilterValue }))
+  }
 
   return (
     <Box display={"flex"} justifyContent={"space-between"} gap={"10px"}>
@@ -42,7 +42,7 @@ export const FilterTasksButtons = ({ todolist }: Props) => {
         Completed
       </Button>
     </Box>
-  );
-};
+  )
+}
 
 //создайте файл FilterTasksButtons.styles.ts рядом с компонентом FilterTasksButtons и перенесите туда необходимые стили

@@ -1,5 +1,5 @@
-import { createTheme } from "@mui/material/styles";
-import { ThemeMode } from "common/types";
+import { createTheme } from "@mui/material/styles"
+import { ThemeMode } from "common/types"
 
 export const getTheme = (themeMode: ThemeMode) => {
   return createTheme({
@@ -9,5 +9,5 @@ export const getTheme = (themeMode: ThemeMode) => {
         main: "#d06905",
       },
     },
-  });
-};
+  })
+}

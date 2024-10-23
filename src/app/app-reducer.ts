@@ -1,27 +1,24 @@
-import { ThemeMode } from "common/types/types";
+import { ThemeMode } from "common/types/types"
 
-type ChangeThemeActionType = ReturnType<typeof changeThemeAC>;
+type ChangeThemeActionType = ReturnType<typeof changeThemeAC>
 
-type InitialStateType = typeof initialState;
+type InitialStateType = typeof initialState
 
 const initialState = {
   themeMode: "dark" as ThemeMode,
-};
+}
 
-export const appReducer = (
-  state: InitialStateType = initialState,
-  action: ActionsType,
-): InitialStateType => {
+export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case "CHANGE_THEME":
-      return { ...state, themeMode: action.payload.themeMode };
+      return { ...state, themeMode: action.payload.themeMode }
     default:
-      return state;
+      return state
   }
-};
+}
 
 // Action types
-type ActionsType = ChangeThemeActionType;
+type ActionsType = ChangeThemeActionType
 
 export const changeThemeAC = (themeMode: ThemeMode) => {
   return {
@@ -29,5 +26,5 @@ export const changeThemeAC = (themeMode: ThemeMode) => {
     payload: {
       themeMode,
     },
-  } as const;
-};
+  } as const
+}

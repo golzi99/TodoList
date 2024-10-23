@@ -1,4 +1,4 @@
-import { SxProps } from "@mui/material";
+import { SxProps } from "@mui/material"
 
 export const getListItemSx = (isDone: boolean): SxProps => ({
   p: 0,
@@ -16,4 +16,4 @@ export const getListItemSx = (isDone: boolean): SxProps => ({
     fontWeight: isDone ? "400" : "bold",
     textDecoration: isDone ? "line-through" : "",
   },
-});
+})
