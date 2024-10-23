@@ -1,4 +1,4 @@
-import {TasksStateType} from '../../../common/types/types';
+import {TasksState} from '../../../common/types/types';
 import {v1} from 'uuid';
 import {
     addTaskAC,
@@ -10,7 +10,7 @@ import {
 import {addTodolistAC, removeTodolistAC} from './todolists-reducer';
 
 
-let startState: TasksStateType = {}
+let startState: TasksState = {}
 let todolistId1: string
 let todolistId2: string
 

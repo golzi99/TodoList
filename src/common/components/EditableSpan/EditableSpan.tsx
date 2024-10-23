@@ -2,11 +2,11 @@ import React, {ChangeEvent, useState} from 'react';
 
 type Props = {
     value: string,
-    updateTitle: (title: string) => void,
+    onChange: (title: string) => void,
     maxLength?: number
 }
 
-export const EditableSpan = ({value, updateTitle, maxLength = 10}: Props) => {
+export const EditableSpan = ({value, onChange, maxLength = 10}: Props) => {
     const [itemTitle, setItemTitle] = useState(value)
     const [editMode, setEditMode] = useState(false)
     const [inputError, setInputError] = useState(false)
@@ -17,7 +17,7 @@ export const EditableSpan = ({value, updateTitle, maxLength = 10}: Props) => {
     const changeTitle = () => {
         const trimmedTitle = itemTitle.trim()
         if (!inputEmpty && !userErrorLengthMessage && trimmedTitle) {
-            updateTitle(trimmedTitle)
+            onChange(trimmedTitle)
             setEditMode(false)
         } else {
             setInputError(true)

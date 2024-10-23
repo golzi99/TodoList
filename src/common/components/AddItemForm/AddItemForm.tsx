@@ -6,10 +6,10 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 type Props = {
     addItem: (title: string) => void,
-    maxLength: number
+    maxLength?: number
 }
 
-export const AddItemForm = ({addItem, maxLength}: Props) => {
+export const AddItemForm = ({addItem, maxLength = 10}: Props) => {
 
     const [title, setTitle] = useState('')
     const [inputError, setInputError] = useState<string | null>(null)
@@ -49,7 +49,7 @@ export const AddItemForm = ({addItem, maxLength}: Props) => {
 
     return (
         <div>
-            <Box display={'flex'} justifyContent={'space-between'}>
+            <Box display={'flex'} gap={'10px'}>
                 <TextField label={inputError ? inputError : 'Title'}
                            variant="outlined"
                            error={!!inputError}

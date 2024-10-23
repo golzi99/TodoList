@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TodolistType} from '../../../../../common/types/types';
+import {TodolistProps} from '../../../../../common/types/types';
 import {AddItemForm} from '../../../../../common/components/AddItemForm/AddItemForm';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import {FilterTasksButtons} from './FilterTasksButtons/FilterTasksButtons';
@@ -10,9 +10,8 @@ import {useAppDispatch} from '../../../../../common/hooks/useAppDispatch';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-
 type Props = {
-    todolist: TodolistType,
+    todolist: TodolistProps,
 }
 
 export const Todolist = ({todolist}: Props) => {
@@ -41,17 +40,16 @@ export const Todolist = ({todolist}: Props) => {
                 </Button>
             </Box>
             <Box
-                //     sx={{
+                // sx={{
                 //     maxHeight: isOpen ? '1000px' : 0,
-                //     transition: 'max-height 0.5s ease-in-out',
+                //     transition: 'max-height 0.5s linear',
                 //     overflow: 'hidden'
                 // }}
             >
-                <AddItemForm addItem={addNewTask} maxLength={10}/>
+                <AddItemForm addItem={addNewTask}/>
                 <Tasks todolist={todolist}/>
                 <FilterTasksButtons todolist={todolist}/>
             </Box>
-
         </Box>
     )
 }

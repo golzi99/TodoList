@@ -6,13 +6,13 @@ import {EditableSpan} from '../../../../../../../common/components/EditableSpan/
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from '../../../../../model/tasks-reducer';
-import {TaskType, TodolistType} from '../../../../../../../common/types/types';
+import {TaskProps, TodolistProps} from '../../../../../../../common/types/types';
 import {getListItemSx} from './Task.styles';
 import {useAppDispatch} from '../../../../../../../common/hooks/useAppDispatch';
 
 type Props = {
-    task: TaskType
-    todolist: TodolistType
+    task: TaskProps
+    todolist: TodolistProps
 }
 
 export const Task = ({task, todolist}: Props) => {
@@ -37,7 +37,7 @@ export const Task = ({task, todolist}: Props) => {
         <ListItem key={taskId} sx={getListItemSx(isDone)}>
             <Box display={'flex'} alignItems={'center'}>
                 <Checkbox checked={isDone} onChange={changeTaskStatusHandler}/>
-                <EditableSpan value={title} updateTitle={changeTaskTitleHandler}/>
+                <EditableSpan value={title} onChange={changeTaskTitleHandler}/>
             </Box>
             <IconButton aria-label="delete" onClick={removeTaskHandler}>
                 <DeleteIcon/>
