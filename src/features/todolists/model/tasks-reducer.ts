@@ -101,7 +101,7 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
 }
 
 export const removeTaskTC = (arg: { taskId: string; todolistId: string }) => (dispatch: AppDispatch) => {
-  tasksApi.removeTask(arg).then((res) => {
+  tasksApi.removeTask(arg).then(() => {
     dispatch(removeTaskAC(arg))
   })
 }
@@ -131,7 +131,7 @@ export const updateTaskTC =
         startDate: domainModel.startDate ?? task.startDate,
       }
 
-      tasksApi.updateTask({ taskId, todolistId, model }).then((res) => {
+      tasksApi.updateTask({ taskId, todolistId, model }).then(() => {
         dispatch(updateTaskAC(arg))
       })
     }

@@ -111,7 +111,7 @@ export const addTodolistTC = (title: string) => (dispatch: AppDispatch) => {
 }
 
 export const removeTodolistTC = (id: string) => (dispatch: AppDispatch) => {
-  todolistsApi.removeTodolist(id).then((res) => {
+  todolistsApi.removeTodolist(id).then(() => {
     dispatch(removeTodolistAC(id))
   })
 }
@@ -123,7 +123,7 @@ export const updateTodolistTitleTC =
     const todolist = todolists?.find((tl) => tl.id === todolistId)
 
     if (todolist) {
-      todolistsApi.updateTodolist({ id: todolistId, title }).then((res) => {
+      todolistsApi.updateTodolist({ id: todolistId, title }).then(() => {
         dispatch(changeTodoListTitleAC(arg))
       })
     }

@@ -1,13 +1,7 @@
 import React from "react"
 import IconButton from "@mui/material/IconButton"
 import DeleteIcon from "@mui/icons-material/Delete"
-import {
-  changeTodoListTitleAC,
-  removeTodolistAC,
-  DomainTodolist,
-  removeTodolistTC,
-  updateTodolistTitleTC,
-} from "../../../../model/todolists-reducer"
+import { DomainTodolist, removeTodolistTC, updateTodolistTitleTC } from "../../../../model/todolists-reducer"
 import { useAppDispatch } from "common/hooks"
 import styles from "./TodolistTitle.module.css"
 import { EditableSpan } from "common/components"
