@@ -23,4 +23,4 @@ export type GetTasksResponse = {
   error: string | null
 }
 
-export type UpdateTaskModel = Partial<Omit<DomainTask, "id" | "todoListId" | "order" | "addedDate">>
+export type UpdateTaskModel = Omit<DomainTask, "id" | "todoListId" | "order" | "addedDate">

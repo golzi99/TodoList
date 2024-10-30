@@ -1,7 +1,7 @@
 import { TasksState } from "common/types/types"
 import { v1 } from "uuid"
-import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer } from "./tasks-reducer"
-import { addTodolistAC, removeTodolistAC } from "./todolists-reducer"
+import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer } from "../tasks-reducer"
+import { addTodolistAC, removeTodolistAC } from "../todolists-reducer"
 
 let startState: TasksState = {}
 let todolistId1: string

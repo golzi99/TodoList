@@ -1,5 +1,5 @@
 import { v1 } from "uuid"
-import { FilterValues, TodolistProps } from "common/types/types"
+import { FilterValues, TodolistProps } from "common/types"
 
 const initialState: Array<TodolistProps> = []
 

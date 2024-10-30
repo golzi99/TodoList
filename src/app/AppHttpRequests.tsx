@@ -1,10 +1,11 @@
 import Checkbox from "@mui/material/Checkbox"
 import React, { ChangeEvent, useEffect, useState } from "react"
-import { DomainTask, Tasks } from "../features/todolists/api/tasksApi.types"
+import { DomainTask, Tasks, UpdateTaskModel } from "../features/todolists/api/tasksApi.types"
 import { tasksApi } from "../features/todolists/api/tasksApi"
 import { todolistsApi } from "../features/todolists/api/todolistsApi"
 import { Todolist } from "../features/todolists/api/todolistsApi.types"
 import { AddItemForm, EditableSpan } from "common/components"
+import { TaskStatus } from "../features/todolists/lib/enums"
 
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Array<Todolist>>([])
@@ -70,7 +71,16 @@ export const AppHttpRequests = () => {
 
   const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, task: DomainTask, todolistId: string) => {
     // update task status
-    tasksApi.updateTaskStatus({ e, task, todolistId }).then((res) => {
+    const taskStatus = e.currentTarget.checked
+    const model: UpdateTaskModel = {
+      title: task.title,
+      description: task.description,
+      status: taskStatus ? TaskStatus.Completed : TaskStatus.New,
+      priority: task.priority,
+      startDate: task.startDate,
+      deadline: task.deadline,
+    }
+    tasksApi.updateTask({ model, task, todolistId }).then((res) => {
       const newTask = res.data.data.item
       setTasks({
         ...tasks,
@@ -81,7 +91,15 @@ export const AppHttpRequests = () => {
 
   const changeTaskTitleHandler = (title: string, task: DomainTask, todolistId: string) => {
     // update task title
-    tasksApi.updateTaskTitle({ title, todolistId, task }).then((res) => {
+    const model: UpdateTaskModel = {
+      title,
+      description: task.description,
+      status: task.status,
+      priority: task.priority,
+      startDate: task.startDate,
+      deadline: task.deadline,
+    }
+    tasksApi.updateTask({ model, todolistId, task }).then((res) => {
       const newTask = res.data.data.item
       setTasks({
         ...tasks,
