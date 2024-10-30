@@ -1,4 +1,4 @@
-import { ThemeMode } from "common/types"
+export type ThemeMode = "light" | "dark"
 
 type ChangeThemeActionType = ReturnType<typeof changeThemeAC>
 

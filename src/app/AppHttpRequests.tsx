@@ -80,13 +80,13 @@ export const AppHttpRequests = () => {
       startDate: task.startDate,
       deadline: task.deadline,
     }
-    tasksApi.updateTask({ model, task, todolistId }).then((res) => {
-      const newTask = res.data.data.item
-      setTasks({
-        ...tasks,
-        [todolistId]: tasks[todolistId].map((t) => (t.id === task.id ? newTask : t)),
-      })
-    })
+    // tasksApi.updateTask({ model, task, todolistId }).then((res) => {
+    //   const newTask = res.data.data.item
+    //   setTasks({
+    //     ...tasks,
+    //     [todolistId]: tasks[todolistId].map((t) => (t.id === task.id ? newTask : t)),
+    //   })
+    // })
   }
 
   const changeTaskTitleHandler = (title: string, task: DomainTask, todolistId: string) => {
@@ -99,13 +99,13 @@ export const AppHttpRequests = () => {
       startDate: task.startDate,
       deadline: task.deadline,
     }
-    tasksApi.updateTask({ model, todolistId, task }).then((res) => {
-      const newTask = res.data.data.item
-      setTasks({
-        ...tasks,
-        [todolistId]: tasks[todolistId].map((t) => (t.id === task.id ? newTask : t)),
-      })
-    })
+    // tasksApi.updateTask({ model, todolistId, task }).then((res) => {
+    //   const newTask = res.data.data.item
+    //   setTasks({
+    //     ...tasks,
+    //     [todolistId]: tasks[todolistId].map((t) => (t.id === task.id ? newTask : t)),
+    //   })
+    // })
   }
 
   return (

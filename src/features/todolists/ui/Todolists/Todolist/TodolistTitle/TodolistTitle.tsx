@@ -1,14 +1,19 @@
 import React from "react"
 import IconButton from "@mui/material/IconButton"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { TodolistProps } from "common/types/types"
-import { changeTodoListTitleAC, removeTodolistAC } from "../../../../model/todolists-reducer"
+import {
+  changeTodoListTitleAC,
+  removeTodolistAC,
+  DomainTodolist,
+  removeTodolistTC,
+  updateTodolistTitleTC,
+} from "../../../../model/todolists-reducer"
 import { useAppDispatch } from "common/hooks"
 import styles from "./TodolistTitle.module.css"
 import { EditableSpan } from "common/components"
 
 type Props = {
-  todolist: TodolistProps
+  todolist: DomainTodolist
 }
 
 export const TodolistTitle = ({ todolist }: Props) => {
@@ -17,11 +22,11 @@ export const TodolistTitle = ({ todolist }: Props) => {
   const { id, title } = todolist
 
   const onClickRemoveTodoList = () => {
-    dispatch(removeTodolistAC(id))
+    dispatch(removeTodolistTC(id))
   }
 
   const updateTitle = (todoListTitle: string) => {
-    dispatch(changeTodoListTitleAC({ todolistId: id, title: todoListTitle }))
+    dispatch(updateTodolistTitleTC({ todolistId: id, title: todoListTitle }))
   }
 
   return (
