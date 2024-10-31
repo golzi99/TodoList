@@ -78,7 +78,6 @@ export const addTodolistAC = (todolist: Todolist) => {
     },
   } as const
 }
-//важно ли, чтобы тут создавать id: v1() или можно вынести в самой функции в App?
 
 export const changeTodoListTitleAC = (payload: { todolistId: string; title: string }) => {
   return {
@@ -123,7 +122,7 @@ export const updateTodolistTitleTC =
     const todolist = todolists?.find((tl) => tl.id === todolistId)
 
     if (todolist) {
-      todolistsApi.updateTodolist({ id: todolistId, title }).then(() => {
+      todolistsApi.updateTodolist({ id: todolistId, title }).then((res) => {
         dispatch(changeTodoListTitleAC(arg))
       })
     }

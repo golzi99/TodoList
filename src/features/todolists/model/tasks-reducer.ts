@@ -86,7 +86,7 @@ export const addTaskAC = (payload: { task: DomainTask }) => {
   } as const
 }
 
-export const updateTaskAC = (payload: { taskId: string; todolistId: string; domainModel: UpdateTaskDomainModel }) => {
+export const updateTaskAC = (payload: { taskId: string; todolistId: string; domainModel: DomainTask }) => {
   return {
     type: "UPDATE_TASK",
     payload,
@@ -131,8 +131,8 @@ export const updateTaskTC =
         startDate: domainModel.startDate ?? task.startDate,
       }
 
-      tasksApi.updateTask({ taskId, todolistId, model }).then(() => {
-        dispatch(updateTaskAC(arg))
+      tasksApi.updateTask({ taskId, todolistId, model }).then((res) => {
+        dispatch(updateTaskAC({ taskId, todolistId, domainModel: res.data.data.item }))
       })
     }
   }

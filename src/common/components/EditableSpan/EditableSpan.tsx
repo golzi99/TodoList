@@ -59,9 +59,3 @@ export const EditableSpan = ({ value, onChange, maxLength = 10 }: Props) => {
     </span>
   )
 }
-
-// Создайте модульный стиль TodolistTitle.module.css и перенесите в него код
-//.container {
-//   display: flex;
-//   align-items: center;
-// }
