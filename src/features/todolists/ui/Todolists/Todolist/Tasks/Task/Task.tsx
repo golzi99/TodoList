@@ -20,7 +20,7 @@ type Props = {
 export const Task = ({ task, todolist }: Props) => {
   const dispatch = useAppDispatch()
   const { id: taskId, title, status } = task
-  const { id: todolistId } = todolist
+  const { id: todolistId, entityStatus } = todolist
 
   const removeTaskHandler = () => {
     dispatch(removeTaskTC({ taskId, todolistId }))
@@ -38,10 +38,14 @@ export const Task = ({ task, todolist }: Props) => {
   return (
     <ListItem key={taskId} sx={getListItemSx(status === TaskStatus.Completed)}>
       <Box display={"flex"} alignItems={"center"}>
-        <Checkbox checked={status === TaskStatus.Completed} onChange={changeTaskStatusHandler} />
-        <EditableSpan value={title} onChange={changeTaskTitleHandler} />
+        <Checkbox
+          checked={status === TaskStatus.Completed}
+          onChange={changeTaskStatusHandler}
+          disabled={entityStatus === "loading"}
+        />
+        <EditableSpan value={title} onChange={changeTaskTitleHandler} disabled={entityStatus === "loading"} />
       </Box>
-      <IconButton aria-label="delete" onClick={removeTaskHandler}>
+      <IconButton aria-label="delete" onClick={removeTaskHandler} disabled={entityStatus === "loading"}>
         <DeleteIcon />
       </IconButton>
     </ListItem>

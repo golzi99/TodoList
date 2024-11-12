@@ -7,9 +7,10 @@ import AddCircleIcon from "@mui/icons-material/AddCircle"
 type Props = {
   addItem: (title: string) => void
   maxLength?: number
+  disabled?: boolean
 }
 
-export const AddItemForm = ({ addItem, maxLength = 10 }: Props) => {
+export const AddItemForm = ({ addItem, disabled, maxLength = 110 }: Props) => {
   const [title, setTitle] = useState("")
   const [inputError, setInputError] = useState<string | null>(null)
 
@@ -57,13 +58,14 @@ export const AddItemForm = ({ addItem, maxLength = 10 }: Props) => {
           onChange={onChangeInputHandler}
           onKeyDown={onEnterClick}
           size="small"
+          disabled={disabled}
         />
         <Button
           variant="contained"
           style={buttonStyle}
           onClick={addItemOnClick}
           endIcon={<AddCircleIcon />}
-          disabled={inputEmpty || userErrorLengthMessage || !!inputError}
+          disabled={inputEmpty || userErrorLengthMessage || !!inputError || disabled}
         >
           ADD
         </Button>

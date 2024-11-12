@@ -6,12 +6,17 @@ import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 import { MenuButton } from "./MenuButton"
 import Switch from "@mui/material/Switch"
+import LinearProgress from "@mui/material/LinearProgress"
+import { useAppSelector } from "common/hooks"
+import { selectAppStatus } from "app/appSelectors"
 
 type Props = {
   onChange: () => void
 }
 
 export function ButtonAppBar({ onChange }: Props) {
+  const status = useAppSelector(selectAppStatus)
+
   return (
     <Box sx={{ flexGrow: 1, paddingBottom: "80px" }}>
       <AppBar position="fixed">
@@ -27,6 +32,7 @@ export function ButtonAppBar({ onChange }: Props) {
           <MenuButton color="inherit">FAQ</MenuButton>
           <Switch color={"default"} onChange={onChange} />
         </Toolbar>
+        {status === "loading" && <LinearProgress />}
       </AppBar>
     </Box>
   )

@@ -4,9 +4,10 @@ type Props = {
   value: string
   onChange: (title: string) => void
   maxLength?: number
+  disabled?: boolean
 }
 
-export const EditableSpan = ({ value, onChange, maxLength = 10 }: Props) => {
+export const EditableSpan = ({ value, onChange, disabled, maxLength = 110 }: Props) => {
   const [itemTitle, setItemTitle] = useState(value)
   const [editMode, setEditMode] = useState(false)
   const [inputError, setInputError] = useState(false)
@@ -52,7 +53,9 @@ export const EditableSpan = ({ value, onChange, maxLength = 10 }: Props) => {
   ) : (
     <span
       onDoubleClick={() => {
-        setEditMode(true)
+        if (!disabled) {
+          setEditMode(true)
+        }
       }}
     >
       {value}
