@@ -3,8 +3,8 @@ import { AppDispatch, AppThunk, RootState } from "app/store"
 import { todolistsApi } from "../api/todolistsApi"
 import { RequestStatus, setAppStatusAC } from "app/app-reducer"
 import { ResultCode } from "../lib/enums"
-import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
-import { handleServerAppError } from "common/utils/handleServerAppError"
+import { handleServerAppError } from "common/utils"
+import { handleServerNetworkError } from "common/utils"
 
 export type DomainTodolist = Todolist & {
   filter: FilterValues
@@ -162,6 +162,7 @@ export const removeTodolistTC =
         }
       })
       .catch((error) => {
+        dispatch(changeTodolistEntityStatusAC({ id, entityStatus: "idle" }))
         handleServerNetworkError(error.message, dispatch)
       })
   }
