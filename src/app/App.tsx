@@ -1,11 +1,11 @@
 import React from "react"
 import { ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
-import { Main } from "./Main"
 import { selectThemeMode } from "./appSelectors"
 import { ErrorSnackbar, Header } from "common/components"
 import { useAppSelector } from "common/hooks"
 import { getTheme } from "common/theme"
+import { Outlet } from "react-router-dom"
 
 function App() {
   const themeMode = useAppSelector(selectThemeMode)
@@ -15,7 +15,7 @@ function App() {
       <ThemeProvider theme={getTheme(themeMode)}>
         <CssBaseline />
         <Header />
-        <Main />
+        <Outlet />
         <ErrorSnackbar />
       </ThemeProvider>
     </div>
