@@ -1,16 +1,21 @@
-import React from "react"
-import ReactDOM from "react-dom/client"
-import "./index.css"
-import { Provider } from "react-redux"
-import { store } from "app/store"
-import { RouterProvider } from "react-router-dom"
-import { router } from "common/router"
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import './index.css'
+import { Provider } from 'react-redux'
+import { store } from 'app/store'
+import { RouterProvider } from 'react-router-dom'
+import { router } from 'common/router'
 
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   // <React.StrictMode>
   <Provider store={store}>
-    <RouterProvider router={router} />
+    <RouterProvider
+      router={router}
+      // future={{
+      //   v7_startTransition: true,
+      // }}
+    />
   </Provider>,
   // </React.StrictMode>
 )

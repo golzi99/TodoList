@@ -1,6 +1,6 @@
 import React from 'react'
 import { getTheme } from 'common/theme'
-import { useAppSelector } from 'common/hooks'
+import { useAppDispatch, useAppSelector } from 'common/hooks'
 import { selectThemeMode } from 'app/appSelectors'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
@@ -10,7 +10,11 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid2'
 import TextField from '@mui/material/TextField'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { loginTC } from '../../model/auth-reducer'
+import { Navigate } from 'react-router-dom'
+import { selectIsLoggedIn } from '../../model/authSelector'
+import { Path } from 'common/router'
 
 type Inputs = {
   email: string
@@ -21,16 +25,29 @@ type Inputs = {
 export const Login = () => {
   const themeMode = useAppSelector(selectThemeMode)
   const theme = getTheme(themeMode)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+
+  const dispatch = useAppDispatch()
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    control,
+    formState: { errors, dirtyFields },
   } = useForm<Inputs>({ defaultValues: { email: '', password: '', rememberMe: false } })
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data)
+    dispatch(loginTC(data)).then(() => {
+      reset()
+    })
   }
+
+  if (isLoggedIn) {
+    return <Navigate to={Path.Main} />
+  }
+
+  const isDisabled = !!errors.email || !dirtyFields.email || !dirtyFields.password
 
   return (
     <Grid container justifyContent={'center'}>
@@ -58,10 +75,44 @@ export const Login = () => {
           </FormLabel>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormGroup>
-              <TextField label="Email" margin="normal" {...register('email')} />
-              <TextField type="password" label="Password" margin="normal" {...register('password')} />
-              <FormControlLabel label={'Remember me'} control={<Checkbox />} {...register('rememberMe')} />
-              <Button type={'submit'} variant={'contained'} color={'primary'}>
+              <TextField
+                label="Email"
+                margin="normal"
+                error={!!errors.email}
+                helperText={errors.email && errors.email.message}
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: 'Incorrect email address',
+                  },
+                })}
+              />
+              <TextField
+                type="password"
+                label="Password"
+                margin="normal"
+                error={!!errors.password}
+                helperText={errors.password && errors.password.message}
+                {...register('password', {
+                  required: 'Password is required',
+                  minLength: {
+                    value: 3,
+                    message: 'Password must be at least 3 characters long',
+                  },
+                })}
+              />
+              <FormControlLabel
+                label={'Remember me'}
+                control={
+                  <Controller
+                    name={'rememberMe'}
+                    control={control}
+                    render={({ field: { value, ...field } }) => <Checkbox {...field} checked={value} />}
+                  />
+                }
+              />
+              <Button type={'submit'} variant={'contained'} color={'primary'} disabled={isDisabled}>
                 Login
               </Button>
             </FormGroup>
@@ -71,3 +122,5 @@ export const Login = () => {
     </Grid>
   )
 }
+
+// не ресетает состояние объекта input
