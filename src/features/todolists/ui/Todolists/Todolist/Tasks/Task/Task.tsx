@@ -61,5 +61,3 @@ export const Task = ({ task, todolist }: Props) => {
     </ListItem>
   )
 }
-
-//создайте файл Task.styles.ts рядом с компонентом Task и перенесите туда необходимые стили

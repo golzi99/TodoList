@@ -41,7 +41,7 @@ export const tasksReducer = (state: Tasks = initialState, action: TaskActionsTyp
       }
     }
     case 'ADD_TASK': {
-      const newTask: DomainTask = action.payload.task
+      const newTask: DomainTask = { ...action.payload.task, entityStatus: 'idle' }
       return {
         ...state,
         [newTask.todoListId]: [newTask, ...state[newTask.todoListId]],
@@ -101,9 +101,10 @@ export const removeTaskAC = (payload: { taskId: string; todolistId: string }) =>
 export const addTaskAC = (payload: { task: BaseTask }) => {
   return {
     type: 'ADD_TASK',
-    payload: {
-      task: { ...payload.task, entityStatus: 'idle' },
-    },
+    payload,
+    // payload: {
+    //   task: { ...payload.task, entityStatus: 'idle' },
+    // },
   } as const
 }
 
