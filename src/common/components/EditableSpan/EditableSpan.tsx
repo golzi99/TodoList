@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react"
+import React, { ChangeEvent, useState } from 'react'
 
 type Props = {
   value: string
@@ -27,7 +27,7 @@ export const EditableSpan = ({ value, onChange, disabled, maxLength = 110 }: Pro
   }
 
   const onEnterClick = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       changeTitle()
     }
   }
@@ -41,24 +41,20 @@ export const EditableSpan = ({ value, onChange, disabled, maxLength = 110 }: Pro
     changeTitle()
   }
 
-  return editMode ? (
+  const onDoubleClickHandler = () => {
+    !disabled && setEditMode(true)
+  }
+
+  return editMode && !disabled ? (
     <input
       value={itemTitle}
       onChange={onChangeInputHandler}
       onKeyDown={onEnterClick}
       onBlur={onBlurHandler}
-      className={inputError ? "input-error" : undefined}
+      className={inputError ? 'input-error' : undefined}
       autoFocus
     />
   ) : (
-    <span
-      onDoubleClick={() => {
-        if (!disabled) {
-          setEditMode(true)
-        }
-      }}
-    >
-      {value}
-    </span>
+    <span onDoubleClick={onDoubleClickHandler}>{value}</span>
   )
 }

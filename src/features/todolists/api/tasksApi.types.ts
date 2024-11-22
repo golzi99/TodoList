@@ -1,6 +1,7 @@
-import { TaskPriority, TaskStatus } from "../lib/enums"
+import { TaskPriority, TaskStatus } from '../lib/enums'
+import { RequestStatus } from 'app/app-reducer'
 
-export type DomainTask = {
+export type BaseTask = {
   description: string
   title: string
   status: TaskStatus
@@ -13,16 +14,18 @@ export type DomainTask = {
   addedDate: string
 }
 
+export type DomainTask = BaseTask & {
+  entityStatus: RequestStatus
+}
+
 export type Tasks = {
   [key: string]: Array<DomainTask>
 }
 
 export type GetTasksResponse = {
-  items: Array<DomainTask>
+  items: Array<BaseTask>
   totalCount: number
   error: string | null
 }
 
-export type UpdateTaskModel = Omit<DomainTask, "id" | "todoListId" | "order" | "addedDate">
-
-export type UpdateTaskDomainModel = Partial<Omit<DomainTask, "id" | "todoListId" | "order" | "addedDate">>
+export type UpdateTaskModel = Omit<BaseTask, 'id' | 'todoListId' | 'order' | 'addedDate'>

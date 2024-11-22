@@ -1,6 +1,6 @@
-import { DomainTask, GetTasksResponse, UpdateTaskModel } from "./tasksApi.types"
-import { BaseResponse } from "common/types"
-import { instance } from "common/instance"
+import { BaseTask, GetTasksResponse, UpdateTaskModel } from './tasksApi.types'
+import { BaseResponse } from 'common/types'
+import { instance } from 'common/instance'
 
 export const tasksApi = {
   getTasks(todolistId: string) {
@@ -8,7 +8,7 @@ export const tasksApi = {
   },
   createTask(payload: { todolistId: string; title: string }) {
     const { todolistId, title } = payload
-    return instance.post<BaseResponse<{ item: DomainTask }>>(`todo-lists/${todolistId}/tasks`, { title })
+    return instance.post<BaseResponse<{ item: BaseTask }>>(`todo-lists/${todolistId}/tasks`, { title })
   },
   removeTask(payload: { todolistId: string; taskId: string }) {
     const { todolistId, taskId } = payload
@@ -16,6 +16,6 @@ export const tasksApi = {
   },
   updateTask(payload: { model: UpdateTaskModel; taskId: string; todolistId: string }) {
     const { model, taskId, todolistId } = payload
-    return instance.put<BaseResponse<{ item: DomainTask }>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+    return instance.put<BaseResponse<{ item: BaseTask }>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
   },
 }

@@ -47,7 +47,7 @@ export const Login = () => {
     return <Navigate to={Path.Main} />
   }
 
-  const isDisabled = !!errors.email || !dirtyFields.email || !dirtyFields.password
+  const isDisabled = !!errors.email || !!errors.password || !dirtyFields.email || !dirtyFields.password
 
   return (
     <Grid container justifyContent={'center'}>
@@ -76,6 +76,7 @@ export const Login = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormGroup>
               <TextField
+                autoFocus={true}
                 label="Email"
                 margin="normal"
                 error={!!errors.email}

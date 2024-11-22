@@ -191,19 +191,21 @@ export const updateTodolistTitleTC =
     const todolists = getState().todolists
     const { todolistId, title } = arg
     const todolist = todolists?.find((tl) => tl.id === todolistId)
-
+    dispatch(changeTodolistEntityStatusAC({ id: todolistId, entityStatus: 'loading' }))
     if (todolist) {
       todolistsApi
         .updateTodolist({ id: todolistId, title })
         .then((res) => {
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatusAC('succeeded'))
+            dispatch(changeTodolistEntityStatusAC({ id: todolistId, entityStatus: 'succeeded' }))
             dispatch(changeTodoListTitleAC(arg))
           } else {
             handleServerAppError(res.data, dispatch)
           }
         })
         .catch((error) => {
+          dispatch(changeTodolistEntityStatusAC({ id: todolistId, entityStatus: 'idle' }))
           handleServerNetworkError(error, dispatch)
         })
     }

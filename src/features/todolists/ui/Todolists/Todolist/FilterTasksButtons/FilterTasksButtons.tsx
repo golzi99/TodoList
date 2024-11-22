@@ -1,8 +1,8 @@
-import React from "react"
-import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import { changeTodoListFilterAC, FilterValues, DomainTodolist } from "../../../../model/todolists-reducer"
-import { useAppDispatch } from "common/hooks"
+import React from 'react'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import { changeTodoListFilterAC, FilterValues, DomainTodolist } from '../../../../model/todolists-reducer'
+import { useAppDispatch } from 'common/hooks'
 
 type Props = {
   todolist: DomainTodolist
@@ -18,25 +18,25 @@ export const FilterTasksButtons = ({ todolist }: Props) => {
   }
 
   return (
-    <Box display={"flex"} justifyContent={"space-between"} gap={"10px"}>
+    <Box display={'flex'} justifyContent={'space-between'} gap={'10px'}>
       <Button
-        variant={filter === "all" ? "outlined" : "text"}
-        color={"success"}
-        onClick={changeFilterTasksHandler("all")}
+        variant={filter === 'all' ? 'contained' : 'text'}
+        color={'success'}
+        onClick={changeFilterTasksHandler('all')}
       >
         All
       </Button>
       <Button
-        variant={filter === "active" ? "outlined" : "text"}
+        variant={filter === 'active' ? 'contained' : 'text'}
         color="error"
-        onClick={changeFilterTasksHandler("active")}
+        onClick={changeFilterTasksHandler('active')}
       >
         Active
       </Button>
       <Button
-        variant={filter === "completed" ? "outlined" : "text"}
+        variant={filter === 'completed' ? 'contained' : 'text'}
         color="secondary"
-        onClick={changeFilterTasksHandler("completed")}
+        onClick={changeFilterTasksHandler('completed')}
       >
         Completed
       </Button>
