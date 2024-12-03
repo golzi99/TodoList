@@ -8,9 +8,11 @@ import { MenuButton } from './MenuButton'
 import Switch from '@mui/material/Switch'
 import LinearProgress from '@mui/material/LinearProgress'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
-import { selectAppStatus } from 'app/appSelectors'
-import { selectIsLoggedIn } from '../../../features/auth/model/authSelector'
-import { logoutTC } from '../../../features/auth/model/auth-reducer'
+import { selectAppStatus, selectIsLoggedIn, setAppStatus, setIsLoggedIn } from 'app/appSlice'
+import { useLogoutMutation } from '../../../features/auth/api/auth-Api'
+import { ResultCode } from '../../../features/todolists/lib/enums'
+import { clearTodolists } from '../../../features/todolists/model/todolistsSlice'
+import { clearTasks } from '../../../features/todolists/model/tasksSlice'
 
 type Props = {
   onChange: () => void
@@ -21,8 +23,18 @@ export function ButtonAppBar({ onChange }: Props) {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const dispatch = useAppDispatch()
 
+  const [logout] = useLogoutMutation()
+
   const logOutHandler = () => {
-    dispatch(logoutTC())
+    logout().then((res) => {
+      if (res.data?.resultCode === ResultCode.Success) {
+        dispatch(setAppStatus({ status: 'succeeded' }))
+        dispatch(setIsLoggedIn({ isLoggedIn: false }))
+        localStorage.removeItem('sn-token')
+        dispatch(clearTodolists())
+        dispatch(clearTasks())
+      }
+    })
   }
 
   return (

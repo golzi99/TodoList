@@ -1,7 +1,6 @@
 import React from 'react'
 import { getTheme } from 'common/theme'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
-import { selectThemeMode } from 'app/appSelectors'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import FormControl from '@mui/material/FormControl'
@@ -11,21 +10,19 @@ import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid2'
 import TextField from '@mui/material/TextField'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { loginTC } from '../../model/auth-reducer'
-import { Navigate } from 'react-router-dom'
-import { selectIsLoggedIn } from '../../model/authSelector'
 import { Path } from 'common/router'
-
-type Inputs = {
-  email: string
-  password: string
-  rememberMe: boolean
-}
+import { selectThemeMode, setIsLoggedIn } from 'app/appSlice'
+import { useNavigate } from 'react-router'
+import { ResultCode } from '../../../todolists/lib/enums'
+import { useLoginMutation } from '../../api/auth-Api'
+import { LoginArgs } from '../../api/auth-Api.types'
 
 export const Login = () => {
   const themeMode = useAppSelector(selectThemeMode)
   const theme = getTheme(themeMode)
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  const navigate = useNavigate()
+
+  const [login] = useLoginMutation()
 
   const dispatch = useAppDispatch()
 
@@ -35,16 +32,20 @@ export const Login = () => {
     reset,
     control,
     formState: { errors, dirtyFields },
-  } = useForm<Inputs>({ defaultValues: { email: '', password: '', rememberMe: false } })
+  } = useForm<LoginArgs>({ defaultValues: { email: '', password: '', rememberMe: false } })
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    dispatch(loginTC(data)).then(() => {
-      reset()
-    })
-  }
-
-  if (isLoggedIn) {
-    return <Navigate to={Path.Main} />
+  const onSubmit: SubmitHandler<LoginArgs> = (data) => {
+    login(data)
+      .then((res) => {
+        if (res.data?.resultCode === ResultCode.Success) {
+          dispatch(setIsLoggedIn({ isLoggedIn: true }))
+          localStorage.setItem('sn-token', res.data.data.token)
+          navigate(Path.Main)
+        }
+      })
+      .finally(() => {
+        reset()
+      })
   }
 
   const isDisabled = !!errors.email || !!errors.password || !dirtyFields.email || !dirtyFields.password
@@ -123,5 +124,3 @@ export const Login = () => {
     </Grid>
   )
 }
-
-// не ресетает состояние объекта input

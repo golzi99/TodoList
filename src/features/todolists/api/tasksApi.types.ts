@@ -1,5 +1,5 @@
 import { TaskPriority, TaskStatus } from '../lib/enums'
-import { RequestStatus } from 'app/app-reducer'
+import { RequestStatus } from 'app/appSlice'
 
 export type BaseTask = {
   description: string

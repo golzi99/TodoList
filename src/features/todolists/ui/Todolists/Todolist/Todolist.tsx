@@ -1,15 +1,15 @@
-import React from "react"
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward"
-import { Tasks } from "./Tasks/Tasks"
-import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
-import { addTaskTC } from "../../../model/tasks-reducer"
-import { useAppDispatch } from "common/hooks"
-import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
-import { AddItemForm } from "common/components"
-import { DomainTodolist } from "../../../model/todolists-reducer"
-import Accordion from "@mui/material/Accordion"
-import AccordionSummary from "@mui/material/AccordionSummary"
-import AccordionDetails from "@mui/material/AccordionDetails"
+import React from 'react'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import { Tasks } from './Tasks/Tasks'
+import { TodolistTitle } from './TodolistTitle/TodolistTitle'
+import { addTaskTC } from '../../../model/tasksSlice'
+import { useAppDispatch } from 'common/hooks'
+import { FilterTasksButtons } from './FilterTasksButtons/FilterTasksButtons'
+import { AddItemForm } from 'common/components'
+import { DomainTodolist } from '../../../model/todolistsSlice'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
 
 type Props = {
   todolist: DomainTodolist
@@ -36,7 +36,7 @@ export const Todolist = ({ todolist }: Props) => {
         </div>
       </AccordionSummary>
       <AccordionDetails>
-        <AddItemForm addItem={addNewTask} disabled={entityStatus === "loading"} />
+        <AddItemForm addItem={addNewTask} disabled={entityStatus === 'loading'} />
         <Tasks todolist={todolist} />
         <FilterTasksButtons todolist={todolist} />
       </AccordionDetails>
