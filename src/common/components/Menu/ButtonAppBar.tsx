@@ -11,8 +11,9 @@ import { useAppDispatch, useAppSelector } from 'common/hooks'
 import { selectAppStatus, selectIsLoggedIn, setAppStatus, setIsLoggedIn } from 'app/appSlice'
 import { useLogoutMutation } from '../../../features/auth/api/auth-Api'
 import { ResultCode } from '../../../features/todolists/lib/enums'
-import { clearTodolists } from '../../../features/todolists/model/todolistsSlice'
-import { clearTasks } from '../../../features/todolists/model/tasksSlice'
+// import { clearTodolists } from '../../../features/todolists/model/todolistsSlice'
+// import { clearTasks } from '../../../features/todolists/model/tasksSlice'
+import { baseApi } from 'app/baseApi'
 
 type Props = {
   onChange: () => void
@@ -26,15 +27,21 @@ export function ButtonAppBar({ onChange }: Props) {
   const [logout] = useLogoutMutation()
 
   const logOutHandler = () => {
-    logout().then((res) => {
-      if (res.data?.resultCode === ResultCode.Success) {
-        dispatch(setAppStatus({ status: 'succeeded' }))
-        dispatch(setIsLoggedIn({ isLoggedIn: false }))
-        localStorage.removeItem('sn-token')
-        dispatch(clearTodolists())
-        dispatch(clearTasks())
-      }
-    })
+    logout()
+      .then((res) => {
+        if (res.data?.resultCode === ResultCode.Success) {
+          dispatch(setAppStatus({ status: 'succeeded' }))
+          dispatch(setIsLoggedIn({ isLoggedIn: false }))
+          localStorage.removeItem('sn-token')
+          // dispatch(clearTodolists())
+          // dispatch(clearTasks())
+
+          // dispatch(baseApi.util.resetApiState())
+        }
+      })
+      .then(() => {
+        dispatch(baseApi.util.invalidateTags(['Task', 'Todolist']))
+      })
   }
 
   return (

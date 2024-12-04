@@ -35,17 +35,14 @@ export const Login = () => {
   } = useForm<LoginArgs>({ defaultValues: { email: '', password: '', rememberMe: false } })
 
   const onSubmit: SubmitHandler<LoginArgs> = (data) => {
-    login(data)
-      .then((res) => {
-        if (res.data?.resultCode === ResultCode.Success) {
-          dispatch(setIsLoggedIn({ isLoggedIn: true }))
-          localStorage.setItem('sn-token', res.data.data.token)
-          navigate(Path.Main)
-        }
-      })
-      .finally(() => {
+    login(data).then((res) => {
+      if (res.data?.resultCode === ResultCode.Success) {
+        dispatch(setIsLoggedIn({ isLoggedIn: true }))
+        localStorage.setItem('sn-token', res.data.data.token)
         reset()
-      })
+        navigate(Path.Main)
+      }
+    })
   }
 
   const isDisabled = !!errors.email || !!errors.password || !dirtyFields.email || !dirtyFields.password

@@ -4,13 +4,14 @@ import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { removeTaskTC, updateTaskTC } from '../../../../../model/tasksSlice'
 import { useAppDispatch } from 'common/hooks'
 import { getListItemSx } from './Task.styles'
 import { EditableSpan } from 'common/components'
 import { DomainTodolist } from '../../../../../model/todolistsSlice'
-import { DomainTask } from '../../../../../api/tasksApi.types'
+import { DomainTask, UpdateTaskModel } from '../../../../../api/tasksApi.types'
 import { TaskStatus } from '../../../../../lib/enums'
+import { tasksApi, useRemoveTaskMutation, useUpdateTaskMutation } from '../../../../../api/tasksApi'
+import { RequestStatus } from 'app/appSlice'
 
 type Props = {
   task: DomainTask
@@ -22,19 +23,70 @@ export const Task = ({ task, todolist }: Props) => {
   const { id: taskId, title, status, entityStatus: TaskEntityStatus } = task
   const { id: todolistId, entityStatus } = todolist
 
+  const [removeTask] = useRemoveTaskMutation()
+  const [updateTask] = useUpdateTaskMutation()
+
+  const updateQueryData = (status: RequestStatus) => {
+    dispatch(
+      tasksApi.util.updateQueryData('getTasks', todolistId, (state) => {
+        const index = state.items.findIndex((task) => task.id === taskId)
+        if (index !== -1) state.items[index].entityStatus = status
+      }),
+    )
+  }
+
   const removeTaskHandler = () => {
-    dispatch(removeTaskTC({ taskId, todolistId }))
+    // dispatch(removeTaskTC({ taskId, todolistId }))
+    updateQueryData('loading')
+    removeTask({ taskId, todolistId })
+      .unwrap()
+      .catch(() => {
+        updateQueryData('idle')
+      })
   }
 
   const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
-    const newTask = { ...task, status }
-    dispatch(updateTaskTC({ task: newTask }))
+    const model: UpdateTaskModel = {
+      status,
+      title: task.title,
+      deadline: task.deadline,
+      description: task.description,
+      priority: task.priority,
+      startDate: task.startDate,
+    }
+    // dispatch(updateTaskTC({ task: newTask }))
+    updateQueryData('loading')
+    updateTask({ model, taskId, todolistId })
+      .unwrap()
+      .then(() => {
+        updateQueryData('succeeded')
+      })
+      .catch(() => {
+        updateQueryData('failed')
+      })
   }
 
   const changeTaskTitleHandler = (title: string) => {
-    const newTask = { ...task, title }
-    dispatch(updateTaskTC({ task: newTask }))
+    const model: UpdateTaskModel = {
+      status: task.status,
+      title,
+      deadline: task.deadline,
+      description: task.description,
+      priority: task.priority,
+      startDate: task.startDate,
+    }
+    // dispatch(updateTaskTC({ task: newTask }))
+    updateQueryData('loading')
+    updateTask({ model, taskId, todolistId })
+      .unwrap()
+      .then(() => {
+        updateQueryData('succeeded')
+      })
+      .catch(() => {
+        updateQueryData('failed')
+      })
+    //обратите внимание, что в changeTaskStatusHandler и changeTaskTitleHandler модельки создаются похожим образом. Попробуйте избавиться от дублирования кода.
   }
 
   return (

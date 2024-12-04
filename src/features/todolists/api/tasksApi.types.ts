@@ -22,8 +22,8 @@ export type Tasks = {
   [key: string]: Array<DomainTask>
 }
 
-export type GetTasksResponse = {
-  items: Array<BaseTask>
+export type GetTasksResponse<T = BaseTask> = {
+  items: Array<T>
   totalCount: number
   error: string | null
 }

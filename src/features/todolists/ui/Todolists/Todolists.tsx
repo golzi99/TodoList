@@ -5,7 +5,7 @@ import { Todolist } from './Todolist/Todolist'
 import { getTheme } from 'common/theme'
 import { useAppSelector } from 'common/hooks'
 import { selectThemeMode } from 'app/appSlice'
-import { useGetTodolistsQuery } from '../../api/_todolistsApi'
+import { useGetTodolistsQuery } from '../../api/todolistsApi'
 
 export const Todolists = () => {
   const themeMode = useAppSelector(selectThemeMode)

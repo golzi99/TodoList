@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid2'
 import Container from '@mui/material/Container'
 import { Todolists } from '../features/todolists/ui/Todolists/Todolists'
 import { AddItemForm } from 'common/components'
-import { useAddTodolistMutation } from '../features/todolists/api/_todolistsApi'
+import { useAddTodolistMutation } from '../features/todolists/api/todolistsApi'
 
 export const Main = () => {
   const [addTodolist] = useAddTodolistMutation()
