@@ -10,6 +10,7 @@ import { selectThemeMode, setIsLoggedIn } from 'app/appSlice'
 import { ProtectedRoute } from 'common/components/ProtectedRoute/ProtectedRoute'
 import { useMeQuery } from '../features/auth/api/auth-Api'
 import { ResultCode } from '../features/todolists/lib/enums'
+import { Routing } from 'common/router'
 
 function App() {
   const themeMode = useAppSelector(selectThemeMode)
@@ -33,7 +34,7 @@ function App() {
         {isInitialized ? (
           <>
             <Header />
-            <ProtectedRoute />
+            <Routing />
           </>
         ) : (
           <div className={s.circularProgressContainer}>

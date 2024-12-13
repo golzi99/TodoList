@@ -1,10 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import { useAppSelector } from 'common/hooks'
-import { Path, Routing } from 'common/router'
+import { Path } from 'common/router'
 import { useNavigate } from 'react-router'
 import { selectIsLoggedIn } from 'app/appSlice'
 
-export const ProtectedRoute = () => {
+interface ProtectedRouteProps {
+  children: ReactNode
+}
+
+export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const navigate = useNavigate()
 
@@ -12,5 +16,5 @@ export const ProtectedRoute = () => {
     if (!isLoggedIn) navigate(Path.Login)
   }, [isLoggedIn])
 
-  return <Routing />
+  return isLoggedIn ? <>{children}</> : null
 }
