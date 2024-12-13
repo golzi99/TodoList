@@ -7,11 +7,11 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { useAppDispatch } from 'common/hooks'
 import { getListItemSx } from './Task.styles'
 import { EditableSpan } from 'common/components'
-import { DomainTodolist } from '../../../../../model/todolistsSlice'
 import { DomainTask, UpdateTaskModel } from '../../../../../api/tasksApi.types'
 import { TaskStatus } from '../../../../../lib/enums'
 import { tasksApi, useRemoveTaskMutation, useUpdateTaskMutation } from '../../../../../api/tasksApi'
 import { RequestStatus } from 'app/appSlice'
+import { DomainTodolist } from '../../../../../api/todolistsApi'
 
 type Props = {
   task: DomainTask

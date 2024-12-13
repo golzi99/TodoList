@@ -7,12 +7,12 @@ import { handleServerAppError, handleServerNetworkError } from 'common/utils'
 // import { fetchTasksTC } from './tasksSlice'
 import { createSlice } from '@reduxjs/toolkit'
 
-export type DomainTodolist = Todolist & {
-  filter: FilterValues
-  entityStatus: RequestStatus
-}
-
-export type FilterValues = 'all' | 'active' | 'completed'
+// export type DomainTodolist = Todolist & {
+//   filter: FilterValues
+//   entityStatus: RequestStatus
+// }
+//
+// export type FilterValues = 'all' | 'active' | 'completed'
 
 // export const todolistsSlice = createSlice({
 //   name: 'todolists',

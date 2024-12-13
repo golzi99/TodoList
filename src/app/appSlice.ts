@@ -36,3 +36,4 @@ export const appSlice = createSlice({
 export const { setAppStatus, setAppError, changeTheme, setIsLoggedIn } = appSlice.actions
 export const { selectThemeMode, selectAppStatus, selectAppError, selectIsLoggedIn } = appSlice.selectors
 export const appReducer = appSlice.reducer
+// export type AppState = ReturnType<typeof appSlice.getInitialState>

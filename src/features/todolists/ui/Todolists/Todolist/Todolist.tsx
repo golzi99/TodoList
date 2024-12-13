@@ -2,22 +2,19 @@ import React from 'react'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import { Tasks } from './Tasks/Tasks'
 import { TodolistTitle } from './TodolistTitle/TodolistTitle'
-import { useAppDispatch } from 'common/hooks'
 import { FilterTasksButtons } from './FilterTasksButtons/FilterTasksButtons'
 import { AddItemForm } from 'common/components'
-import { DomainTodolist } from '../../../model/todolistsSlice'
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import { useCreateTaskMutation } from '../../../api/tasksApi'
+import { DomainTodolist } from '../../../api/todolistsApi'
 
 type Props = {
   todolist: DomainTodolist
 }
 
 export const Todolist = ({ todolist }: Props) => {
-  const dispatch = useAppDispatch()
-
   const { id: todolistId, entityStatus } = todolist
   const [addTask] = useCreateTaskMutation()
 

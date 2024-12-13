@@ -1,10 +1,14 @@
 import React from 'react'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { DomainTodolist } from '../../../../model/todolistsSlice'
 import styles from './TodolistTitle.module.css'
 import { EditableSpan } from 'common/components'
-import { todolistsApi, useRemoveTodolistMutation, useUpdateTodolistTitleMutation } from '../../../../api/todolistsApi'
+import {
+  DomainTodolist,
+  todolistsApi,
+  useRemoveTodolistMutation,
+  useUpdateTodolistTitleMutation,
+} from '../../../../api/todolistsApi'
 import { RequestStatus } from 'app/appSlice'
 import { useAppDispatch } from 'common/hooks'
 
