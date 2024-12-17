@@ -23,25 +23,34 @@ export const FilterTasksButtons = ({ todolist }: Props) => {
   }
 
   return (
-    <Box display={'flex'} justifyContent={'space-between'} gap={'10px'}>
+    <Box display={'flex'} gap={'10px'}>
       <Button
-        variant={filter === 'all' ? 'contained' : 'text'}
+        variant={filter === 'all' ? 'outlined' : 'text'}
         color={'success'}
         onClick={changeFilterTasksHandler('all')}
+        sx={{
+          flexGrow: '1',
+        }}
       >
         All
       </Button>
       <Button
-        variant={filter === 'active' ? 'contained' : 'text'}
+        variant={filter === 'active' ? 'outlined' : 'text'}
         color="error"
         onClick={changeFilterTasksHandler('active')}
+        sx={{
+          flexGrow: '1',
+        }}
       >
         Active
       </Button>
       <Button
-        variant={filter === 'completed' ? 'contained' : 'text'}
+        variant={filter === 'completed' ? 'outlined' : 'text'}
         color="secondary"
         onClick={changeFilterTasksHandler('completed')}
+        sx={{
+          flexGrow: '1',
+        }}
       >
         Completed
       </Button>

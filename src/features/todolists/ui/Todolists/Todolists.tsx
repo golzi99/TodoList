@@ -6,12 +6,25 @@ import { getTheme } from 'common/theme'
 import { useAppSelector } from 'common/hooks'
 import { selectThemeMode } from 'app/appSlice'
 import { useGetTodolistsQuery } from '../../api/todolistsApi'
+import { TodolistSkeleton } from '../Skeletons/TodolistSkeleton/TodolistSkeleton'
 
 export const Todolists = () => {
   const themeMode = useAppSelector(selectThemeMode)
   const theme = getTheme(themeMode)
 
-  const { data: todolists } = useGetTodolistsQuery()
+  const { data: todolists, isLoading } = useGetTodolistsQuery()
+
+  if (isLoading) {
+    return (
+      <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
+        {Array(3)
+          .fill(null)
+          .map((_, id) => (
+            <TodolistSkeleton key={id} />
+          ))}
+      </div>
+    )
+  }
 
   return (
     <>
