@@ -4,8 +4,8 @@ import { TodolistTitle } from './TodolistTitle/TodolistTitle'
 import { FilterTasksButtons } from './FilterTasksButtons/FilterTasksButtons'
 import { AddItemForm } from 'common/components'
 import { useCreateTaskMutation } from '../../../api/tasksApi'
-import { DomainTodolist } from '../../../api/todolistsApi'
 import Paper from '@mui/material/Paper'
+import { DomainTodolist } from '../../../lib/types'
 
 type Props = {
   todolist: DomainTodolist

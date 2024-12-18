@@ -1,42 +1,34 @@
 import React from 'react'
 import List from '@mui/material/List'
 import { Task } from './Task/Task'
-import { TaskStatus } from '../../../../lib/enums'
-import { useGetTasksQuery } from '../../../../api/tasksApi'
-import { DomainTodolist } from '../../../../api/todolistsApi'
 import { TasksSkeleton } from '../../../Skeletons/TasksSkeleton/TasksSkeleton'
+import { TasksPagination } from '../TaskPagination/TasksPagination'
+import { DomainTodolist } from '../../../../lib/types'
+import { useTasks } from '../../../../lib/hooks/useTasks'
 
 type Props = {
   todolist: DomainTodolist
 }
 
 export const Tasks = ({ todolist }: Props) => {
-  const { filter, id } = todolist
-
-  const { data, isLoading } = useGetTasksQuery(id)
+  const { tasks, setPage, page, totalCount, isLoading } = useTasks(todolist)
 
   if (isLoading) {
     return <TasksSkeleton />
   }
 
-  let tasksForTodoList = data?.items
-  if (filter === 'active') {
-    tasksForTodoList = tasksForTodoList?.filter((t) => t.status === TaskStatus.New)
-  } else if (filter === 'completed') {
-    tasksForTodoList = tasksForTodoList?.filter((t) => t.status === TaskStatus.Completed)
-  }
-
   return (
     <>
-      {tasksForTodoList?.length === 0 ? (
+      {tasks?.length === 0 ? (
         <p>Тасок нет</p>
       ) : (
         <List>
-          {tasksForTodoList?.map((task) => {
+          {tasks?.map((task) => {
             return <Task key={task.id} task={task} todolist={todolist} />
           })}
         </List>
       )}
+      <TasksPagination totalCount={totalCount || 0} page={page} setPage={setPage} />
     </>
   )
 }

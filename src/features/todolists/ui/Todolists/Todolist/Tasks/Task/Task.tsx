@@ -11,7 +11,7 @@ import { DomainTask, UpdateTaskModel } from '../../../../../api/tasksApi.types'
 import { TaskStatus } from '../../../../../lib/enums'
 import { tasksApi, useRemoveTaskMutation, useUpdateTaskMutation } from '../../../../../api/tasksApi'
 import { RequestStatus } from 'app/appSlice'
-import { DomainTodolist } from '../../../../../api/todolistsApi'
+import { DomainTodolist } from '../../../../../lib/types'
 
 type Props = {
   task: DomainTask
@@ -28,7 +28,7 @@ export const Task = ({ task, todolist }: Props) => {
 
   const updateQueryData = (status: RequestStatus) => {
     dispatch(
-      tasksApi.util.updateQueryData('getTasks', todolistId, (state) => {
+      tasksApi.util.updateQueryData('getTasks', { todolistId, args: { page: 1 } }, (state) => {
         const index = state.items.findIndex((task) => task.id === taskId)
         if (index !== -1) state.items[index].entityStatus = status
       }),

@@ -2,7 +2,8 @@ import React from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { useAppDispatch } from 'common/hooks'
-import { DomainTodolist, FilterValues, todolistsApi } from '../../../../api/todolistsApi'
+import { todolistsApi } from '../../../../api/todolistsApi'
+import { DomainTodolist, FilterValues } from '../../../../lib/types'
 
 type Props = {
   todolist: DomainTodolist

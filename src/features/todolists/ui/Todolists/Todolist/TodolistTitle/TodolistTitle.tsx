@@ -3,14 +3,10 @@ import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import styles from './TodolistTitle.module.css'
 import { EditableSpan } from 'common/components'
-import {
-  DomainTodolist,
-  todolistsApi,
-  useRemoveTodolistMutation,
-  useUpdateTodolistTitleMutation,
-} from '../../../../api/todolistsApi'
+import { todolistsApi, useRemoveTodolistMutation, useUpdateTodolistTitleMutation } from '../../../../api/todolistsApi'
 import { RequestStatus } from 'app/appSlice'
 import { useAppDispatch } from 'common/hooks'
+import { DomainTodolist } from '../../../../lib/types'
 
 type Props = {
   todolist: DomainTodolist
